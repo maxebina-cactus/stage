@@ -17,12 +17,15 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="flex h-screen w-full overflow-hidden bg-gray-50 dark:bg-gray-950">
+  <div class="flex h-screen">
     <Sidebar />
-
-    <main class="flex-1 overflow-y-auto p-8">
-      <NuxtPage />
-    </main>
+    <div class="flex flex-col flex-1">
+      <UDashboardNavbar title="Dashboard" />
+      <div class="flex-1 p-4">
+        <h1 class="text-2xl font-bold">Bem-vindo ao Stage</h1>
+        <p class="mt-2 text-gray-600">Este é um exemplo de conteúdo principal.</p>
+      </div>
+    </div>
   </div>
 </template>
 
