@@ -17,12 +17,11 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="flex h-screen">
+  <div class="flex h-screen overflow-hidden">
     <Sidebar />
-    <div class="flex flex-col flex-1">
-      <UDashboardNavbar title="Dashboard" />
+    <main class="flex-1 overflow-y-auto p-4">
       <NuxtPage />
-    </div>
+    </main>
   </div>
 </template>
 

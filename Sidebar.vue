@@ -1,20 +1,18 @@
 <template>
-  <UDashboardGroup>
-    <UDashboardSidebar :resizable="true" :collapsible="true">
-      <template #header="{ collapsed }">
-        <div v-if="!collapsed">
-          Nuxt UI Pro
-        </div>
-        <AppLogo v-else />
+  <div class="w-64 h-screen border-r border-gray-200 dark:border-gray-800 flex flex-col">
+    <UVerticalNavigation :links="links" />
+    <UDropdown :items="dropdownItems" mode="hover" class="mt-auto p-2">
+      <template #trigger="{ open }">
+        <UButton
+          :avatar="user.avatar"
+          :label="user.label"
+          color="neutral"
+          variant="ghost"
+          @click="open = !open"
+        />
       </template>
-
-      <UVerticalNavigation :links="links" />
-
-      <template #footer>
-        <UDropdown :items="dropdownItems" @click:option="handleDropdownClick" />
-      </template>
-    </UDashboardSidebar>
-  </UDashboardGroup>
+    </UDropdown>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -47,15 +45,14 @@ const dropdownItems = [
   { label: 'Sair', color: 'error', icon: 'i-lucide-log-out' }
 ]
 
-const handleDropdownClick = (item) => {
-  if (item.label === 'Sair') {
-    // Lógica para logout
-    router.push('/login')
-  } else if (item.label === 'Idioma') {
-    // Lógica para mudar o idioma
-  } else if (item.label === 'Configurações') {
-    // Lógica para abrir as configurações
-  }
+const user = {
+  avatar: 'https://via.placeholder.com/50',
+  label: 'Administrador Aarnia'
+}
+
+const handleLogout = () => {
+  // Lógica para logout
+  router.push('/login')
 }
 </script>
 
