@@ -1,10 +1,14 @@
 <template>
-  <aside class="w-64 h-screen flex flex-col bg-white dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800">
-    <div class="flex-1 overflow-y-auto px-4 py-4">
-      <UNavigationMenu orientation="vertical" :items="links" />
+  <aside class="w-64 h-screen border-r border-neutral-200 dark:border-neutral-800 flex flex-col justify-between p-4 bg-white dark:bg-neutral-900">
+    <div class="mb-6">
+      <h1 class="text-xl font-bold text-neutral-900 dark:text-white">Meu App</h1>
     </div>
 
-    <div class="mt-auto px-4 py-4 border-t border-neutral-200 dark:border-neutral-800">
+    <div class="flex-1 space-y-1">
+      <UNavigationMenu orientation="vertical" :items="links" class="w-full flex items-center gap-3 text-sm font-medium" />
+    </div>
+
+    <div class="-mx-4 px-4 pt-4 border-t border-neutral-200 dark:border-neutral-800">
       <UDropdownMenu :items="userMenu" class="w-full">
         <UButton
           color="neutral"
