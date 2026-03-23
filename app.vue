@@ -17,9 +17,10 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="flex h-screen overflow-hidden">
+  <div class="flex h-screen w-full overflow-hidden bg-gray-50 dark:bg-gray-950">
     <Sidebar />
-    <main class="flex-1 overflow-y-auto p-4">
+
+    <main class="flex-1 overflow-y-auto p-8">
       <NuxtPage />
     </main>
   </div>
