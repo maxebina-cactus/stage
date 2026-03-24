@@ -8,16 +8,17 @@
       <UNavigationMenu orientation="vertical" :items="links" class="w-full" />
     </div>
 
-    <div class="mt-auto p-4 border-t border-neutral-200 dark:border-neutral-800">
-      <UDropdownMenu :items="userMenu" class="w-full">
-        <UButton
-          color="neutral"
-          variant="ghost"
-          class="w-full justify-start"
-          icon="i-lucide-user"
-          label="Meu Perfil"
-        />
-      </UDropdownMenu>
+    <div class="mt-auto p-4 border-t border-neutral-200 dark:border-neutral-800 flex justify-end items-center gap-2">
+      <UAvatar src="/avatar.jpg" size="2xs" />
+      <div class="flex flex-col text-sm text-neutral-500 dark:text-neutral-400 truncate flex-1 text-left">
+        Administrador - Administrador
+      </div>
+      <UButton
+        color="neutral"
+        variant="ghost"
+        class="w-full h-12 px-4 pb-4 justify-start"
+        icon="i-lucide-chevrons-up-down"
+      />
     </div>
   </aside>
 </template>
