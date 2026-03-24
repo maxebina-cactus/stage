@@ -9,6 +9,7 @@
     </div>
 
     <div class="mt-auto p-4 border-t border-neutral-200 dark:border-neutral-800 flex justify-end items-center gap-2">
+      <UAvatar src="/avatar.jpg" size="xs" />
       <UButton
         color="neutral"
         variant="ghost"
