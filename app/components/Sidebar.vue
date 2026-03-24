@@ -1,10 +1,10 @@
 <template>
-  <aside class="w-64 h-screen border-r border-neutral-200 dark:border-neutral-800 flex flex-col justify-between p-4 bg-white dark:bg-neutral-900">
+  <aside class="w-60 h-screen border-r border-neutral-200 dark:border-neutral-800 flex flex-col justify-between p-4 bg-white dark:bg-neutral-900">
     <div class="mb-6">
       <h1 class="text-xl font-bold text-neutral-900 dark:text-white">Meu App</h1>
     </div>
 
-    <div class="flex-1">
+    <div class="flex-1 gap-2 p-4">
       <UNavigationMenu orientation="vertical" :items="links" class="w-full" />
     </div>
 
