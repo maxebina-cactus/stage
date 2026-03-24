@@ -21,7 +21,7 @@ useSeoMeta({
 <template>
   <div class="flex h-screen overflow-hidden bg-white dark:bg-neutral-950">
     <Sidebar :is-open="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
-    <div class="flex flex-col flex-1 transition-all duration-300 ease-in-out w-full" :class="{ 'w-60': isSidebarOpen, 'w-0': !isSidebarOpen }">
+    <div class="flex flex-col flex-1 transition-all duration-300 ease-in-out w-full" :class="{ 'w-60': isSidebarOpen, 'w-16': !isSidebarOpen }">
       <Header :is-open="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
       <main class="flex-1 p-6 overflow-y-auto">
         <NuxtPage />

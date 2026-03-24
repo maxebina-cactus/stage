@@ -1,14 +1,15 @@
 <template>
-  <aside class="h-screen flex flex-col bg-white dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800" :class="{ 'w-60': isOpen, 'w-0': !isOpen }">
-    <div class="px-4 pt-6 pb-2">
-      <AppLogo class="h-8 w-auto text-neutral-900 dark:text-white" />
+  <aside class="h-screen flex flex-col bg-white dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800" :class="{ 'w-60': isOpen, 'w-16': !isOpen }">
+    <div class="flex justify-start px-4" :class="{ 'justify-center p-0': !isOpen }">
+      <AppLogo v-if="isOpen" class="h-8 w-auto text-neutral-900 dark:text-white" />
+      <img v-else src="/stage-logo-s.svg" class="h-8 w-8" alt="Stage Logo Pequeno" />
     </div>
 
-    <div class="flex-1 px-4 mt-2 overflow-y-auto">
+    <div v-show="isOpen" class="flex-1 px-4 mt-2 overflow-y-auto">
       <UNavigationMenu orientation="vertical" :items="links" class="w-full" />
     </div>
 
-    <div class="mt-auto p-4 border-t border-neutral-200 dark:border-neutral-800 flex justify-end items-center gap-2">
+    <div v-show="isOpen" class="mt-auto p-4 border-t border-neutral-200 dark:border-neutral-800 flex justify-end items-center gap-2">
       <UButton
         color="neutral"
         variant="ghost"
