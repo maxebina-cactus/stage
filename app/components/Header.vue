@@ -1,47 +1,44 @@
 <template>
-  <header class="h-16 w-full flex items-center justify-between px-6 bg-[#1D1D21] border-b border-[#1D293D]">
-    <div class="flex gap-4">
+  <header class="h-16 min-h-[64px] w-full flex items-center justify-between px-6 bg-white dark:bg-[#1D1D21] border-b border-neutral-200 dark:border-[#1D293D]">
+    
+    <div class="flex items-center gap-4">
       <UButton
-        color="neutral"
         variant="ghost"
+        color="neutral"
         icon="i-lucide-panel-left-close"
         @click="toggleSidebar"
-        class="text-[#E4E4E7]"
+        class="text-neutral-500 dark:text-neutral-400"
       />
-      <span class="text-sm font-medium text-[#E4E4E7]">Dashboard</span>
+      <span class="text-sm font-medium text-neutral-900 dark:text-[#E4E4E7] font-sans">
+        Dashboard
+      </span>
     </div>
 
-    <div class="flex items-center gap-2">
-      <div class="p-3 border border-[#1D293D] rounded-full cursor-pointer">
-        <UAvatar src="/avatar.jpg" size="sm" />
-      </div>
-      <UDropdownMenu :items="userMenu" class="cursor-pointer">
-        <UAvatar src="/avatar.jpg" size="sm" class="cursor-pointer border border-[#1D293D]" />
+    <div class="flex items-center h-full">
+      <UDropdownMenu :items="userMenu">
+        <UAvatar 
+          src="/avatar.jpg" 
+          size="sm" 
+          class="cursor-pointer ring-1 ring-neutral-200 dark:ring-[#1D293D] hover:ring-primary-500 transition-all" 
+        />
       </UDropdownMenu>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-
-const userMenu = ref([
-  {
-    label: 'Idioma',
-    icon: 'i-lucide-globe'
-  },
-  {
-    label: 'Configurações',
-    icon: 'i-lucide-settings'
-  },
-  {
-    label: 'Sair',
-    icon: 'i-lucide-log-out',
-    color: 'error'
-  }
-])
+// Mantenha o script anterior igual
+const userMenu = [
+  [
+    { label: 'Idioma', icon: 'i-lucide-globe' },
+    { label: 'Configurações', icon: 'i-lucide-settings' }
+  ],
+  [
+    { label: 'Sair', icon: 'i-lucide-log-out', color: 'error' as const }
+  ]
+]
 
 const toggleSidebar = () => {
-  // Lógica para alternar a sidebar
+  console.log('Toggle Sidebar')
 }
 </script>

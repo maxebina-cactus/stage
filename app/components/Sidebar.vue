@@ -14,7 +14,7 @@
         variant="ghost"
         class="w-full flex items-center justify-start gap-3 px-2 py-2"
       >
-        <div class="flex flex-col items-start overflow-hidden flex-1 gap-4">
+        <div class="flex flex-row items-center overflow-hidden flex-1 gap-4">
           <UAvatar src="/avatar.jpg" size="xs" />
           <span class="text-sm font-medium truncate w-full text-neutral-900 dark:text-white">Administrador - Administrador</span>
         </div>
