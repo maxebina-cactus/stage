@@ -1,14 +1,14 @@
 <template>
-  <aside class="w-60 h-screen border-r border-neutral-200 dark:border-neutral-800 flex flex-col justify-between p-4 bg-white dark:bg-neutral-900">
-    <div class="mb-6">
+  <aside class="w-60 h-screen flex flex-col bg-white dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800">
+    <div class="px-4 pt-6 pb-2">
       <h1 class="text-xl font-bold text-neutral-900 dark:text-white">Meu App</h1>
     </div>
 
-    <div class="flex-1 gap-2 p-4">
+    <div class="flex-1 px-4 mt-2">
       <UNavigationMenu orientation="vertical" :items="links" class="w-full" />
     </div>
 
-    <div class="mt-auto pt-4 border-t border-neutral-200 dark:border-neutral-800">
+    <div class="mt-auto p-4 border-t border-neutral-200 dark:border-neutral-800">
       <UDropdownMenu :items="userMenu" class="w-full">
         <UButton
           color="neutral"
