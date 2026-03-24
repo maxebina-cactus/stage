@@ -1,7 +1,7 @@
 <template>
   <aside class="w-60 h-screen flex flex-col bg-white dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800">
     <div class="px-4 pt-6 pb-2">
-      <h1 class="text-xl font-bold text-neutral-900 dark:text-white">Meu App</h1>
+      <AppLogo class="h-8 w-auto text-neutral-900 dark:text-white" />
     </div>
 
     <div class="flex-1 px-4 mt-2">
@@ -24,6 +24,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import AppLogo from '@/components/AppLogo.vue'
 
 const links = ref([
   [
