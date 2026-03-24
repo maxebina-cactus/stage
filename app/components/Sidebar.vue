@@ -1,10 +1,10 @@
 <template>
-  <aside class="w-60 h-screen flex flex-col bg-white dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800">
+  <aside class="h-screen flex flex-col bg-white dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800" :class="{ 'w-60': isOpen, 'w-0': !isOpen }">
     <div class="px-4 pt-6 pb-2">
       <AppLogo class="h-8 w-auto text-neutral-900 dark:text-white" />
     </div>
 
-    <div class="flex-1 px-4 mt-2">
+    <div class="flex-1 px-4 mt-2 overflow-y-auto">
       <UNavigationMenu orientation="vertical" :items="links" class="w-full" />
     </div>
 
@@ -18,7 +18,7 @@
           <UAvatar src="/avatar.jpg" size="xs" />
           <span class="text-sm font-medium truncate w-full text-neutral-900 dark:text-white">Administrador - Administrador</span>
         </div>
-        <UIcon name="i-lucide-chevrons-up-down" class="w-4 h-4 text-neutral-400 shrink-0" />
+        <UIcon :name="isOpen ? 'i-lucide-panel-left-close' : 'i-lucide-panel-left-open'" class="w-4 h-4 text-neutral-400 shrink-0" />
       </UButton>
     </div>
   </aside>
@@ -27,6 +27,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import AppLogo from '@/components/AppLogo.vue'
+
+const isOpen = useState('sidebar', () => true)
 
 const links = ref([
   [
@@ -42,7 +44,11 @@ const userMenu = ref([
     { label: 'Configurações', icon: 'i-lucide-settings' }
   ],
   [
-    { label: 'Sair', icon: 'i-lucide-log-out', color: 'error' }
+    { label: 'Sair', icon: 'i-lucide-log-out', color: 'error' as const }
   ]
 ])
+
+const toggleSidebar = () => {
+  isOpen.value = !isOpen.value
+}
 </script>

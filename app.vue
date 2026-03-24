@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 import Sidebar from '~/components/Sidebar.vue'
 
+const isSidebarOpen = useState('sidebar', () => true)
+
 const title = 'Nuxt Starter Template'
 const description = 'A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours.'
 
@@ -17,14 +19,13 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="flex h-screen">
-    <Sidebar />
-    <div class="flex flex-col flex-1">
-      <UDashboardNavbar title="Dashboard" />
-      <div class="flex-1 p-4">
-        <h1 class="text-2xl font-bold">Bem-vindo ao Stage</h1>
-        <p class="mt-2 text-gray-600">Este é um exemplo de conteúdo principal.</p>
-      </div>
+  <div class="flex h-screen overflow-hidden bg-white dark:bg-neutral-950">
+    <Sidebar :is-open="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
+    <div class="flex flex-col flex-1 transition-all duration-300 ease-in-out w-full" :class="{ 'w-60': isSidebarOpen, 'w-0': !isSidebarOpen }">
+      <Header :is-open="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
+      <main class="flex-1 p-6 overflow-y-auto">
+        <NuxtPage />
+      </main>
     </div>
   </div>
 </template>
