@@ -1,14 +1,15 @@
 <template>
-  <aside class="w-64 h-screen border-r border-neutral-200 dark:border-neutral-800 flex flex-col justify-between p-4 bg-white dark:bg-neutral-900">
-    <div class="mb-6">
-      <h1 class="text-xl font-bold text-neutral-900 dark:text-white">Meu App</h1>
+  <aside :class="{ 'w-64': isOpen, 'w-16': !isOpen }" class="h-screen border-r border-neutral-200 dark:border-neutral-800 flex flex-col justify-between p-4 bg-white dark:bg-neutral-900 transition-all duration-300 ease-in-out">
+    <div :class="{ 'pt-6': isOpen, 'flex justify-center': !isOpen }" class="mb-6">
+      <h1 v-if="isOpen" class="text-xl font-bold text-neutral-900 dark:text-white">Stage</h1>
+      <img v-else src="/stage-logo-s.svg" alt="Logo" class="w-10 h-10" />
     </div>
 
     <div class="flex-1 space-y-1">
       <UNavigationMenu orientation="vertical" :items="links" class="w-full flex items-center gap-3 text-sm font-medium" />
     </div>
 
-    <div class="-mx-4 px-4 pt-4 border-t border-neutral-200 dark:border-neutral-800">
+    <div v-if="isOpen" class="-mx-4 px-4 pt-4 border-t border-neutral-200 dark:border-neutral-800">
       <UDropdownMenu :items="userMenu" class="w-full">
         <UButton
           color="neutral"
@@ -24,6 +25,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+
+const isOpen = useState('sidebar', () => true)
 
 const links = ref([
   {

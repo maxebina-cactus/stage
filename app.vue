@@ -4,7 +4,7 @@ import Sidebar from '~/components/Sidebar.vue'
 
 const isSidebarOpen = useState('sidebar', () => true)
 
-const title = 'Nuxt Starter Template'
+const title = 'Stage'
 const description = 'A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours.'
 
 useSeoMeta({
@@ -23,7 +23,7 @@ useSeoMeta({
     <Sidebar :is-open="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
     <div class="flex flex-col flex-1 transition-all duration-300 ease-in-out w-full" :class="{ 'w-60': isSidebarOpen, 'w-16': !isSidebarOpen }">
       <Header :is-open="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
-      <main class="flex-1 p-6 overflow-y-auto">
+      <main class="flex-1 p-6 overflow-y-auto whitespace-nowrap">
         <NuxtPage />
       </main>
     </div>

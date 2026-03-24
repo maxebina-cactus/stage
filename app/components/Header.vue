@@ -8,7 +8,7 @@
         @click="toggleSidebar"
         :class="{ 'text-neutral-500 dark:text-neutral-400': !isOpen, 'text-white dark:text-white': isOpen }"
       />
-      <span class="text-sm font-medium text-neutral-900 dark:text-[#E4E4E7] font-sans">
+      <span v-if="isOpen" class="text-sm font-medium text-neutral-900 dark:text-[#E4E4E7] font-sans">
         Dashboard
       </span>
     </div>
