@@ -9,16 +9,18 @@
     </div>
 
     <div class="mt-auto p-4 border-t border-neutral-200 dark:border-neutral-800 flex justify-end items-center gap-2">
-      <UAvatar src="/avatar.jpg" size="2xs" />
-      <div class="flex flex-col text-sm text-neutral-500 dark:text-neutral-400 truncate flex-1 text-left">
-        Administrador - Administrador
-      </div>
+      <UAvatar src="/avatar.jpg" size="xs" />
       <UButton
         color="neutral"
         variant="ghost"
-        class="w-full h-12 px-4 pb-4 justify-start"
-        icon="i-lucide-chevrons-up-down"
-      />
+        class="w-full flex items-center justify-start gap-3 px-2 py-2"
+      >
+        <div class="flex flex-col items-start overflow-hidden flex-1">
+          <span class="text-sm font-medium truncate w-full text-neutral-900 dark:text-white">Administrador</span>
+          <span class="text-xs text-neutral-500 truncate w-full">Administrador</span>
+        </div>
+        <UIcon name="i-lucide-chevrons-up-down" class="w-4 h-4 text-neutral-400 shrink-0" />
+      </UButton>
     </div>
   </aside>
 </template>
