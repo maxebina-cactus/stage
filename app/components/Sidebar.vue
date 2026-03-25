@@ -9,7 +9,9 @@ const isOpen = useState('sidebar', () => true)
 const items = [
   { label: 'Dashboard', icon: 'i-lucide-layout-dashboard', to: '/' },
   { label: 'Jornada', icon: 'i-lucide-map', to: '/jornada' },
-  { label: 'Relatórios', icon: 'i-lucide-bar-chart-2', to: '/relatorios' }
+  { label: 'Relatórios', icon: 'i-lucide-bar-chart-2', to: '/relatorios' },
+  { label: 'Parceiros', icon: 'i-lucide-handshake', to: '/parceiros' },
+  { label: 'Tabs', icon: 'i-lucide-layout', to: '/tabs' }
 ]
 
 const user = {
