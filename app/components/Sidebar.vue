@@ -35,7 +35,8 @@ const links = ref([
   [
     { label: 'Dashboard', icon: 'i-lucide-layout-dashboard' },
     { label: 'Jornada', icon: 'i-lucide-map' },
-    { label: 'Relatórios', icon: 'i-lucide-bar-chart' }
+    { label: 'Relatórios', icon: 'i-lucide-bar-chart' },
+    { label: 'Parceiros', icon: 'i-lucide-handshake' }
   ]
 ])
 

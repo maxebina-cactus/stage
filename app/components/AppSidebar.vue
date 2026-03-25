@@ -17,6 +17,11 @@ const items = [
     label: 'Relatórios',
     icon: 'i-lucide-bar-chart-2',
     to: '/relatorios'
+  },
+  {
+    label: 'Parceiros',
+    icon: 'i-lucide-handshake',
+    to: '/parceiros'
   }
 ]
 
