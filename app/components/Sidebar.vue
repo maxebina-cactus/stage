@@ -11,7 +11,8 @@ const items = [
   { label: 'Jornada', icon: 'i-lucide-map', to: '/jornada' },
   { label: 'Relatórios', icon: 'i-lucide-bar-chart-2', to: '/relatorios' },
   { label: 'Parceiros', icon: 'i-lucide-handshake', to: '/parceiros' },
-  { label: 'Tabs', icon: 'i-lucide-layout', to: '/tabs' }
+  { label: 'Tabs', icon: 'i-lucide-layout', to: '/tabs' },
+  { label: 'Usuários', icon: 'i-lucide-users', to: '/usuarios' }
 ]
 
 const user = {
