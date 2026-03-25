@@ -1,44 +1,39 @@
 <template>
-  <header class="h-16 min-h-[64px] w-full flex items-center justify-between px-6 bg-white dark:bg-[#1D1D21] border-b border-neutral-200 dark:border-[#1D293D]">
+  <header class="h-16 min-h-[64px] w-full flex items-center justify-between px-6 bg-(--ui-bg) border-b border-(--ui-border)">
     <div class="flex items-center gap-4">
       <UButton
         variant="ghost"
         color="neutral"
-        icon="i-lucide-panel-left-close"
+        :icon="isOpen ? 'i-lucide-panel-left-close' : 'i-lucide-panel-left-open'"
         @click="toggleSidebar"
-        :class="{ 'text-neutral-500 dark:text-neutral-400': !isOpen, 'text-white dark:text-white': isOpen }"
+        class="text-(--ui-text-muted) hover:text-(--ui-text)"
       />
-      <span v-if="isOpen" class="text-sm font-medium text-neutral-900 dark:text-[#E4E4E7] font-sans">
-        Dashboard
+      <span class="text-sm font-medium text-(--ui-text) font-sans">
+        {{ pageTitle }}
       </span>
     </div>
 
-    <div class="flex items-center h-full">
-      <UDropdownMenu :items="userMenu">
-        <UAvatar 
-          src="/avatar.jpg" 
-          size="sm" 
-          class="cursor-pointer ring-1 ring-neutral-200 dark:ring-[#1D293D] hover:ring-primary-500 transition-all" 
-        />
-      </UDropdownMenu>
+    <!-- Área de ações — futuros botões aqui -->
+    <div class="flex items-center gap-2 h-full">
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const isOpen = useState('sidebar', () => true)
 
-const userMenu = [
-  [
-    { label: 'Idioma', icon: 'i-lucide-globe' },
-    { label: 'Configurações', icon: 'i-lucide-settings' }
-  ],
-  [
-    { label: 'Sair', icon: 'i-lucide-log-out', color: 'error' as const }
-  ]
-]
+const pageTitles: Record<string, string> = {
+  '/': 'Dashboard',
+  '/jornada': 'Jornada',
+  '/relatorios': 'Relatórios',
+  '/settings': 'Configurações',
+}
+
+const pageTitle = computed(() => pageTitles[route.path] ?? route.path)
 
 const toggleSidebar = () => {
   isOpen.value = !isOpen.value

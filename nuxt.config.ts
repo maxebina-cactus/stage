@@ -5,8 +5,9 @@ export default defineNuxtConfig({
     '@nuxt/ui'
   ],
 
+  // 1. Desativamos o painel flutuante das DevTools
   devtools: {
-    enabled: true
+    enabled: false
   },
 
   css: ['~/assets/css/main.css'],
@@ -24,13 +25,6 @@ export default defineNuxtConfig({
         braceStyle: '1tbs'
       }
     }
-  },
-  vite: {
-    optimizeDeps: {
-      include: [
-        '@vue/devtools-core',
-        '@vue/devtools-kit'
-      ]
-    }
   }
+  // 2. Removi o bloco 'vite' que estava forçando o carregamento de ferramentas extras
 })
