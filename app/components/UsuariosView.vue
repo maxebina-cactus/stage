@@ -40,21 +40,29 @@ const kpiRow2 = [
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 p-6">
+  <div class="flex flex-col gap-3 p-6 bg-(--ui-bg)">
 
     <!-- ── KPI Row 1 (4 cols) ──────────────────────────────────── -->
     <div class="grid grid-cols-4 gap-3">
       <div
         v-for="kpi in kpiRow1" :key="kpi.label"
-        class="rounded-xl border border-(--ui-border) bg-(--ui-bg-elevated) px-4 py-4 flex flex-col gap-1.5"
+        class="rounded-xl border border-(--ui-border) bg-(--ui-bg-elevated) px-4 py-4 flex flex-col gap-2"
       >
-        <div class="flex items-center justify-between">
-          <span class="text-xs text-(--ui-text-muted)">{{ kpi.label }}</span>
+        <div class="flex items-start justify-between gap-2">
+          <span class="text-xs text-(--ui-text-muted) leading-tight">{{ kpi.label }}</span>
           <span
-            class="flex items-center justify-center w-7 h-7 rounded-lg"
-            style="background-color: color-mix(in oklch, var(--ui-primary) 12%, transparent)"
+            class="flex items-center justify-center w-8 h-8 rounded-lg shrink-0"
+            :style="{
+              backgroundColor: kpi.positive
+                ? 'color-mix(in oklch, var(--ui-primary) 14%, transparent)'
+                : 'color-mix(in oklch, var(--ui-color-error-500) 14%, transparent)'
+            }"
           >
-            <UIcon :name="kpi.icon" class="w-4 h-4" style="color: var(--ui-primary)" />
+            <UIcon
+              :name="kpi.icon"
+              class="w-4 h-4"
+              :style="{ color: kpi.positive ? 'var(--ui-primary)' : 'var(--ui-color-error-500)' }"
+            />
           </span>
         </div>
         <span class="text-2xl font-bold tracking-tight text-(--ui-text)">{{ kpi.value }}</span>
@@ -72,13 +80,13 @@ const kpiRow2 = [
     <div class="grid grid-cols-3 gap-3">
       <div
         v-for="kpi in kpiRow2" :key="kpi.label"
-        class="rounded-xl border border-(--ui-border) bg-(--ui-bg-elevated) px-4 py-4 flex flex-col gap-1.5"
+        class="rounded-xl border border-(--ui-border) bg-(--ui-bg-elevated) px-4 py-4 flex flex-col gap-2"
       >
-        <div class="flex items-center justify-between">
-          <span class="text-xs text-(--ui-text-muted)">{{ kpi.label }}</span>
+        <div class="flex items-start justify-between gap-2">
+          <span class="text-xs text-(--ui-text-muted) leading-tight">{{ kpi.label }}</span>
           <span
-            class="flex items-center justify-center w-7 h-7 rounded-lg"
-            style="background-color: color-mix(in oklch, var(--ui-primary) 12%, transparent)"
+            class="flex items-center justify-center w-8 h-8 rounded-lg shrink-0"
+            style="background-color: color-mix(in oklch, var(--ui-primary) 14%, transparent)"
           >
             <UIcon :name="kpi.icon" class="w-4 h-4" style="color: var(--ui-primary)" />
           </span>
