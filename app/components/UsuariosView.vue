@@ -3,9 +3,9 @@ import { ref, nextTick, onMounted, watch } from 'vue'
 
 // Navigation tabs (sliding pill)
 const navTabs = [
-  { id: 'geral', label: 'Visão Geral', icon: 'i-lucide-bar-chart-2' },
-  { id: 'ciclo', label: 'Ciclo de Vida e Retenção', icon: 'i-lucide-heart' },
-  { id: 'financeiro', label: 'Performance Financeira', icon: 'i-lucide-dollar-sign' },
+  { id: 'geral', label: 'Visão Geral', icon: 'i-lucide-chart-column' },
+  { id: 'ciclo', label: 'Ciclo de Vida e Retenção', icon: 'i-lucide-heart-pulse' },
+  { id: 'financeiro', label: 'Performance Financeira', icon: 'i-lucide-wallet' },
 ]
 const activeTab = ref('geral')
 const tabEls = ref<HTMLElement[]>([])
@@ -107,7 +107,7 @@ const kpiRow2 = [
       <!-- Pill indicator -->
       <div
         class="absolute top-1 bottom-1 rounded-lg transition-all duration-200 ease-in-out"
-        style="background-color: var(--ui-color-neutral-700)"
+        style="background-color: var(--ui-primary)"
         :style="{ width: pillStyle.width, left: pillStyle.left }"
       />
       <button
@@ -116,14 +116,14 @@ const kpiRow2 = [
         :ref="el => (tabEls[i] = el as HTMLElement)"
         class="relative z-10 flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-150 select-none cursor-pointer"
         :style="activeTab === tab.id
-          ? { color: 'var(--ui-color-neutral-50)' }
+          ? { color: 'var(--ui-color-neutral-950)' }
           : { color: 'var(--ui-color-neutral-400)' }"
         @click="activeTab = tab.id"
       >
         <UIcon
           :name="tab.icon"
           class="w-4 h-4 shrink-0"
-          :style="activeTab === tab.id ? { color: 'var(--ui-primary)' } : {}"
+          :style="activeTab === tab.id ? { color: 'var(--ui-color-neutral-950)' } : {}"
         />
         {{ tab.label }}
       </button>
