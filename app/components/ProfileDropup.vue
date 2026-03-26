@@ -133,7 +133,7 @@ const idiomas = [
   { label: 'Español', value: 'es' }
 ]
 
-const toggleSection = (s: string) => expanded[s] = !expanded[s]
+const toggleSection = (s: keyof typeof expanded) => { expanded[s] = !expanded[s] }
 const setTema = (v: string) => temaAtivo.value = v
 const setIdioma = (v: string) => idiomaAtivo.value = v
 </script>

@@ -1,41 +1,54 @@
 <template>
-  <header class="h-16 min-h-[64px] w-full flex items-center justify-between px-6 border-b border-(--ui-border)" style="background-color: #0D1117">
-    <div class="flex items-center gap-4">
+  <header class="h-14 min-h-14 w-full flex items-center justify-between px-4 border-b border-(--ui-border) bg-(--ui-bg-elevated) shrink-0">
+    <div class="flex items-center gap-3">
       <UButton
         variant="ghost"
         color="neutral"
+        size="sm"
         :icon="isOpen ? 'i-lucide-panel-left-close' : 'i-lucide-panel-left-open'"
-        @click="toggleSidebar"
-        class="text-(--ui-text-muted) hover:text-(--ui-text)"
+        @click="isOpen = !isOpen"
       />
-      <span class="text-sm font-medium text-(--ui-text) font-sans">
-        {{ pageTitle }}
-      </span>
+      <span class="text-sm font-semibold text-(--ui-text)">{{ pageTitle }}</span>
     </div>
 
-    <!-- Área de ações — futuros botões aqui -->
-    <div class="flex items-center gap-2 h-full">
+    <div class="flex items-center gap-2">
+      <UTooltip text="Notifications" :shortcuts="['N']">
+        <UButton variant="ghost" color="neutral" size="sm" class="relative">
+          <UChip color="error" inset size="xs">
+            <UIcon name="i-lucide-bell" class="w-4 h-4" />
+          </UChip>
+        </UButton>
+      </UTooltip>
+
+      <UDropdownMenu :items="newItems">
+        <UButton icon="i-lucide-plus" size="sm" class="rounded-full" />
+      </UDropdownMenu>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-
 const route = useRoute()
 const isOpen = useState('sidebar', () => true)
 
 const pageTitles: Record<string, string> = {
-  '/': 'Dashboard',
-  '/jornada': 'Jornada',
-  '/relatorios': 'Relatórios',
-  '/settings': 'Configurações',
+  '/': 'Home',
+  '/inbox': 'Inbox',
+  '/customers': 'Customers',
+  '/settings': 'Settings',
+  '/usuarios': 'Usuários',
+  '/tabs': 'Tabs',
 }
 
-const pageTitle = computed(() => pageTitles[route.path] ?? route.path)
+const pageTitle = computed(() => {
+  for (const [path, title] of Object.entries(pageTitles)) {
+    if (path === '/' ? route.path === '/' : route.path.startsWith(path)) return title
+  }
+  return 'Dashboard'
+})
 
-const toggleSidebar = () => {
-  isOpen.value = !isOpen.value
-}
+const newItems = [[
+  { label: 'New mail', icon: 'i-lucide-send', to: '/inbox' },
+  { label: 'New customer', icon: 'i-lucide-user-plus', to: '/customers' },
+]]
 </script>
