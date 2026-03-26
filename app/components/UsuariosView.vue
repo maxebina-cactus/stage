@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { ref, nextTick, onMounted, watch } from 'vue'
 
-const dateRange = '11 de mar. de 2026 – 25 de mar. de 2026'
-
 // Navigation tabs (sliding pill)
 const navTabs = [
   { id: 'geral', label: 'Visão Geral', icon: 'i-lucide-bar-chart-2' },
@@ -43,17 +41,6 @@ const kpiRow2 = [
 
 <template>
   <div class="flex flex-col gap-4 p-6">
-
-    <!-- ── Date Range ─────────────────────────────────────────── -->
-    <div>
-      <button
-        class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-(--ui-border) bg-(--ui-bg-elevated) text-sm text-(--ui-text) hover:bg-(--ui-bg-accented) transition-colors"
-      >
-        <UIcon name="i-lucide-calendar" class="w-4 h-4 text-(--ui-text-muted)" />
-        <span>{{ dateRange }}</span>
-        <UIcon name="i-lucide-chevron-down" class="w-4 h-4 text-(--ui-text-muted)" />
-      </button>
-    </div>
 
     <!-- ── KPI Row 1 (4 cols) ──────────────────────────────────── -->
     <div class="grid grid-cols-4 gap-3">
