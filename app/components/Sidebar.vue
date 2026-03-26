@@ -13,13 +13,27 @@ watch(
 const isActive = (to: string, exact = false) =>
   exact ? route.path === to : (to === '/' ? route.path === '/' : route.path.startsWith(to))
 
-const user = { name: 'Benjamin Canac', avatar: '' }
+const user = { name: 'Benjamin Canac', role: 'Administrador', avatar: '' }
+const dropupOpen = ref(false)
+const footerRef = ref<HTMLElement | null>(null)
+const dropupStyle = ref<Record<string, string>>({})
+
+function toggleDropup() {
+  if (!dropupOpen.value && footerRef.value) {
+    const rect = footerRef.value.getBoundingClientRect()
+    dropupStyle.value = {
+      bottom: `${window.innerHeight - rect.top}px`,
+      left: `${rect.left}px`,
+      width: `${Math.max(rect.width, 256)}px`,
+    }
+  }
+  dropupOpen.value = !dropupOpen.value
+}
 </script>
 
 <template>
   <aside
     class="h-screen flex flex-col shrink-0 border-r border-(--ui-border) transition-all duration-200 overflow-hidden"
-    style="background-color: color-mix(in oklab, var(--ui-bg-elevated) 25%, transparent)"
     :class="isOpen ? 'w-[220px]' : 'w-[56px]'"
   >
     <!-- Logo -->
@@ -160,10 +174,11 @@ const user = { name: 'Benjamin Canac', avatar: '' }
     </div>
 
     <!-- User footer -->
-    <div class="shrink-0 border-t border-(--ui-border) p-3">
+    <div ref="footerRef" class="shrink-0 border-t border-(--ui-border) p-3">
       <button
         class="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-sm text-(--ui-text-toned) hover:text-(--ui-text) hover:bg-(--ui-bg-accented) transition-colors focus:outline-none"
-        :class="!isOpen && 'justify-center'"
+        :class="[!isOpen && 'justify-center', dropupOpen && 'bg-(--ui-bg-accented) text-(--ui-text)']"
+        @click="toggleDropup"
       >
         <UAvatar
           size="xs"
@@ -178,4 +193,16 @@ const user = { name: 'Benjamin Canac', avatar: '' }
       </button>
     </div>
   </aside>
+
+  <Teleport to="body">
+    <div v-if="dropupOpen" class="fixed inset-0 z-40" @click="dropupOpen = false" />
+    <!-- Wrapper fixo com h-0 para que o absolute bottom-full do ProfileDropup funcione fora do aside overflow-hidden -->
+    <div v-if="dropupOpen" class="fixed z-50 h-0" :style="dropupStyle">
+      <ProfileDropup
+        :user="user"
+        @configuracoes="dropupOpen = false"
+        @sair="dropupOpen = false"
+      />
+    </div>
+  </Teleport>
 </template>
