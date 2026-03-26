@@ -40,10 +40,10 @@ const kpiRow2 = [
 </script>
 
 <template>
-  <div class="flex flex-col gap-3 p-6">
+  <div class="flex flex-col gap-5 p-6">
 
     <!-- ── KPI Row 1 (4 cols) ──────────────────────────────────── -->
-    <div class="grid grid-cols-4 gap-3">
+    <div class="grid grid-cols-4 gap-4">
       <div
         v-for="kpi in kpiRow1" :key="kpi.label"
         class="rounded-xl px-4 py-4 flex flex-col gap-2" style="background-color: #1A2235; border: 1px solid #1E2D45"
@@ -77,7 +77,7 @@ const kpiRow2 = [
     </div>
 
     <!-- ── KPI Row 2 (3 cols alinhadas com as 3 primeiras de cima) -->
-    <div class="grid grid-cols-4 gap-3">
+    <div class="grid grid-cols-4 gap-4">
       <div
         v-for="kpi in kpiRow2" :key="kpi.label"
         class="rounded-xl px-4 py-4 flex flex-col gap-2" style="background-color: #1A2235; border: 1px solid #1E2D45"
@@ -143,7 +143,7 @@ const kpiRow2 = [
       <div v-if="activeTab === 'geral'" :key="activeTab" class="flex flex-col gap-6">
 
         <!-- Section: ATIVIDADE -->
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-4">
           <!-- Section header -->
           <div class="flex items-center gap-3">
             <div class="w-0.5 h-4 rounded-full" style="background-color: var(--ui-primary)" />
@@ -187,7 +187,7 @@ const kpiRow2 = [
           </div>
 
           <!-- Atividade por Dia e Hora + Usuários Ativos por Região — half width -->
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-2 gap-4">
 
             <!-- Atividade por Dia e Hora -->
             <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: #1A2235; border: 1px solid #1E2D45">
@@ -230,14 +230,14 @@ const kpiRow2 = [
         </div>
 
         <!-- Section: ARPU & ARPU -->
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-4">
           <div class="flex items-center gap-3">
             <div class="w-0.5 h-4 rounded-full" style="background-color: var(--ui-primary)" />
             <span class="text-xs font-semibold tracking-widest text-(--ui-text-muted) uppercase">ARPU &amp; ARPU</span>
             <div class="flex-1 h-px bg-(--ui-border)" />
           </div>
 
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-2 gap-4">
 
             <!-- ARPU vs ARPU ao Longo do Tempo -->
             <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: #1A2235; border: 1px solid #1E2D45">
@@ -279,7 +279,7 @@ const kpiRow2 = [
       </div>
 
       <!-- ── CICLO DE VIDA E RETENÇÃO ─────────────────────────── -->
-      <div v-else-if="activeTab === 'ciclo'" :key="activeTab" class="flex flex-col gap-3">
+      <div v-else-if="activeTab === 'ciclo'" :key="activeTab" class="flex flex-col gap-4">
         <div class="flex flex-col items-center justify-center py-24 gap-3 rounded-xl" style="background-color: #1A2235; border: 1px solid #1E2D45">
           <UIcon name="i-lucide-heart" class="w-10 h-10 text-(--ui-text-dimmed)" />
           <span class="text-sm text-(--ui-text-dimmed)">Ciclo de Vida e Retenção — em breve</span>
@@ -287,7 +287,7 @@ const kpiRow2 = [
       </div>
 
       <!-- ── PERFORMANCE FINANCEIRA ──────────────────────────── -->
-      <div v-else-if="activeTab === 'financeiro'" :key="activeTab" class="flex flex-col gap-3">
+      <div v-else-if="activeTab === 'financeiro'" :key="activeTab" class="flex flex-col gap-4">
         <div class="flex flex-col items-center justify-center py-24 gap-3 rounded-xl" style="background-color: #1A2235; border: 1px solid #1E2D45">
           <UIcon name="i-lucide-dollar-sign" class="w-10 h-10 text-(--ui-text-dimmed)" />
           <span class="text-sm text-(--ui-text-dimmed)">Performance Financeira — em breve</span>

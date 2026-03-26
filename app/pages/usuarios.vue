@@ -5,7 +5,7 @@
       <DateRangeFilter />
     </div>
     <!-- Conteúdo com scroll próprio -->
-    <div class="flex-1 overflow-y-auto" style="background-color: #111827">
+    <div class="flex-1 overflow-y-auto" style="background-color: #0B1120">
       <UsuariosView />
     </div>
   </div>
