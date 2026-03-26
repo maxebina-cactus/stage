@@ -76,8 +76,8 @@ const kpiRow2 = [
       </div>
     </div>
 
-    <!-- ── KPI Row 2 (3 cols) ──────────────────────────────────── -->
-    <div class="grid grid-cols-3 gap-3">
+    <!-- ── KPI Row 2 (3 cols alinhadas com as 3 primeiras de cima) -->
+    <div class="grid grid-cols-4 gap-3">
       <div
         v-for="kpi in kpiRow2" :key="kpi.label"
         class="rounded-xl px-4 py-4 flex flex-col gap-2" style="background-color: #1A2235; border: 1px solid #1E2D45"
