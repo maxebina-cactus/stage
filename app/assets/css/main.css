@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import "tailwindcss" theme(static);
 @import "@nuxt/ui";
 
 @theme static {
@@ -15,24 +15,4 @@
   --color-green-800: #016538;
   --color-green-900: #0A5331;
   --color-green-950: #052E16;
-}
-
-/* Tema Cactus — replica exatamente o backoffice-stage4 */
-:root {
-  --ui-primary: #00dc82;
-
-  --ui-bg:           oklch(21%   0.034 264.665);
-  --ui-bg-elevated:  oklch(27.8% 0.033 256.848);
-  --ui-bg-accented:  oklch(37.3% 0.034 259.733);
-
-  --ui-border:       oklch(27.8% 0.033 256.848);
-
-  --ui-text:         oklch(92.8% 0.006 264.531);
-  --ui-text-toned:   oklch(87.2% 0.010 258.338);
-  --ui-text-muted:   oklch(70.7% 0.022 261.325);
-  --ui-text-dimmed:  oklch(55.1% 0.027 264.364);
-}
-
-button, [role="button"] {
-  cursor: pointer;
 }

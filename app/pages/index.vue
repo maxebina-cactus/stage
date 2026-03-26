@@ -1,52 +1,67 @@
 <script setup lang="ts">
-const period = ref<'daily' | 'weekly'>('daily')
+import { sub } from 'date-fns'
+import type { DropdownMenuItem } from '@nuxt/ui'
+import type { Period, Range } from '~/types'
 
-const rangeStart = new Date()
-rangeStart.setDate(rangeStart.getDate() - 14)
-const rangeEnd = new Date()
+const { isNotificationsSlideoverOpen } = useDashboard()
 
-const fmt = (d: Date) =>
-  d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+const items = [[{
+  label: 'New mail',
+  icon: 'i-lucide-send',
+  to: '/inbox'
+}, {
+  label: 'New customer',
+  icon: 'i-lucide-user-plus',
+  to: '/customers'
+}]] satisfies DropdownMenuItem[][]
 
-const dateRangeLabel = `${fmt(rangeStart)} – ${fmt(rangeEnd)}`
-
-const periodItems = computed(() => [[
-  { label: 'Daily', click: () => { period.value = 'daily' } },
-  { label: 'Weekly', click: () => { period.value = 'weekly' } },
-]])
+const range = shallowRef<Range>({
+  start: sub(new Date(), { days: 14 }),
+  end: new Date()
+})
+const period = ref<Period>('daily')
 </script>
 
 <template>
-  <div class="flex flex-col h-full">
-    <!-- Toolbar -->
-    <div class="flex items-center gap-3 px-6 py-3 border-b border-(--ui-border) bg-(--ui-bg-elevated) shrink-0">
-      <UButton
-        variant="outline"
-        color="neutral"
-        size="sm"
-        icon="i-lucide-calendar"
-        trailing-icon="i-lucide-chevron-down"
-      >
-        {{ dateRangeLabel }}
-      </UButton>
+  <UDashboardPanel id="home">
+    <template #header>
+      <UDashboardNavbar title="Home" :ui="{ right: 'gap-3' }">
+        <template #leading>
+          <UDashboardSidebarCollapse />
+        </template>
 
-      <UDropdownMenu :items="periodItems">
-        <UButton
-          variant="outline"
-          color="neutral"
-          size="sm"
-          trailing-icon="i-lucide-chevron-down"
-        >
-          {{ period === 'daily' ? 'Daily' : 'Weekly' }}
-        </UButton>
-      </UDropdownMenu>
-    </div>
+        <template #right>
+          <UTooltip text="Notifications" :shortcuts="['N']">
+            <UButton
+              color="neutral"
+              variant="ghost"
+              square
+              @click="isNotificationsSlideoverOpen = true"
+            >
+              <UChip color="error" inset>
+                <UIcon name="i-lucide-bell" class="size-5 shrink-0" />
+              </UChip>
+            </UButton>
+          </UTooltip>
 
-    <!-- Content -->
-    <div class="flex-1 overflow-y-auto p-6 space-y-4">
-      <HomeStats :period="period" />
-      <HomeChart :period="period" />
-      <HomeSales />
-    </div>
-  </div>
+          <UDropdownMenu :items="items">
+            <UButton icon="i-lucide-plus" size="md" class="rounded-full" />
+          </UDropdownMenu>
+        </template>
+      </UDashboardNavbar>
+
+      <UDashboardToolbar>
+        <template #left>
+          <HomeDateRangePicker v-model="range" class="-ms-1" />
+          <HomePeriodSelect v-model="period" :range="range" />
+        </template>
+      </UDashboardToolbar>
+    </template>
+
+    <template #body>
+      <HomeStats :period="period" :range="range" />
+      <HomeChart :period="period" :range="range" />
+      <HomeSales :period="period" :range="range" />
+    </template>
+  </UDashboardPanel>
 </template>

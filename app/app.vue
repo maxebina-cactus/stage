@@ -1,28 +1,29 @@
-<template>
-  <UApp>
-    <div class="flex h-screen overflow-hidden bg-(--ui-bg)">
-      <Sidebar />
-      <div class="flex-1 flex flex-col min-h-0 overflow-hidden">
-        <Header />
-        <main class="flex-1 min-h-0 overflow-y-auto bg-(--ui-bg)">
-          <NuxtPage />
-        </main>
-      </div>
-    </div>
-  </UApp>
-</template>
-
 <script setup lang="ts">
 const colorMode = useColorMode()
-const color = computed(() => colorMode.value === 'dark' ? '#0f1117' : 'white')
+
+const color = computed(() => colorMode.value === 'dark' ? '#1b1718' : 'white')
 
 useHead({
-  meta: [{ key: 'theme-color', name: 'theme-color', content: color }],
+  meta: [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+    { key: 'theme-color', name: 'theme-color', content: color }
+  ],
+  link: [{ rel: 'icon', href: '/favicon.ico' }],
   htmlAttrs: { lang: 'en' }
 })
 
 useSeoMeta({
-  title: 'Nuxt Dashboard',
-  description: 'A professional dashboard built with Nuxt UI.',
+  title: 'Stage Dashboard',
+  description: 'Stage — painel de controle.'
 })
 </script>
+
+<template>
+  <UApp>
+    <NuxtLoadingIndicator />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </UApp>
+</template>

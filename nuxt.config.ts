@@ -2,19 +2,15 @@
 export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
-    '@nuxt/ui'
+    '@nuxt/ui',
+    '@vueuse/nuxt'
   ],
 
-  // 1. Desativamos o painel flutuante das DevTools
   devtools: {
     enabled: false
   },
 
   css: ['~/assets/css/main.css'],
-
-  routeRules: {
-    '/': { prerender: true }
-  },
 
   compatibilityDate: '2025-01-15',
 
@@ -26,5 +22,4 @@ export default defineNuxtConfig({
       }
     }
   }
-  // 2. Removi o bloco 'vite' que estava forçando o carregamento de ferramentas extras
 })
