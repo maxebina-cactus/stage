@@ -160,22 +160,19 @@ const kpiRow2 = [
               </div>
               <div class="flex items-center gap-2">
                 <!-- DAU/WAU/MAU/Todos filter -->
-                <div
-                  class="inline-flex items-center rounded-lg p-0.5 gap-0.5"
-                  style="background-color: var(--ui-color-neutral-700)"
-                >
+                <div class="inline-flex items-center gap-1.5">
                   <button
                     v-for="m in metrics" :key="m"
-                    class="px-2.5 py-1 rounded-md text-xs font-medium transition-colors duration-150 cursor-pointer"
+                    class="px-3 py-1 rounded-md text-xs font-medium transition-all duration-150 cursor-pointer"
                     :style="activeMetric === m.toLowerCase()
-                      ? { backgroundColor: 'var(--ui-primary)', color: 'var(--ui-color-neutral-950)' }
-                      : { color: 'var(--ui-color-neutral-400)' }"
+                      ? { backgroundColor: 'var(--ui-primary)', color: 'var(--ui-color-neutral-950)', border: '1px solid var(--ui-primary)' }
+                      : { backgroundColor: 'transparent', color: 'var(--ui-primary)', border: '1px solid var(--ui-primary)' }"
                     @click="activeMetric = m.toLowerCase()"
                   >{{ m }}</button>
                 </div>
                 <!-- Fullscreen -->
                 <button class="flex items-center justify-center w-7 h-7 rounded-lg hover:bg-(--ui-bg-accented) transition-colors text-(--ui-text-muted) hover:text-(--ui-text) cursor-pointer">
-                  <UIcon name="i-lucide-maximize-2" class="w-4 h-4" />
+                  <UIcon name="i-lucide-maximize" class="w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -200,7 +197,7 @@ const kpiRow2 = [
                   <span class="text-xs text-(--ui-text-dimmed) ml-4">Volume de usuários ativos por dia da semana e faixa horária</span>
                 </div>
                 <button class="flex items-center justify-center w-7 h-7 rounded-lg hover:bg-(--ui-bg-accented) transition-colors text-(--ui-text-muted) hover:text-(--ui-text) cursor-pointer shrink-0">
-                  <UIcon name="i-lucide-maximize-2" class="w-4 h-4" />
+                  <UIcon name="i-lucide-maximize" class="w-4 h-4" />
                 </button>
               </div>
               <div class="flex flex-col items-center justify-center py-12 gap-2">
@@ -217,7 +214,7 @@ const kpiRow2 = [
                   <span class="text-sm font-medium text-(--ui-text)">Usuários Ativos por Região</span>
                 </div>
                 <button class="flex items-center justify-center w-7 h-7 rounded-lg hover:bg-(--ui-bg-accented) transition-colors text-(--ui-text-muted) hover:text-(--ui-text) cursor-pointer">
-                  <UIcon name="i-lucide-maximize-2" class="w-4 h-4" />
+                  <UIcon name="i-lucide-maximize" class="w-4 h-4" />
                 </button>
               </div>
               <div class="flex flex-col items-center justify-center py-12 gap-2">
@@ -247,7 +244,7 @@ const kpiRow2 = [
                   <span class="text-sm font-medium text-(--ui-text)">ARPU vs ARPU ao Longo do Tempo</span>
                 </div>
                 <button class="flex items-center justify-center w-7 h-7 rounded-lg hover:bg-(--ui-bg-accented) transition-colors text-(--ui-text-muted) hover:text-(--ui-text) cursor-pointer">
-                  <UIcon name="i-lucide-maximize-2" class="w-4 h-4" />
+                  <UIcon name="i-lucide-maximize" class="w-4 h-4" />
                 </button>
               </div>
               <div class="flex flex-col items-center justify-center py-12 gap-2">
@@ -264,7 +261,7 @@ const kpiRow2 = [
                   <span class="text-sm font-medium text-(--ui-text)">ARPU vs ARPU por Segmento</span>
                 </div>
                 <button class="flex items-center justify-center w-7 h-7 rounded-lg hover:bg-(--ui-bg-accented) transition-colors text-(--ui-text-muted) hover:text-(--ui-text) cursor-pointer">
-                  <UIcon name="i-lucide-maximize-2" class="w-4 h-4" />
+                  <UIcon name="i-lucide-maximize" class="w-4 h-4" />
                 </button>
               </div>
               <div class="flex flex-col items-center justify-center py-12 gap-2">
