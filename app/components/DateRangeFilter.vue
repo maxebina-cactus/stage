@@ -9,7 +9,7 @@ const isOpen = ref(false)
   <UButton
     variant="ghost"
     color="neutral"
-    class="gap-1.5 font-normal px-2 h-7"
+    class="gap-1.5 font-normal px-3 py-3"
     @click="isOpen = !isOpen"
   >
     <template #leading>
