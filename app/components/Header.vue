@@ -1,5 +1,5 @@
 <template>
-  <header class="h-16 min-h-[64px] w-full flex items-center justify-between px-6 bg-(--ui-bg) border-b border-(--ui-border)">
+  <header class="h-16 min-h-[64px] w-full flex items-center justify-between px-6 border-b border-(--ui-border)" style="background-color: #0D1117">
     <div class="flex items-center gap-4">
       <UButton
         variant="ghost"

@@ -40,13 +40,13 @@ const kpiRow2 = [
 </script>
 
 <template>
-  <div class="flex flex-col gap-3 p-6 bg-(--ui-bg)">
+  <div class="flex flex-col gap-3 p-6">
 
     <!-- ── KPI Row 1 (4 cols) ──────────────────────────────────── -->
     <div class="grid grid-cols-4 gap-3">
       <div
         v-for="kpi in kpiRow1" :key="kpi.label"
-        class="rounded-xl border border-(--ui-border) bg-(--ui-bg-elevated) px-4 py-4 flex flex-col gap-2"
+        class="rounded-xl px-4 py-4 flex flex-col gap-2" style="background-color: #1A2235; border: 1px solid #1E2D45"
       >
         <div class="flex items-start justify-between gap-2">
           <span class="text-xs text-(--ui-text-muted) leading-tight">{{ kpi.label }}</span>
@@ -80,7 +80,7 @@ const kpiRow2 = [
     <div class="grid grid-cols-3 gap-3">
       <div
         v-for="kpi in kpiRow2" :key="kpi.label"
-        class="rounded-xl border border-(--ui-border) bg-(--ui-bg-elevated) px-4 py-4 flex flex-col gap-2"
+        class="rounded-xl px-4 py-4 flex flex-col gap-2" style="background-color: #1A2235; border: 1px solid #1E2D45"
       >
         <div class="flex items-start justify-between gap-2">
           <span class="text-xs text-(--ui-text-muted) leading-tight">{{ kpi.label }}</span>

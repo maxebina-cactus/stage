@@ -92,8 +92,9 @@ function isActive(to: string) {
 
 <template>
   <aside
-    class="h-screen border-r border-(--ui-border) flex flex-col bg-(--ui-bg) shrink-0 overflow-hidden transition-all duration-200"
+    class="h-screen border-r border-(--ui-border) flex flex-col shrink-0 overflow-hidden transition-all duration-200"
     :class="isOpen ? 'w-60' : 'w-16'"
+    style="background-color: #0D1117"
   >
 
     <div class="shrink-0 overflow-hidden" :class="isOpen ? 'px-4 pt-6 pb-4' : 'flex justify-center pt-3 pb-3'">
