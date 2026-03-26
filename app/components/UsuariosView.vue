@@ -152,7 +152,7 @@ const kpiRow2 = [
           </div>
 
           <!-- Usuários Ativos — full width -->
-          <div class="rounded-xl border border-(--ui-border) bg-(--ui-bg-elevated) p-4 flex flex-col gap-3">
+          <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: #1A2235; border: 1px solid #1E2D45">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full shrink-0" style="background-color: var(--ui-primary)" />
@@ -190,7 +190,7 @@ const kpiRow2 = [
           <div class="grid grid-cols-2 gap-3">
 
             <!-- Atividade por Dia e Hora -->
-            <div class="rounded-xl border border-(--ui-border) bg-(--ui-bg-elevated) p-4 flex flex-col gap-3">
+            <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: #1A2235; border: 1px solid #1E2D45">
               <div class="flex items-start justify-between">
                 <div class="flex flex-col gap-0.5">
                   <div class="flex items-center gap-2">
@@ -210,7 +210,7 @@ const kpiRow2 = [
             </div>
 
             <!-- Usuários Ativos por Região -->
-            <div class="rounded-xl border border-(--ui-border) bg-(--ui-bg-elevated) p-4 flex flex-col gap-3">
+            <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: #1A2235; border: 1px solid #1E2D45">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full shrink-0" style="background-color: var(--ui-primary)" />
@@ -240,7 +240,7 @@ const kpiRow2 = [
           <div class="grid grid-cols-2 gap-3">
 
             <!-- ARPU vs ARPU ao Longo do Tempo -->
-            <div class="rounded-xl border border-(--ui-border) bg-(--ui-bg-elevated) p-4 flex flex-col gap-3">
+            <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: #1A2235; border: 1px solid #1E2D45">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full shrink-0" style="background-color: var(--ui-primary)" />
@@ -257,7 +257,7 @@ const kpiRow2 = [
             </div>
 
             <!-- ARPU vs ARPU por Segmento -->
-            <div class="rounded-xl border border-(--ui-border) bg-(--ui-bg-elevated) p-4 flex flex-col gap-3">
+            <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: #1A2235; border: 1px solid #1E2D45">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full shrink-0" style="background-color: var(--ui-primary)" />
@@ -280,7 +280,7 @@ const kpiRow2 = [
 
       <!-- ── CICLO DE VIDA E RETENÇÃO ─────────────────────────── -->
       <div v-else-if="activeTab === 'ciclo'" :key="activeTab" class="flex flex-col gap-3">
-        <div class="flex flex-col items-center justify-center py-24 gap-3 rounded-xl border border-(--ui-border) bg-(--ui-bg-elevated)">
+        <div class="flex flex-col items-center justify-center py-24 gap-3 rounded-xl" style="background-color: #1A2235; border: 1px solid #1E2D45">
           <UIcon name="i-lucide-heart" class="w-10 h-10 text-(--ui-text-dimmed)" />
           <span class="text-sm text-(--ui-text-dimmed)">Ciclo de Vida e Retenção — em breve</span>
         </div>
@@ -288,7 +288,7 @@ const kpiRow2 = [
 
       <!-- ── PERFORMANCE FINANCEIRA ──────────────────────────── -->
       <div v-else-if="activeTab === 'financeiro'" :key="activeTab" class="flex flex-col gap-3">
-        <div class="flex flex-col items-center justify-center py-24 gap-3 rounded-xl border border-(--ui-border) bg-(--ui-bg-elevated)">
+        <div class="flex flex-col items-center justify-center py-24 gap-3 rounded-xl" style="background-color: #1A2235; border: 1px solid #1E2D45">
           <UIcon name="i-lucide-dollar-sign" class="w-10 h-10 text-(--ui-text-dimmed)" />
           <span class="text-sm text-(--ui-text-dimmed)">Performance Financeira — em breve</span>
         </div>
