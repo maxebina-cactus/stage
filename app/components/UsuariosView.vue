@@ -153,7 +153,7 @@ const kpiRow2 = [
 
           <!-- Usuários Ativos — full width -->
           <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: #101726; border: 1px solid #1E2D45">
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between pb-3" style="border-bottom: 1px solid #1E2D45">
               <div class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full shrink-0" style="background-color: var(--ui-primary)" />
                 <span class="text-sm font-medium text-(--ui-text)">Usuários Ativos</span>
@@ -188,7 +188,7 @@ const kpiRow2 = [
 
             <!-- Atividade por Dia e Hora -->
             <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: #101726; border: 1px solid #1E2D45">
-              <div class="flex items-start justify-between">
+              <div class="flex items-start justify-between pb-3" style="border-bottom: 1px solid #1E2D45">
                 <div class="flex flex-col gap-0.5">
                   <div class="flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full shrink-0" style="background-color: var(--ui-primary)" />
@@ -208,7 +208,7 @@ const kpiRow2 = [
 
             <!-- Usuários Ativos por Região -->
             <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: #101726; border: 1px solid #1E2D45">
-              <div class="flex items-center justify-between">
+              <div class="flex items-center justify-between pb-3" style="border-bottom: 1px solid #1E2D45">
                 <div class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full shrink-0" style="background-color: var(--ui-primary)" />
                   <span class="text-sm font-medium text-(--ui-text)">Usuários Ativos por Região</span>
@@ -238,7 +238,7 @@ const kpiRow2 = [
 
             <!-- ARPU vs ARPU ao Longo do Tempo -->
             <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: #101726; border: 1px solid #1E2D45">
-              <div class="flex items-center justify-between">
+              <div class="flex items-center justify-between pb-3" style="border-bottom: 1px solid #1E2D45">
                 <div class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full shrink-0" style="background-color: var(--ui-primary)" />
                   <span class="text-sm font-medium text-(--ui-text)">ARPU vs ARPU ao Longo do Tempo</span>
@@ -255,7 +255,7 @@ const kpiRow2 = [
 
             <!-- ARPU vs ARPU por Segmento -->
             <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: #101726; border: 1px solid #1E2D45">
-              <div class="flex items-center justify-between">
+              <div class="flex items-center justify-between pb-3" style="border-bottom: 1px solid #1E2D45">
                 <div class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full shrink-0" style="background-color: var(--ui-primary)" />
                   <span class="text-sm font-medium text-(--ui-text)">ARPU vs ARPU por Segmento</span>
