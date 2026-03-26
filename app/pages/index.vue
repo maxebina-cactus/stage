@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex-1 overflow-y-auto p-6">
     <UPageHero
       title="Nuxt Starter Template"
       description="A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours."
