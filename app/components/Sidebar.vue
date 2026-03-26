@@ -18,7 +18,8 @@ const user = { name: 'Benjamin Canac', avatar: '' }
 
 <template>
   <aside
-    class="h-screen flex flex-col shrink-0 border-r border-(--ui-border) bg-(--ui-bg-elevated) transition-all duration-200 overflow-hidden"
+    class="h-screen flex flex-col shrink-0 border-r border-(--ui-border) transition-all duration-200 overflow-hidden"
+    style="background-color: color-mix(in oklab, var(--ui-bg-elevated) 25%, transparent)"
     :class="isOpen ? 'w-[220px]' : 'w-[56px]'"
   >
     <!-- Logo -->
