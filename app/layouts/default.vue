@@ -49,8 +49,13 @@ const links = [[{
 }], [{
   label: 'Feedback',
   icon: 'i-lucide-message-circle',
-  to: 'https://github.com/nuxt-ui-templates/dashboard',
-  target: '_blank'
+  to: '/feedback',
+  onSelect: () => { open.value = false }
+}, {
+  label: 'Commands',
+  icon: 'i-lucide-terminal',
+  to: '/commands',
+  onSelect: () => { open.value = false }
 }, {
   label: 'Help & Support',
   icon: 'i-lucide-info',
@@ -103,6 +108,7 @@ onMounted(async () => {
       v-model:open="open"
       collapsible
       resizable
+      :default-size="17"
       class="bg-elevated/25"
       :ui="{ footer: 'lg:border-t lg:border-default' }"
     >

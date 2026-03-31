@@ -23,3 +23,13 @@ logs
 .env.*
 !.env.example
 .aider*
+
+# Commands page (private — not for version control)
+app/pages/commands.vue
+app/composables/useCommandsAuth.ts
+server/api/commands-auth.post.ts
+app/components/molecules/CommandItem.vue
+app/components/molecules/CommandPasswordGate.vue
+app/components/molecules/CommandSection.vue
+app/components/organisms/CommandPasswordGate.vue
+app/components/organisms/CommandSection.vue

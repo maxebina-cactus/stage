@@ -56,6 +56,22 @@ export interface Notification {
   date: string
 }
 
+export type FeedbackStatus = 'pendente' | 'respondido' | 'arquivado'
+export type FeedbackCategoria = 'Bug' | 'Sugestão' | 'Elogio' | 'Outro'
+
+export interface Feedback {
+  id: number
+  usuario: {
+    nome: string
+    avatar?: string
+  }
+  mensagem: string
+  avaliacao: 1 | 2 | 3 | 4 | 5
+  categoria: FeedbackCategoria
+  status: FeedbackStatus
+  data: string
+}
+
 export type Period = 'daily' | 'weekly' | 'monthly'
 
 export interface Range {

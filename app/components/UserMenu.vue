@@ -14,7 +14,7 @@ const neutrals = ['slate', 'gray', 'zinc', 'neutral', 'stone']
 const user = ref({
   name: 'Administrador',
   avatar: {
-    src: '',
+    src: '/avatar.jpg',
     alt: 'Admin'
   }
 })
@@ -24,20 +24,10 @@ const items = computed<DropdownMenuItem[][]>(() => ([[{
   label: user.value.name,
   avatar: user.value.avatar
 }], [{
-  label: 'Profile',
-  icon: 'i-lucide-user'
-}, {
-  label: 'Billing',
-  icon: 'i-lucide-credit-card'
-}, {
-  label: 'Settings',
-  icon: 'i-lucide-settings',
-  to: '/settings'
-}], [{
-  label: 'Theme',
-  icon: 'i-lucide-palette',
+  label: 'Tema',
+  icon: 'i-material-symbols-colorize-outline-rounded',
   children: [{
-    label: 'Primary',
+    label: 'Primário',
     slot: 'chip',
     chip: appConfig.ui.colors.primary,
     content: { align: 'center', collisionPadding: 16 },
@@ -53,7 +43,7 @@ const items = computed<DropdownMenuItem[][]>(() => ([[{
       }
     }))
   }, {
-    label: 'Neutral',
+    label: 'Neutro',
     slot: 'chip',
     chip: appConfig.ui.colors.neutral === 'neutral' ? 'old-neutral' : appConfig.ui.colors.neutral,
     content: { align: 'end', collisionPadding: 16 },
@@ -70,8 +60,8 @@ const items = computed<DropdownMenuItem[][]>(() => ([[{
     }))
   }]
 }, {
-  label: 'Appearance',
-  icon: 'i-lucide-sun-moon',
+  label: 'Aparência',
+  icon: 'i-material-symbols-partly-cloudy-day-outline-rounded',
   children: [{
     label: 'Light',
     icon: 'i-lucide-sun',
@@ -93,9 +83,43 @@ const items = computed<DropdownMenuItem[][]>(() => ([[{
       e.preventDefault()
     }
   }]
+}, {
+  label: 'Idioma',
+  icon: 'i-material-symbols-language',
+  children: [{
+    label: 'Português',
+    avatar: { src: '/br.svg' },
+    type: 'checkbox',
+    checked: true,
+    onSelect: (e: Event) => { e.preventDefault() }
+  }, {
+    label: 'English',
+    avatar: { src: '/us.svg' },
+    type: 'checkbox',
+    checked: false,
+    onSelect: (e: Event) => { e.preventDefault() }
+  }, {
+    label: 'Español',
+    avatar: { src: '/es.svg' },
+    type: 'checkbox',
+    checked: false,
+    onSelect: (e: Event) => { e.preventDefault() }
+  }, {
+    label: 'Deutsch',
+    avatar: { src: '/al.svg' },
+    type: 'checkbox',
+    checked: false,
+    onSelect: (e: Event) => { e.preventDefault() }
+  }, {
+    label: 'Italiano',
+    avatar: { src: '/it.svg' },
+    type: 'checkbox',
+    checked: false,
+    onSelect: (e: Event) => { e.preventDefault() }
+  }]
 }], [{
-  label: 'Log out',
-  icon: 'i-lucide-log-out'
+  label: 'Sair',
+  icon: 'i-material-symbols-power-settings-new-outline-rounded'
 }]]))
 </script>
 

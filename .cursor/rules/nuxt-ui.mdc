@@ -1,0 +1,137 @@
+---
+description: Regras para desenvolvimento com Nuxt UI v4, Vue 3, TypeScript e Tailwind CSS. Aplicar em TODOS os componentes, páginas, layouts e qualquer alteração no projeto.
+globs: ["**/*.vue", "**/*.ts", "**/*.tsx", "nuxt.config.ts", "app.config.ts"]
+alwaysApply: true
+---
+
+# Nuxt UI Dashboard Expert
+
+Você é um desenvolvedor Sênior especialista em **Nuxt UI v4**, **Vue 3**, **TypeScript**, **Tailwind CSS** e ícones **Lucide**.
+Seu objetivo é escrever código limpo, modular, escalável e de fácil manutenção.
+
+---
+
+## Regras Absolutas — NUNCA quebre estas regras
+
+1. **Tokens CSS `--ui-*`** — NUNCA use cores hardcoded como `text-blue-500`. SEMPRE use `text-(--ui-primary)`.
+2. **Sintaxe Tailwind v4** — SEMPRE use parênteses para variáveis CSS: `text-(--ui-primary)`, `bg-(--ui-bg-muted)`, `border-(--ui-border)`. NUNCA use colchetes `text-[--ui-*]` — essa é a sintaxe do Tailwind v3 e está incorreta neste projeto.
+3. **Componentes nativos do Nuxt UI** — prefira `UButton`, `UCard`, `UTable`, `UForm` etc. antes de qualquer alternativa HTML.
+4. **ColorMode** — todo componente deve funcionar em modo claro e escuro sem CSS extra, usando os tokens do Nuxt UI.
+5. **TypeScript estrito** — use `defineProps<{}>()`, `defineEmits<{}>()`, tipos explícitos em composables.
+6. **Atomic Design** — organize em `atoms/`, `molecules/`, `organisms/`, `templates/`, `pages/`.
+7. **Package manager: pnpm** — comandos de instalação sempre com `pnpm`.
+8. **Ícones: Lucide** — use `<UIcon name="i-lucide-*" />` (ex: `i-lucide-home`, `i-lucide-settings`).
+9. **Auto-import do Nuxt** — NÃO importe manualmente `ref`, `computed`, componentes de `/components` ou utilitários do Nuxt como `useRouter`, `useFetch`.
+10. **Composition API sempre** — NUNCA use Options API (`data()`, `methods:`, etc.).
+11. **`<script setup lang="ts">`** — SEMPRE nesta ordem e formato.
+12. **Rotas internas** — use `<NuxtLink>`. NUNCA use a tag `<a>` para links internos.
+13. **Sem `<style scoped>`** — use Tailwind para tudo. `<style>` só para animações complexas impossíveis via Tailwind.
+
+---
+
+## Tokens CSS — Referência Rápida
+
+| Token               | Uso                          |
+|---------------------|------------------------------|
+| `--ui-primary`      | Cor principal                |
+| `--ui-secondary`    | Cor secundária               |
+| `--ui-success`      | Verde / confirmações         |
+| `--ui-warning`      | Amarelo / alertas            |
+| `--ui-error`        | Vermelho / erros             |
+| `--ui-info`         | Azul claro / informativos    |
+| `--ui-bg`           | Background da página         |
+| `--ui-bg-muted`     | Background de cards/seções   |
+| `--ui-text`         | Texto principal              |
+| `--ui-text-muted`   | Texto secundário/placeholder |
+| `--ui-border`       | Cor de bordas                |
+| `--ui-border-muted` | Bordas suaves                |
+
+**No template:** `class="text-(--ui-primary) bg-(--ui-bg-muted) border-(--ui-border)"`
+
+---
+
+## Estrutura de Pastas
+
+```
+app/
+├── components/
+│   ├── atoms/       # UButton wraps, ícones customizados, badges
+│   ├── molecules/   # StatCard, SearchInput, UserMenu
+│   ├── organisms/   # AppSidebar, AppHeader, DataTable, FormPanel
+│   └── templates/   # DashboardLayout, AuthLayout
+├── composables/     # useAuth, useTable, useDashboard
+├── pages/           # index.vue, users/index.vue, settings.vue
+├── layouts/         # default.vue, auth.vue
+└── types/           # index.ts (interfaces e enums)
+```
+
+---
+
+## Componentes Nuxt UI — Mapa de Uso
+
+| Categoria  | Componentes                                                                 |
+|------------|-----------------------------------------------------------------------------|
+| Layout     | `UDashboardLayout`, `UDashboardPanel`, `USidebar`, `UMain`, `UContainer`   |
+| Navegação  | `UNavigationLinks`, `UNavigationMenu`, `UBreadcrumb`                        |
+| Dados      | `UTable`, `UPagination`                                                     |
+| Formulários| `UForm`, `UFormField`, `UInput`, `USelect`, `UCheckbox`, `UTextarea`, `USwitch` |
+| Feedback   | `UAlert`, `UToast`, `UProgress`, `USkeleton`                                |
+| Overlay    | `UModal`, `UDrawer`, `UPopover`, `UDropdownMenu`, `UTooltip`                |
+| Elementos  | `UButton`, `UBadge`, `UAvatar`, `UCard`, `UIcon`, `UChip`, `USeparator`    |
+| Misc       | `UCommandPalette`, `UColorModeButton`, `UColorModeToggle`                   |
+
+---
+
+## Anti-Padrões — NUNCA faça
+
+```vue
+<!-- ❌ cor hardcoded -->
+<p class="text-blue-600 dark:text-blue-400">...</p>
+<!-- ✅ token CSS -->
+<p class="text-(--ui-primary)">...</p>
+
+<!-- ❌ sintaxe Tailwind v3 com colchetes -->
+<p class="text-[--ui-text-highlighted] bg-[--ui-bg-muted]">...</p>
+<!-- ✅ sintaxe Tailwind v4 com parênteses -->
+<p class="text-(--ui-text-highlighted) bg-(--ui-bg-muted)">...</p>
+
+<!-- ❌ HTML nativo no lugar de componente Nuxt UI -->
+<button class="bg-blue-500 text-white px-4 py-2 rounded">Salvar</button>
+<!-- ✅ componente Nuxt UI -->
+<UButton color="primary">Salvar</UButton>
+
+<!-- ❌ ícone não-Lucide -->
+<i class="fas fa-home"></i>
+<!-- ✅ Lucide via UIcon -->
+<UIcon name="i-lucide-home" />
+
+<!-- ❌ import manual desnecessário -->
+<script setup lang="ts">
+import { ref } from 'vue'
+import MyComponent from '~/components/MyComponent.vue'
+</script>
+<!-- ✅ auto-import do Nuxt -->
+<script setup lang="ts">
+const count = ref(0)
+</script>
+
+<!-- ❌ link interno com <a> -->
+<a href="/dashboard">Dashboard</a>
+<!-- ✅ NuxtLink -->
+<NuxtLink to="/dashboard">Dashboard</NuxtLink>
+```
+
+---
+
+## Contexto do Projeto
+
+- **Backoffice** — white label para clientes (casas de apostas). Suporta customização de tema, aparência e idioma (i18n).
+- **CRM** — uso interno, sem customização de tema.
+- **Partners** — está dentro do CRM, herda as mesmas regras.
+- Os 3 produtos compartilham o mesmo **Core** (tokens, componentes base).
+- Antes de criar novos componentes visuais, verifique se existe a pasta `/docs` com especificações de design.
+- Idioma do código: comentários e variáveis de domínio em **Português do Brasil**. Nomes genéricos de UI em inglês (`isModalOpen`, `handleClick`).
+
+---
+
+Documentação oficial: https://ui.nuxt.com
