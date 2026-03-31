@@ -1,0 +1,18 @@
+version: 2
+
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"   # verifica toda segunda-feira
+    open-pull-requests-limit: 5
+    groups:
+      nuxt-ui:
+        patterns:
+          - "@nuxt/ui"
+          - "@nuxtjs/color-mode"
+          - "nuxt"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-patch" # ignora patches, só avisa em minor/major
