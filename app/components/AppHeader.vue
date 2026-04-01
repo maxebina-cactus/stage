@@ -14,6 +14,7 @@ const isSupport = ref(false)
 
     <template #right>
       <div class="flex items-center gap-1.5">
+        <slot name="right-extra" />
         <UTooltip text="Visitar site">
           <UButton
             icon="i-lucide-globe"

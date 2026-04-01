@@ -198,6 +198,7 @@ const changelogColumns = [
                 <div v-if="card.to" class="mt-auto">
                   <UButton
                     :to="card.to"
+                    target="_blank"
                     size="xs"
                     variant="soft"
                     color="primary"
@@ -269,6 +270,7 @@ const changelogColumns = [
                 <div class="mt-auto">
                   <UButton
                     :to="card.to"
+                    target="_blank"
                     size="xs"
                     variant="soft"
                     color="primary"

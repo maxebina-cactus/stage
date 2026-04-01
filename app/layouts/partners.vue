@@ -4,40 +4,73 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 const route = useRoute()
 const router = useRouter()
 const { isNotificationsSlideoverOpen } = useDashboard()
+const colorMode = useColorMode()
 
 defineShortcuts({
   'g-h': () => router.push('/partners')
 })
 
+useHead(() => ({
+  title: (route.meta.title as string) || undefined,
+  titleTemplate: title => title ? `${title} - Partners Stage` : 'Partners Stage'
+}))
+
+const toast = useToast()
 const open = ref(false)
 
-const links = [[{
+const links = computed(() => [[{
   label: 'Home',
   icon: 'i-lucide-house',
   to: '/partners',
   onSelect: () => { open.value = false }
 }], [{
-  label: 'Help & Support',
-  icon: 'i-lucide-info',
-  to: 'https://github.com/nuxt-ui-templates/dashboard',
+  label: 'View page Source',
+  icon: 'i-simple-icons-github',
+  to: `https://github.com/nuxt-ui-templates/dashboard/blob/main/app/pages${route.path === '/' ? '/index' : route.path}.vue`,
   target: '_blank'
-}]] satisfies NavigationMenuItem[][]
+}]] satisfies NavigationMenuItem[][])
 
 const groups = computed(() => [{
   id: 'links',
   label: 'Ir para',
-  items: links.flat()
+  items: links.value.flat()
 }, {
-  id: 'code',
-  label: 'Código',
+  id: 'theme',
+  label: 'Aparência',
   items: [{
-    id: 'source',
-    label: 'View page source',
-    icon: 'i-simple-icons-github',
-    to: `https://github.com/nuxt-ui-templates/dashboard/blob/main/app/pages${route.path === '/' ? '/index' : route.path}.vue`,
-    target: '_blank'
+    label: 'Claro',
+    icon: 'i-lucide-sun',
+    active: colorMode.preference === 'light',
+    onSelect: () => { colorMode.preference = 'light' }
+  }, {
+    label: 'Escuro',
+    icon: 'i-lucide-moon',
+    active: colorMode.preference === 'dark',
+    onSelect: () => { colorMode.preference = 'dark' }
   }]
 }])
+
+onMounted(async () => {
+  const cookie = useCookie('cookie-consent')
+  if (cookie.value === 'accepted') return
+
+  toast.add({
+    title: 'Utilizamos cookies próprios para melhorar a sua experiência em nosso site.',
+    duration: 0,
+    close: false,
+    position: 'bottom-right',
+    actions: [{
+      label: 'Aceitar',
+      color: 'neutral',
+      variant: 'outline',
+      onClick: () => { cookie.value = 'accepted' }
+    }, {
+      label: 'Recusar',
+      color: 'neutral',
+      variant: 'ghost'
+    }]
+  })
+})
 </script>
 
 <template>
@@ -76,15 +109,32 @@ const groups = computed(() => [{
       </template>
 
       <template #footer="{ collapsed }">
-        <UserMenu :collapsed="collapsed" />
+        <UTooltip :text="collapsed ? 'Changelog' : ''" :delay="300">
+          <UButton
+            icon="i-lucide-scroll-text"
+            :label="collapsed ? undefined : 'v0.0.31'"
+            to="/partners/changelog"
+            color="neutral"
+            variant="ghost"
+            :square="collapsed"
+            block
+            class="text-dimmed"
+          />
+        </UTooltip>
       </template>
     </UDashboardSidebar>
 
-    <UDashboardSearch :groups="groups" />
+    <UDashboardSearch :groups="groups" :color-mode="false" />
 
     <UDashboardPanel id="partners">
       <template #header>
-        <AppHeader title="Partners" />
+        <AppHeader :title="(route.meta.title as string) || 'Partners'">
+          <template #right-extra>
+            <div class="w-48 min-w-0">
+              <UserMenu :collapsed="false" class="[&_span]:truncate" />
+            </div>
+          </template>
+        </AppHeader>
       </template>
 
       <template #body>

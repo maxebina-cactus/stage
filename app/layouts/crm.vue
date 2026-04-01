@@ -4,10 +4,16 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 const route = useRoute()
 const router = useRouter()
 const { isNotificationsSlideoverOpen } = useDashboard()
+const colorMode = useColorMode()
 
 defineShortcuts({
   'g-h': () => router.push('/crm')
 })
+
+useHead(() => ({
+  title: (route.meta.title as string) || undefined,
+  titleTemplate: title => title ? `${title} - CRM Stage` : 'CRM Stage'
+}))
 
 const open = ref(false)
 
@@ -36,6 +42,20 @@ const groups = computed(() => [{
     icon: 'i-simple-icons-github',
     to: `https://github.com/nuxt-ui-templates/dashboard/blob/main/app/pages${route.path === '/' ? '/index' : route.path}.vue`,
     target: '_blank'
+  }]
+}, {
+  id: 'theme',
+  label: 'Aparência',
+  items: [{
+    label: 'Claro',
+    icon: 'i-lucide-sun',
+    active: colorMode.preference === 'light',
+    onSelect: () => { colorMode.preference = 'light' }
+  }, {
+    label: 'Escuro',
+    icon: 'i-lucide-moon',
+    active: colorMode.preference === 'dark',
+    onSelect: () => { colorMode.preference = 'dark' }
   }]
 }])
 </script>
@@ -80,7 +100,7 @@ const groups = computed(() => [{
       </template>
     </UDashboardSidebar>
 
-    <UDashboardSearch :groups="groups" />
+    <UDashboardSearch :groups="groups" :color-mode="false" />
 
     <UDashboardPanel id="crm">
       <template #header>

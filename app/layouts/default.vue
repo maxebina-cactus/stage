@@ -5,6 +5,7 @@ const route = useRoute()
 const router = useRouter()
 const toast = useToast()
 const { isNotificationsSlideoverOpen } = useDashboard()
+const colorMode = useColorMode()
 
 defineShortcuts({
   'g-h': () => router.push('/'),
@@ -87,6 +88,20 @@ const groups = computed(() => [{
     to: `https://github.com/nuxt-ui-templates/dashboard/blob/main/app/pages${route.path === '/' ? '/index' : route.path}.vue`,
     target: '_blank'
   }]
+}, {
+  id: 'theme',
+  label: 'Aparência',
+  items: [{
+    label: 'Claro',
+    icon: 'i-lucide-sun',
+    active: colorMode.preference === 'light',
+    onSelect: () => { colorMode.preference = 'light' }
+  }, {
+    label: 'Escuro',
+    icon: 'i-lucide-moon',
+    active: colorMode.preference === 'dark',
+    onSelect: () => { colorMode.preference = 'dark' }
+  }]
 }])
 
 onMounted(async () => {
@@ -151,7 +166,7 @@ onMounted(async () => {
       </template>
     </UDashboardSidebar>
 
-    <UDashboardSearch :groups="groups" />
+    <UDashboardSearch :groups="groups" :color-mode="false" />
 
     <slot />
 
