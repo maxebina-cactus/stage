@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { Feedback, FeedbackStatus, FeedbackCategoria } from '~/types'
 
+useSeoMeta({ title: 'Feedback' })
+
 // ---- Dados mockados ----
 const todosFeedbacks: Feedback[] = [
   {
@@ -140,16 +142,32 @@ const todosFeedbacks: Feedback[] = [
   },
 ]
 
-// ---- Filtros e tabs ----
-const busca = ref('')
-const statusAtivo = ref<FeedbackStatus | 'todos'>('todos')
+// ---- Filter Group ----
+const filtroNome = ref('')
+const filtroTipo = ref<string | undefined>(undefined)
+const filtroCategoria = ref<string | undefined>(undefined)
+const filtroStatusGroup = ref<FeedbackStatus | 'todos'>('todos')
 
-const tabs = [
+const opcoesTodosOsTipos = [
+  { label: 'Bug', value: 'bug' },
+  { label: 'Sugestão', value: 'sugestao' },
+  { label: 'Elogio', value: 'elogio' },
+  { label: 'Outro', value: 'outro' },
+]
+
+const opcoesCategoria = [
+  { label: 'UX', value: 'ux' },
+  { label: 'Performance', value: 'performance' },
+  { label: 'Visual', value: 'visual' },
+  { label: 'Funcional', value: 'funcional' },
+]
+
+const tabsStatusGroup: { label: string; value: FeedbackStatus | 'todos' }[] = [
   { label: 'Todos', value: 'todos' },
   { label: 'Pendente', value: 'pendente' },
   { label: 'Respondido', value: 'respondido' },
   { label: 'Arquivado', value: 'arquivado' },
-] as const
+]
 
 // ---- Paginação ----
 const pagina = ref(1)
@@ -157,12 +175,12 @@ const porPagina = 8
 
 // ---- Dados filtrados ----
 const feedbacksFiltrados = computed(() => {
-  const termo = busca.value.toLowerCase().trim()
+  const termo = filtroNome.value.toLowerCase().trim()
   return todosFeedbacks.filter((f) => {
     const matchBusca = !termo
       || f.usuario.nome.toLowerCase().includes(termo)
       || f.mensagem.toLowerCase().includes(termo)
-    const matchStatus = statusAtivo.value === 'todos' || f.status === statusAtivo.value
+    const matchStatus = filtroStatusGroup.value === 'todos' || f.status === filtroStatusGroup.value
     return matchBusca && matchStatus
   })
 })
@@ -175,7 +193,7 @@ const feedbacksPaginados = computed(() => {
 })
 
 // Reseta página ao filtrar
-watch([busca, statusAtivo], () => { pagina.value = 1 })
+watch([filtroNome, filtroStatusGroup], () => { pagina.value = 1 })
 
 // ---- Colunas da tabela ----
 const colunas = [
@@ -243,41 +261,89 @@ function handleExcluir(feedback: Feedback) {
     <template #header>
       <AppHeader title="Feedback" />
 
-      <UDashboardToolbar>
+      <UDashboardToolbar :ui="{ left: 'w-full' }">
         <template #left>
-          <div class="flex flex-col gap-3 py-1">
-            <!-- Busca -->
-            <UInput
-              v-model="busca"
-              icon="i-lucide-search"
-              placeholder="Buscar por nome ou mensagem…"
-              class="w-72"
-              color="neutral"
-              variant="outline"
-            />
+          <div class="flex flex-col gap-3 py-4 w-full">
+            <div class="flex items-start justify-between gap-4 flex-wrap w-full">
 
-            <!-- Tabs de status -->
-            <UButtonGroup>
+              <!-- Esquerda: duas linhas -->
+              <div class="flex flex-col gap-3">
+
+                <!-- Linha 1: busca + ícone de filtro + dois selects -->
+                <div class="flex flex-wrap gap-4">
+                  <UButtonGroup class="inline-flex items-center">
+                    <UInput
+                      v-model="filtroNome"
+                      icon="i-lucide-search"
+                      placeholder="Buscar por nome, ID ou tag"
+                      color="neutral"
+                      variant="outline"
+                      class="w-64"
+                      :ui="{ base: 'rounded-r-none' }"
+                    />
+                    <UButton
+                      icon="i-lucide-filter"
+                      color="neutral"
+                      variant="outline"
+                      class="rounded-l-none"
+                    />
+                  </UButtonGroup>
+
+                  <USelect
+                    v-model="filtroTipo"
+                    :items="opcoesTodosOsTipos"
+                    placeholder="Todos os tipos"
+                    color="neutral"
+                    variant="outline"
+                    class="w-48"
+                  />
+
+                  <USelect
+                    v-model="filtroCategoria"
+                    :items="opcoesCategoria"
+                    placeholder="Todas as categorias"
+                    color="neutral"
+                    variant="outline"
+                    class="w-48"
+                  />
+                </div>
+
+                <!-- Linha 2: tabs de status -->
+                <UButtonGroup>
+                  <UButton
+                    v-for="(tab, index) in tabsStatusGroup"
+                    :key="tab.value"
+                    color="neutral"
+                    :variant="filtroStatusGroup === tab.value ? 'solid' : 'outline'"
+                    :label="tab.label"
+                    :class="index === 0
+                      ? 'rounded-l-md rounded-r-none'
+                      : index === tabsStatusGroup.length - 1
+                        ? 'rounded-r-md rounded-l-none'
+                        : 'rounded-none'"
+                    @click="filtroStatusGroup = tab.value"
+                  />
+                </UButtonGroup>
+
+              </div>
+
+              <!-- Direita: botão primário de ação -->
               <UButton
-                v-for="tab in tabs"
-                :key="tab.value"
-                color="neutral"
-                :variant="statusAtivo === tab.value ? 'solid' : 'ghost'"
-                :label="tab.label"
-                @click="statusAtivo = tab.value"
+                icon="i-lucide-plus"
+                label="Novo Feedback"
+                color="primary"
+                class="self-start"
               />
-            </UButtonGroup>
-          </div>
-        </template>
 
-        <template #right>
-          <UButton icon="i-lucide-plus" label="Novo Feedback" />
+            </div>
+          </div>
         </template>
       </UDashboardToolbar>
     </template>
 
     <template #body>
       <div class="flex flex-col h-full">
+
         <!-- Tabela -->
         <div class="flex-1 overflow-auto">
           <UTable
@@ -395,14 +461,15 @@ function handleExcluir(feedback: Feedback) {
           <UIcon name="i-lucide-message-square-off" class="size-10 opacity-40" />
           <p class="text-sm">Nenhum feedback encontrado.</p>
           <UButton
-            v-if="busca || statusAtivo !== 'todos'"
+            v-if="filtroNome || filtroStatusGroup !== 'todos'"
             variant="ghost"
             color="neutral"
             size="xs"
             label="Limpar filtros"
-            @click="busca = ''; statusAtivo = 'todos'"
+            @click="filtroNome = ''; filtroStatusGroup = 'todos'"
           />
         </div>
+
       </div>
     </template>
   </UDashboardPanel>

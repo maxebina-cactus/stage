@@ -1,4 +1,6 @@
 <script setup lang="ts">
+useSeoMeta({ title: 'Home' })
+
 const quickStartCards = [
   {
     label: 'Tokens',
@@ -35,6 +37,27 @@ const quickStartCards = [
 ]
 
 const coreTags = ['Tokens CSS --ui-*', 'Componentes base', 'Padrões', 'Atomic design']
+
+const produtosCards = [
+  {
+    label: 'Backoffice',
+    icon: 'i-lucide-layout-dashboard',
+    description: 'Plataforma white label para gestão de casas de apostas. Suporta customização de tema, aparência e idioma.',
+    to: '/backoffice',
+  },
+  {
+    label: 'CRM',
+    icon: 'i-lucide-users',
+    description: 'Ferramenta interna de gestão de relacionamento com clientes. Sem customização de tema.',
+    to: '/crm',
+  },
+  {
+    label: 'Partners',
+    icon: 'i-lucide-handshake',
+    description: 'Portal de parceiros integrado ao CRM. Herda as mesmas regras e padrões do CRM.',
+    to: '/partners',
+  },
+]
 
 const changelog = [
   {
@@ -206,6 +229,53 @@ const changelogColumns = [
                     title="Abrir no app"
                   >
                     App
+                  </UButton>
+                </div>
+              </div>
+            </UCard>
+          </div>
+        </section>
+
+        <!-- Produtos -->
+        <section id="produtos" class="flex flex-col gap-4">
+          <div class="flex items-center gap-2">
+            <div class="w-1 self-stretch rounded-sm bg-(--ui-primary) shrink-0" />
+            <h2 class="text-sm font-semibold text-(--ui-text-muted) uppercase tracking-wider whitespace-nowrap shrink-0">
+              Produtos
+            </h2>
+            <div class="flex-1 h-px bg-(--ui-border)" />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <UCard
+              v-for="card in produtosCards"
+              :key="card.label"
+              :ui="{ root: 'group relative overflow-hidden', body: 'p-4 h-full' }"
+              class="hover:ring-1 hover:ring-(--ui-primary) transition-shadow"
+              @mousemove="handleSpotlight"
+            >
+              <div
+                class="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style="background: radial-gradient(400px 400px at var(--x, 0px) var(--y, 0px), color-mix(in oklab, var(--ui-primary) 10%, transparent), transparent)"
+              />
+              <div class="flex flex-col gap-3 h-full relative">
+                <div class="size-7 rounded-md bg-(--ui-bg-elevated) flex items-center justify-center">
+                  <UIcon :name="card.icon" class="size-4 text-(--ui-primary)" />
+                </div>
+                <p class="text-base font-semibold text-(--ui-text-highlighted)">
+                  {{ card.label }}
+                </p>
+                <p class="text-[15px] font-normal text-(--ui-text-muted) text-pretty mt-1 flex-1">{{ card.description }}</p>
+                <div class="mt-auto">
+                  <UButton
+                    :to="card.to"
+                    size="xs"
+                    variant="soft"
+                    color="primary"
+                    icon="i-lucide-arrow-right"
+                    trailing
+                  >
+                    Acessar
                   </UButton>
                 </div>
               </div>

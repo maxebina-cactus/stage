@@ -1,3 +1,7 @@
+<script setup lang="ts">
+useSeoMeta({ title: 'Tabs' })
+</script>
+
 <template>
   <div class="flex-1 overflow-y-auto p-8 max-w-2xl mx-auto flex flex-col gap-6">
     <div>

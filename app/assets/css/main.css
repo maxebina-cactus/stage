@@ -36,6 +36,11 @@
   background: color-mix(in srgb, var(--color-gray-500) 50%, transparent);
 }
 
+/* Remove a opção Sistema do grupo de Aparência no modal de pesquisa */
+[data-slot="modal"] [data-slot="item"]:has(.i-lucide-monitor) {
+  display: none;
+}
+
 /* Pointer cursor em botões e links */
 button:not(:disabled):not([aria-disabled="true"]),
 a,

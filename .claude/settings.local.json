@@ -27,7 +27,13 @@
       "mcp__figma-oauth__generate_figma_design",
       "Bash(start:*)",
       "Bash(curl:*)",
-      "Bash(npm add:*)"
+      "Bash(npm add:*)",
+      "Bash(git rm:*)",
+      "Bash(git push:*)",
+      "Bash(grep -E \"\\\\.js$|\\\\.d\\\\.ts$\")",
+      "Bash(xargs grep:*)",
+      "mcp__figma-oauth__get_screenshot",
+      "Bash(node:*)"
     ]
   }
 }

@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
   app: {
     head: {
+      titleTemplate: '%s - Stage',
       script: [
         { src: 'https://mcp.figma.com/mcp/html-to-design/capture.js', async: true }
       ]

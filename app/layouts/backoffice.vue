@@ -3,15 +3,10 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 
 const route = useRoute()
 const router = useRouter()
-const toast = useToast()
 const { isNotificationsSlideoverOpen } = useDashboard()
 
 defineShortcuts({
-  'g-h': () => router.push('/'),
-  'g-i': () => router.push('/inbox'),
-  'g-c': () => router.push('/customers'),
-  'g-s': () => router.push('/settings'),
-  'n': () => { isNotificationsSlideoverOpen.value = !isNotificationsSlideoverOpen.value }
+  'g-h': () => router.push('/backoffice')
 })
 
 const open = ref(false)
@@ -19,54 +14,9 @@ const open = ref(false)
 const links = [[{
   label: 'Home',
   icon: 'i-lucide-house',
-  to: '/',
+  to: '/backoffice',
   onSelect: () => { open.value = false }
-}, {
-  label: 'Inbox',
-  icon: 'i-lucide-inbox',
-  to: '/inbox',
-  badge: '4',
-  onSelect: () => { open.value = false }
-}, {
-  label: 'Customers',
-  icon: 'i-lucide-users',
-  to: '/customers',
-  onSelect: () => { open.value = false }
-}, {
-  label: 'Settings',
-  to: '/settings',
-  icon: 'i-lucide-settings',
-  defaultOpen: true,
-  type: 'trigger',
-  children: [{
-    label: 'General',
-    to: '/settings',
-    exact: true,
-    onSelect: () => { open.value = false }
-  }, {
-    label: 'Members',
-    to: '/settings/members',
-    onSelect: () => { open.value = false }
-  }, {
-    label: 'Notifications',
-    to: '/settings/notifications',
-    onSelect: () => { open.value = false }
-  }, {
-    label: 'Security',
-    to: '/settings/security',
-    onSelect: () => { open.value = false }
-  }]
 }], [{
-  label: 'Feedback',
-  icon: 'i-lucide-message-circle',
-  to: '/feedback',
-  onSelect: () => { open.value = false }
-}, {
-  label: 'Commands',
-  icon: 'i-lucide-terminal',
-  to: '/commands',
-  onSelect: () => { open.value = false }
-}, {
   label: 'Help & Support',
   icon: 'i-lucide-info',
   to: 'https://github.com/nuxt-ui-templates/dashboard',
@@ -88,33 +38,12 @@ const groups = computed(() => [{
     target: '_blank'
   }]
 }])
-
-onMounted(async () => {
-  const cookie = useCookie('cookie-consent')
-  if (cookie.value === 'accepted') return
-
-  toast.add({
-    title: 'Utilizamos cookies próprios para melhorar a sua experiência em nosso site.',
-    duration: 0,
-    close: false,
-    actions: [{
-      label: 'Aceitar',
-      color: 'neutral',
-      variant: 'outline',
-      onClick: () => { cookie.value = 'accepted' }
-    }, {
-      label: 'Recusar',
-      color: 'neutral',
-      variant: 'ghost'
-    }]
-  })
-})
 </script>
 
 <template>
   <UDashboardGroup unit="rem">
     <UDashboardSidebar
-      id="default"
+      id="backoffice"
       v-model:open="open"
       collapsible
       resizable
@@ -153,7 +82,15 @@ onMounted(async () => {
 
     <UDashboardSearch :groups="groups" />
 
-    <slot />
+    <UDashboardPanel id="backoffice">
+      <template #header>
+        <AppHeader title="Backoffice" />
+      </template>
+
+      <template #body>
+        <slot />
+      </template>
+    </UDashboardPanel>
 
     <NotificationsSlideover />
   </UDashboardGroup>

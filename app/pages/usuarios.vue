@@ -1,3 +1,7 @@
+<script setup lang="ts">
+useSeoMeta({ title: 'Usuários' })
+</script>
+
 <template>
   <div class="flex flex-col flex-1 min-h-0">
     <!-- Filter bar — fora da área de scroll -->
