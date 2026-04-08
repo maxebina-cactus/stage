@@ -1,0 +1,1439 @@
+---
+description: Nuxt UI v4 complete token and component mapping for Figma. Use this file when sending any page to Figma to replace hardcoded values with Nuxt UI Design Kit tokens, components and variants.
+globs: ["**/*.vue", "**/*.ts"]
+alwaysApply: true
+---
+
+# Nuxt UI v4 — Figma Design Kit Reference
+
+**Source:** Nuxt UI v4 • Official Design Kit • Free (Community)
+**Figma File Key:** `ggqlpX1YH0uEFrmbJbi4TD`
+
+---
+
+## 1. Color Tokens
+
+### 1.1 Semantic CSS Variables (Design Tokens)
+
+These are the primary tokens to use when wiring components to Figma. They map to Figma Local Variables.
+
+| CSS Variable | Role | Default Palette |
+|---|---|---|
+| `--ui-primary` | Primary brand color (500 step) | Green (#00C16A) |
+| `--ui-primary-50` … `--ui-primary-950` | Full primary scale | Green scale |
+| `--ui-secondary` | Secondary brand color | Blue (#2B7FFF) |
+| `--ui-secondary-50` … `--ui-secondary-950` | Full secondary scale | Blue scale |
+| `--ui-success` | Success state | Green (#00C16A) |
+| `--ui-success-50` … `--ui-success-950` | Full success scale | Green scale |
+| `--ui-info` | Informational state | Blue (#2B7FFF) |
+| `--ui-info-50` … `--ui-info-950` | Full info scale | Blue scale |
+| `--ui-warning` | Warning state | Yellow (#FCC800) |
+| `--ui-warning-50` … `--ui-warning-950` | Full warning scale | Yellow scale |
+| `--ui-error` | Error/danger state | Red (#FB2C36) |
+| `--ui-error-50` … `--ui-error-950` | Full error scale | Red scale |
+| `--ui-neutral` | Neutral/gray base | Slate scale |
+| `--ui-neutral-50` … `--ui-neutral-950` | Full neutral scale | Slate scale |
+| `--ui-bg` | Page background | `--ui-neutral-50` (light) / `--ui-neutral-950` (dark) |
+| `--ui-bg-elevated` | Elevated surface (cards, popovers) | white / `--ui-neutral-900` |
+| `--ui-bg-accented` | Accented surface | `--ui-neutral-100` / `--ui-neutral-800` |
+| `--ui-bg-inverted` | Inverted background | `--ui-neutral-900` / white |
+| `--ui-text-highlighted` | Headings / high-emphasis text | `--ui-neutral-900` / white |
+| `--ui-text` | Body text | `--ui-neutral-700` / `--ui-neutral-200` |
+| `--ui-text-muted` | Muted/secondary text | `--ui-neutral-500` |
+| `--ui-text-dimmed` | Very low-emphasis text | `--ui-neutral-400` |
+| `--ui-text-inverted` | Text on inverted background | white / `--ui-neutral-900` |
+| `--ui-border` | Default border | `--ui-neutral-200` / `--ui-neutral-800` |
+| `--ui-border-muted` | Subtle border | `--ui-neutral-100` / `--ui-neutral-900` |
+| `--ui-border-accented` | Accented border | `--ui-neutral-300` / `--ui-neutral-700` |
+| `--ui-border-inverted` | Inverted border | `--ui-neutral-900` / white |
+
+### 1.2 Palette — Semantic Color Roles in Figma
+
+| Token | Figma Variable Group | Swappable Palettes |
+|---|---|---|
+| **Neutral** | `neutral/*` | Slate · Gray · Zinc · Neutral |
+| **Primary** | `primary/*` | Green · Sky · Purple · Teal |
+| **Secondary** | `secondary/*` | Blue · Pink · Indigo · Fuchsia |
+| **Success** | `success/*` | Green (fixed) |
+| **Info** | `info/*` | Blue (fixed) |
+| **Warning** | `warning/*` | Yellow (fixed) |
+| **Error** | `error/*` | Red (fixed) |
+
+### 1.3 Full Tailwind Palette (Figma Variables → Hex)
+
+These are the raw palette variables available in the Design Kit.
+
+#### Slate
+| Variable | Hex |
+|---|---|
+| `slate-50` | `#F8FAFC` |
+| `slate-100` | `#F1F5F9` |
+| `slate-200` | `#E2E8F0` |
+| `slate-300` | `#CAD5E2` |
+| `slate-400` | `#90A1B9` |
+| `slate-500` | `#64748E` |
+| `slate-600` | `#45556C` |
+| `slate-700` | `#314158` |
+| `slate-800` | `#1D293D` |
+| `slate-900` | `#0F172B` |
+| `slate-950` | `#020618` |
+
+#### Gray
+| Variable | Hex |
+|---|---|
+| `gray-50` | `#F9FAFB` |
+| `gray-100` | `#F3F4F6` |
+| `gray-200` | `#E5E7EB` |
+| `gray-300` | `#D1D5DB` |
+| `gray-400` | `#99A1AF` |
+| `gray-500` | `#6A7282` |
+| `gray-600` | `#4A5565` |
+| `gray-700` | `#364153` |
+| `gray-800` | `#1E2939` |
+| `gray-900` | `#101820` |
+| `gray-950` | `#030712` |
+
+#### Zinc
+| Variable | Hex |
+|---|---|
+| `zinc-50` | `#FAFAFA` |
+| `zinc-100` | `#F4F4F5` |
+| `zinc-200` | `#E4E4E7` |
+| `zinc-300` | `#D4D4D8` |
+| `zinc-400` | `#9F9FA9` |
+| `zinc-500` | `#71717B` |
+| `zinc-600` | `#52525C` |
+| `zinc-700` | `#3F3F46` |
+| `zinc-800` | `#27272A` |
+| `zinc-900` | `#18181B` |
+| `zinc-950` | `#09090B` |
+
+#### Neutral
+| Variable | Hex |
+|---|---|
+| `neutral-50` | `#FAFAFA` |
+| `neutral-100` | `#F5F5F5` |
+| `neutral-200` | `#E5E5E5` |
+| `neutral-300` | `#D4D4D4` |
+| `neutral-400` | `#A1A1A1` |
+| `neutral-500` | `#737373` |
+| `neutral-600` | `#525252` |
+| `neutral-700` | `#404040` |
+| `neutral-800` | `#262626` |
+| `neutral-900` | `#171717` |
+| `neutral-950` | `#0A0A0A` |
+
+#### Stone
+| Variable | Hex |
+|---|---|
+| `stone-50` | `#FAFAF9` |
+| `stone-100` | `#F5F5F4` |
+| `stone-200` | `#E7E5E4` |
+| `stone-300` | `#D6D3D1` |
+| `stone-400` | `#A6A09B` |
+| `stone-500` | `#79716B` |
+| `stone-600` | `#57534D` |
+| `stone-700` | `#44403B` |
+| `stone-800` | `#292524` |
+| `stone-900` | `#1C1917` |
+| `stone-950` | `#0C0A09` |
+
+#### Red
+| Variable | Hex |
+|---|---|
+| `red-50` | `#FEF2F2` |
+| `red-100` | `#FEE2E2` |
+| `red-200` | `#FFC9C9` |
+| `red-300` | `#FFA2A2` |
+| `red-400` | `#FF6467` |
+| `red-500` | `#FB2C36` |
+| `red-600` | `#E7000B` |
+| `red-700` | `#C10007` |
+| `red-800` | `#9F0712` |
+| `red-900` | `#82181A` |
+| `red-950` | `#460809` |
+
+#### Orange
+| Variable | Hex |
+|---|---|
+| `orange-50` | `#FFF7ED` |
+| `orange-100` | `#FFEDD4` |
+| `orange-200` | `#FFD6A8` |
+| `orange-300` | `#FFB86A` |
+| `orange-400` | `#FF8904` |
+| `orange-500` | `#FF6900` |
+| `orange-600` | `#F54A00` |
+| `orange-700` | `#CA3500` |
+| `orange-800` | `#9F2D00` |
+| `orange-900` | `#7E2A0C` |
+| `orange-950` | `#441306` |
+
+#### Amber
+| Variable | Hex |
+|---|---|
+| `amber-50` | `#FFFBEB` |
+| `amber-100` | `#FEF3C6` |
+| `amber-200` | `#FEE685` |
+| `amber-300` | `#FFD230` |
+| `amber-400` | `#FFBA00` |
+| `amber-500` | `#FD9A00` |
+| `amber-600` | `#E17100` |
+| `amber-700` | `#BB4D00` |
+| `amber-800` | `#973C00` |
+| `amber-900` | `#7B3306` |
+| `amber-950` | `#461901` |
+
+#### Yellow
+| Variable | Hex |
+|---|---|
+| `yellow-50` | `#FEFCE8` |
+| `yellow-100` | `#FEF9C2` |
+| `yellow-200` | `#FFF085` |
+| `yellow-300` | `#FFDF20` |
+| `yellow-400` | `#FCC800` |
+| `yellow-500` | `#EFB100` |
+| `yellow-600` | `#D08700` |
+| `yellow-700` | `#A65F00` |
+| `yellow-800` | `#894B00` |
+| `yellow-900` | `#733E0A` |
+| `yellow-950` | `#432004` |
+
+#### Lime
+| Variable | Hex |
+|---|---|
+| `lime-50` | `#F7FEE7` |
+| `lime-100` | `#ECFCCA` |
+| `lime-200` | `#D8F999` |
+| `lime-300` | `#BBF451` |
+| `lime-400` | `#9AE600` |
+| `lime-500` | `#7CCF00` |
+| `lime-600` | `#5EA500` |
+| `lime-700` | `#497D00` |
+| `lime-800` | `#3D6300` |
+| `lime-900` | `#35530E` |
+| `lime-950` | `#192E03` |
+
+#### Green (default Primary & Success)
+| Variable | Hex |
+|---|---|
+| `green-50` | `#EFFDF5` |
+| `green-100` | `#D9FBE8` |
+| `green-200` | `#B3F5D1` |
+| `green-300` | `#75EDAE` |
+| `green-400` | `#00DC82` |
+| `green-500` | `#00C16A` |
+| `green-600` | `#00A155` |
+| `green-700` | `#007F45` |
+| `green-800` | `#016538` |
+| `green-900` | `#0A5331` |
+| `green-950` | `#052E16` |
+
+#### Emerald
+| Variable | Hex |
+|---|---|
+| `emerald-50` | `#ECFDF5` |
+| `emerald-100` | `#D0FAE5` |
+| `emerald-200` | `#A4F4CF` |
+| `emerald-300` | `#5EE9B5` |
+| `emerald-400` | `#00D492` |
+| `emerald-500` | `#00BC7D` |
+| `emerald-600` | `#009966` |
+| `emerald-700` | `#007A55` |
+| `emerald-800` | `#006045` |
+| `emerald-900` | `#004F3B` |
+| `emerald-950` | `#022C22` |
+
+#### Teal
+| Variable | Hex |
+|---|---|
+| `teal-50` | `#F0FDFA` |
+| `teal-100` | `#CBFBF1` |
+| `teal-200` | `#96F7E4` |
+| `teal-300` | `#46ECD5` |
+| `teal-400` | `#00D5BE` |
+| `teal-500` | `#00BBA7` |
+| `teal-600` | `#009689` |
+| `teal-700` | `#00786F` |
+| `teal-800` | `#005F5A` |
+| `teal-900` | `#0B4F4A` |
+| `teal-950` | `#022F2E` |
+
+#### Cyan
+| Variable | Hex |
+|---|---|
+| `cyan-50` | `#ECFEFF` |
+| `cyan-100` | `#CEFAFE` |
+| `cyan-200` | `#A2F4FD` |
+| `cyan-300` | `#53EAFD` |
+| `cyan-400` | `#00D3F2` |
+| `cyan-500` | `#00B8DB` |
+| `cyan-600` | `#0092B8` |
+| `cyan-700` | `#007595` |
+| `cyan-800` | `#005F78` |
+| `cyan-900` | `#104E64` |
+| `cyan-950` | `#053345` |
+
+#### Sky
+| Variable | Hex |
+|---|---|
+| `sky-50` | `#F0F9FF` |
+| `sky-100` | `#DFF2FE` |
+| `sky-200` | `#B8E6FE` |
+| `sky-400` | `#00BCFF` |
+| `sky-500` | `#00A6F4` |
+| `sky-600` | `#0084D1` |
+| `sky-700` | `#0069A8` |
+| `sky-800` | `#00598A` |
+| `sky-900` | `#024A70` |
+| `sky-950` | `#052F4A` |
+
+#### Blue (default Secondary & Info)
+| Variable | Hex |
+|---|---|
+| `blue-50` | `#EFF6FF` |
+| `blue-100` | `#DBEAFE` |
+| `blue-200` | `#BEDBFF` |
+| `blue-300` | `#8EC5FF` |
+| `blue-400` | `#51A2FF` |
+| `blue-500` | `#2B7FFF` |
+| `blue-600` | `#155DFC` |
+| `blue-700` | `#1447E6` |
+| `blue-800` | `#193CB8` |
+| `blue-900` | `#1C398E` |
+| `blue-950` | `#162456` |
+
+#### Indigo
+| Variable | Hex |
+|---|---|
+| `indigo-50` | `#EEF2FF` |
+| `indigo-100` | `#E0E7FF` |
+| `indigo-200` | `#C6D2FF` |
+| `indigo-300` | `#A3B3FF` |
+| `indigo-400` | `#7C86FF` |
+| `indigo-500` | `#615FFF` |
+| `indigo-600` | `#4F39F6` |
+| `indigo-700` | `#432DD7` |
+| `indigo-800` | `#372AAC` |
+| `indigo-900` | `#312C85` |
+| `indigo-950` | `#1E1A4D` |
+
+#### Violet
+| Variable | Hex |
+|---|---|
+| `violet-50` | `#F5F3FF` |
+| `violet-100` | `#EDE9FE` |
+| `violet-200` | `#DDD6FE` |
+| `violet-300` | `#C4B4FF` |
+| `violet-400` | `#A684FF` |
+| `violet-500` | `#8E51FF` |
+| `violet-600` | `#7F22FE` |
+| `violet-700` | `#7008E7` |
+| `violet-800` | `#5D0EC0` |
+| `violet-900` | `#4D179A` |
+| `violet-950` | `#2F0D68` |
+
+#### Purple
+| Variable | Hex |
+|---|---|
+| `purple-50` | `#FAF5FF` |
+| `purple-100` | `#F3E8FF` |
+| `purple-200` | `#E9D4FF` |
+| `purple-300` | `#DAB2FF` |
+| `purple-400` | `#C27AFF` |
+| `purple-500` | `#AD46FF` |
+| `purple-600` | `#9810FA` |
+| `purple-700` | `#8200DB` |
+| `purple-800` | `#6E11B0` |
+| `purple-900` | `#59168B` |
+| `purple-950` | `#3C0366` |
+
+#### Fuchsia
+| Variable | Hex |
+|---|---|
+| `fuchsia-50` | `#FDF4FF` |
+| `fuchsia-100` | `#FAE8FF` |
+| `fuchsia-200` | `#F6CFFF` |
+| `fuchsia-300` | `#F4A8FF` |
+| `fuchsia-400` | `#ED6BFF` |
+| `fuchsia-500` | `#E12AFB` |
+| `fuchsia-600` | `#C800DE` |
+| `fuchsia-700` | `#A800B7` |
+| `fuchsia-800` | `#8A0194` |
+| `fuchsia-900` | `#721378` |
+| `fuchsia-950` | `#4B004F` |
+
+#### Pink
+| Variable | Hex |
+|---|---|
+| `pink-50` | `#FDF2F8` |
+| `pink-100` | `#FCE7F3` |
+| `pink-200` | `#FCCEE8` |
+| `pink-300` | `#FDA5D5` |
+| `pink-400` | `#FB64B6` |
+| `pink-500` | `#F6339A` |
+| `pink-600` | `#E60076` |
+| `pink-700` | `#C6005C` |
+| `pink-800` | `#A3004C` |
+| `pink-900` | `#861043` |
+| `pink-950` | `#510424` |
+
+#### Rose
+| Variable | Hex |
+|---|---|
+| `rose-50` | `#FFF1F2` |
+| `rose-100` | `#FFE4E6` |
+| `rose-200` | `#FFCCD3` |
+| `rose-300` | `#FFA1AD` |
+| `rose-400` | `#FF637E` |
+| `rose-500` | `#FF2056` |
+| `rose-600` | `#EC003F` |
+| `rose-700` | `#C70036` |
+| `rose-800` | `#A50036` |
+| `rose-950` | `#4D0218` |
+
+---
+
+## 2. Border Radius Tokens
+
+Nuxt UI v4 exposes a configurable radius via a single `--ui-radius` base variable. All component radii derive from it.
+
+| CSS Variable | Default Value | Usage |
+|---|---|---|
+| `--ui-radius` | `0.375rem` (6px) | Base radius — controls all components |
+| `--ui-radius-sm` | `calc(var(--ui-radius) - 2px)` | Small elements: badges, chips |
+| `--ui-radius-md` | `var(--ui-radius)` | Default: buttons, inputs, selects |
+| `--ui-radius-lg` | `calc(var(--ui-radius) + 2px)` | Cards, modals, drawers |
+| `--ui-radius-xl` | `calc(var(--ui-radius) + 4px)` | Large panels |
+| `--ui-radius-2xl` | `calc(var(--ui-radius) + 8px)` | Extra large surfaces |
+| `--ui-radius-full` | `9999px` | Pills, circular avatars |
+
+**Figma Presets — Border Radius (Figma page `1960:8749`):**
+
+The Design Kit ships two border-radius preset tables:
+- **Default** — `none` / `sm(2px)` / `md(4px)` / `lg(6px)` / `xl(8px)` / `2xl(12px)` / `full`
+- **Rounded** — same scale with rounder base (e.g. base = 8px)
+
+---
+
+## 3. Spacing Tokens
+
+Nuxt UI v4 uses Tailwind CSS v4 spacing (4px base unit). These map directly to Tailwind's `space-*` utilities.
+
+| Step | px | rem | CSS Variable |
+|---|---|---|---|
+| 0 | 0 | 0 | — |
+| px | 1px | — | — |
+| 0.5 | 2px | 0.125rem | — |
+| 1 | 4px | 0.25rem | — |
+| 1.5 | 6px | 0.375rem | — |
+| 2 | 8px | 0.5rem | — |
+| 2.5 | 10px | 0.625rem | — |
+| 3 | 12px | 0.75rem | — |
+| 3.5 | 14px | 0.875rem | — |
+| 4 | 16px | 1rem | — |
+| 5 | 20px | 1.25rem | — |
+| 6 | 24px | 1.5rem | — |
+| 7 | 28px | 1.75rem | — |
+| 8 | 32px | 2rem | — |
+| 9 | 36px | 2.25rem | — |
+| 10 | 40px | 2.5rem | — |
+| 11 | 44px | 2.75rem | — |
+| 12 | 48px | 3rem | — |
+| 14 | 56px | 3.5rem | — |
+| 16 | 64px | 4rem | — |
+| 20 | 80px | 5rem | — |
+| 24 | 96px | 6rem | — |
+
+---
+
+## 4. Typography Tokens
+
+**Figma Page:** `〰️ Typography` (`3639:262956`)
+
+### Font Family
+| Token | Default Value |
+|---|---|
+| `--ui-font-sans` | `DM Sans` (Design Kit) / system-ui (production) |
+| `--ui-font-mono` | `DM Mono` |
+
+### Font Scale (Tailwind v4 — matches Design Kit text styles)
+| Style Name | Size | Weight | Line Height |
+|---|---|---|---|
+| `text-xs` | 12px | 400 | 1.5 |
+| `text-sm` | 14px | 400 | 1.5 |
+| `text-base` | 16px | 400 | 1.5 |
+| `text-lg` | 18px | 400 | 1.5 |
+| `text-xl` | 20px | 400 | 1.5 |
+| `text-2xl` | 24px | 400 | 1.333 |
+| `text-3xl` | 30px | 400 | 1.2 |
+| `text-4xl` | 36px | 400 | 1.111 |
+| `text-5xl` | 48px | 400 | 1 |
+| `text-6xl` | 60px | 400 | 1 |
+
+### Typography Component Variants (`3639:263724`)
+| Variant | Maps To |
+|---|---|
+| `h1` | `<h1>` heading |
+| `h2` | `<h2>` heading |
+| `h3` | `<h3>` heading |
+| `h4` | `<h4>` heading |
+| `p` | Body paragraph |
+| `code` | Inline code |
+| `Block quote` | Blockquote |
+| `table` | Table element |
+| `hr` | Horizontal rule |
+
+---
+
+## 5. Shadow Tokens
+
+**Figma Page:** `〰️ Presets` → Presets - Shadows (`1960:8348`)
+
+| Token | Value | Usage |
+|---|---|---|
+| `--ui-shadow-xs` | `0 1px 2px 0 rgb(0 0 0 / 0.05)` | Subtle inputs |
+| `--ui-shadow-sm` | `0 1px 2px 0 rgb(0 0 0 / 0.06), 0 1px 3px 0 rgb(0 0 0 / 0.1)` | Cards (default in kit) |
+| `--ui-shadow-md` | `0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)` | Popovers |
+| `--ui-shadow-lg` | `0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)` | Modals |
+| `--ui-shadow-xl` | `0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)` | Slideouts |
+| `shadows/drop-shadow` | `0px 1px 2px 0px rgba(0,0,0,0.06), 0px 1px 3px 0px rgba(0,0,0,0.1)` | Figma frame shadow |
+
+---
+
+## 6. Icon Components
+
+**Figma Page:** `〰️ Icon` (`141:12807`)
+
+The Design Kit ships two icon libraries:
+
+### Lucide Icons
+- **Figma path:** `Icon/Lucide/{icon-name}`
+- **Usage in Nuxt UI:** `<UIcon name="i-lucide-{icon-name}" />`
+- **Examples:** `i-lucide-arrow-right`, `i-lucide-check`, `i-lucide-x`, `i-lucide-chevron-down`, `i-lucide-search`, `i-lucide-user`, `i-lucide-settings`, `i-lucide-home`, `i-lucide-menu`, `i-lucide-bell`
+
+### Simple Icons (Brand Icons)
+- **Figma path:** `Icon/SimpleIcons/{icon-name}`
+- **Usage in Nuxt UI:** `<UIcon name="i-simple-icons-{icon-name}" />`
+- **Examples:** `i-simple-icons-github`, `i-simple-icons-twitter`, `i-simple-icons-nuxt`, `i-simple-icons-vue`, `i-simple-icons-typescript`
+
+---
+
+## 7. UI Components
+
+All components are in Figma page `———— COMPONENTS ————` and sub-pages.
+
+---
+
+### Accordion
+**Figma Node:** `141:12806`
+**Nuxt UI:** `UAccordion`
+
+| Property | Values |
+|---|---|
+| State | `Closed` \| `Disable` |
+
+```vue
+<UAccordion :items="items" />
+```
+
+---
+
+### Alert
+**Figma Node:** `1762:9173`
+**Nuxt UI:** `UAlert`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `secondary` \| `success` \| `info` \| `warning` \| `error` \| `neutral` |
+| variant | `solid` \| `outline` \| `soft` \| `subtle` |
+| LeadingSlot | `Icon` \| `Avatar` |
+| Description | `True` \| `False` |
+| Action | `True` \| `False` |
+
+```vue
+<UAlert color="primary" variant="soft" title="..." description="..." />
+```
+
+---
+
+### Avatar
+**Figma Node:** `2:9`
+**Nuxt UI:** `UAvatar`
+
+| Property | Values |
+|---|---|
+| variant | `Image` \| `Icon` \| `Alt` \| `Outline` |
+| size | `3xs` \| `2xs` \| `xs` \| `sm` \| `md` \| `lg` \| `xl` \| `2xl` \| `3xl` |
+| ChipPosition | `None` \| `Top-right` \| `Top-left` \| `Bottom-right` \| `Bottom-left` |
+
+```vue
+<UAvatar src="..." size="md" />
+<UAvatar icon="i-lucide-user" size="lg" />
+```
+
+---
+
+### AvatarGroup
+**Figma Node:** `1787:8442`
+**Nuxt UI:** `UAvatarGroup`
+
+| Property | Values |
+|---|---|
+| size | `3xs` \| `2xs` \| `xs` \| `sm` \| `md` \| `lg` \| `xl` \| `2xl` \| `3xl` |
+
+```vue
+<UAvatarGroup size="md" :max="3">
+  <UAvatar v-for="u in users" :key="u.id" :src="u.avatar" />
+</UAvatarGroup>
+```
+
+---
+
+### Badge
+**Figma Node:** `1702:33527`
+**Nuxt UI:** `UBadge`
+**Figma Component Set Key:** `05c969dd983c5d390625a22ecf33aae582f746bb`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `secondary` \| `success` \| `info` \| `warning` \| `error` \| `neutral` |
+| variant | `solid` \| `outline` \| `soft` \| `subtle` |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+| rounded-full | `true` \| `false` |
+
+```vue
+<UBadge color="primary" variant="solid" size="md">Label</UBadge>
+<UBadge color="success" variant="soft" :rounded-full="true">Active</UBadge>
+```
+
+---
+
+### Banner
+**Figma Node:** `3523:8119`
+**Nuxt UI:** `UBanner`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `neutral` \| `success` \| `info` \| `warning` \| `error` |
+| close | `true` \| `false` |
+
+---
+
+### Breadcrumb
+**Figma Node:** `1762:18557`
+**Nuxt UI:** `UBreadcrumb`
+**Figma Component Set Key:** `f673f2522a976a91de38cdf0ed4ea45d795d3f3f`
+
+| Property | Values |
+|---|---|
+| LeadingSlot | `None` \| `Icon` \| `Span` |
+| Divider | `Icon` \| `Span` |
+| Background | `True` \| `False` |
+| DropdownMenu | `True` \| `False` |
+
+```vue
+<UBreadcrumb :links="[{ label: 'Home', to: '/' }, { label: 'Docs' }]" />
+```
+
+---
+
+### Button
+**Figma Node:** `69:12607`
+**Nuxt UI:** `UButton`
+**Figma Component Sets:** `ButtonNeutral` · `ButtonPrimary` · `ButtonSecondary` · `ButtonSuccess` · `ButtonWarning` · `ButtonError` · `ButtonInfo`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `secondary` \| `success` \| `info` \| `warning` \| `error` \| `neutral` |
+| variant | `solid` \| `outline` \| `soft` \| `subtle` \| `ghost` \| `link` |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+| Slot | `Icon` \| `Avatar` |
+| square | `true` \| `false` |
+| rounded-full | `true` \| `false` |
+| State | `Default` \| `Hover` \| `Focus` \| `Disabled` |
+
+```vue
+<UButton color="primary" variant="solid" size="md">Click me</UButton>
+<UButton color="neutral" variant="outline" leading-icon="i-lucide-plus" />
+<UButton color="primary" variant="ghost" square />
+```
+
+---
+
+### ButtonGroup
+**Figma Node:** `1762:39104`
+**Nuxt UI:** `UButtonGroup`
+
+```vue
+<UButtonGroup>
+  <UButton color="primary" variant="outline">Left</UButton>
+  <UButton color="primary" variant="outline">Right</UButton>
+</UButtonGroup>
+```
+
+---
+
+### Calendar
+**Figma Node:** `2106:2701`
+**Nuxt UI:** `UCalendar`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `neutral` |
+| size | `sm` \| `md` \| `lg` |
+
+---
+
+### Card
+**Figma Node:** `1762:41287`
+**Nuxt UI:** `UCard`
+**Figma Component:** single component (no color/variant matrix)
+
+Slots: `header` · `body` (default) · `footer`
+
+```vue
+<UCard>
+  <template #header>Title</template>
+  <p>Content</p>
+  <template #footer>Actions</template>
+</UCard>
+```
+
+---
+
+### Carousel
+**Figma Node:** `1793:21310`
+**Nuxt UI:** `UCarousel`
+
+| Property | Values |
+|---|---|
+| arrows | `true` \| `false` |
+| dots | `true` \| `false` |
+
+---
+
+### Checkbox
+**Figma Node:** `1762:41329`
+**Nuxt UI:** `UCheckbox`
+**Figma Component Set Key:** `06d19efbeb6282e9cc0fe868325234638615e3ec`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `neutral` \| `error` |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+| State | `Default` \| `Checked` \| `Disabled` \| `Focus` |
+
+```vue
+<UCheckbox v-model="checked" label="Accept terms" color="primary" size="md" />
+```
+
+---
+
+### Chip
+**Figma Node:** `1702:30992`
+**Nuxt UI:** `UChip`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `secondary` \| `success` \| `info` \| `warning` \| `error` \| `neutral` |
+| size | `3xs` \| `2xs` \| `xs` \| `sm` \| `md` \| `lg` \| `xl` \| `2xl` \| `3xl` |
+| position | `top-right` \| `top-left` \| `bottom-right` \| `bottom-left` |
+
+---
+
+### Collapsible
+**Figma Node:** `1717:41768`
+**Nuxt UI:** `UCollapsible`
+
+| Property | Values |
+|---|---|
+| State | `Open` \| `Closed` |
+
+---
+
+### ColorModeSelect / ColorModeSwitch
+**Figma Nodes:** `3578:5630` / `3578:10618`
+**Nuxt UI:** `UColorModeSelect` / `UColorModeSwitch`
+
+Toggle between light and dark mode.
+
+---
+
+### ColorPicker
+**Figma Node:** `3591:24586`
+**Nuxt UI:** `UColorPicker`
+
+---
+
+### CommandPalette
+**Figma Node:** `1717:39982`
+**Nuxt UI:** `UCommandPalette`
+
+| Property | Values |
+|---|---|
+| close | `true` \| `false` |
+
+---
+
+### ContentNavigation
+**Figma Node:** `3630:36671`
+**Nuxt UI:** `UContentNavigation`
+
+---
+
+### ContentSearch / ContentSearchButton
+**Figma Nodes:** `3660:11763` / `3660:11444`
+**Nuxt UI:** `UContentSearch` / `UContentSearchButton`
+
+---
+
+### ContentToc
+**Figma Node:** `3660:213244`
+**Nuxt UI:** `UContentToc`
+
+---
+
+### DashboardNavbar
+**Figma Node:** `3975:13038`
+**Nuxt UI:** `UDashboardNavbar`
+
+---
+
+### DashboardPanel
+**Figma Node:** `3979:24521`
+**Nuxt UI:** `UDashboardPanel`
+
+---
+
+### DashboardSearch / DashboardSearchButton
+**Figma Nodes:** `3980:32976` / `3981:34440`
+**Nuxt UI:** `UDashboardSearch` / `UDashboardSearchButton`
+
+---
+
+### DashboardSidebar
+**Figma Node:** `3981:35516`
+**Nuxt UI:** `UDashboardSidebar`
+
+---
+
+### DashboardToolbar
+**Figma Node:** `3984:298678`
+**Nuxt UI:** `UDashboardToolbar`
+
+---
+
+### Drawer
+**Figma Node:** `1717:39890`
+**Nuxt UI:** `UDrawer`
+
+| Property | Values |
+|---|---|
+| direction | `top` \| `right` \| `bottom` \| `left` |
+
+---
+
+### DropdownMenu
+**Figma Node:** `1717:4947`
+**Nuxt UI:** `UDropdownMenu`
+
+| Property | Values |
+|---|---|
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+| Trigger Variant | `Button` \| `Avatar` \| `Outline` |
+| Alignment | `bottom-start` \| `bottom-end` \| `top-start` \| `right` \| `left` |
+| arrow | `true` \| `false` |
+
+```vue
+<UDropdownMenu :items="menuItems">
+  <UButton label="Open" trailing-icon="i-lucide-chevron-down" />
+</UDropdownMenu>
+```
+
+---
+
+### Error
+**Figma Node:** `3620:828`
+**Nuxt UI:** `UError`
+
+---
+
+### FileUpload
+**Figma Node:** `4186:21549`
+**Nuxt UI:** `UFileUpload`
+
+---
+
+### Footer / FooterColumns
+**Figma Nodes:** `3620:13888` / `3762:5735`
+**Nuxt UI:** `UFooter` / `UFooterColumns`
+
+---
+
+### FormField
+**Figma Node:** `1715:6743`
+**Nuxt UI:** `UFormField`
+
+| Property | Values |
+|---|---|
+| error | `true` \| `false` |
+| required | `true` \| `false` |
+| hint | `true` \| `false` |
+
+```vue
+<UFormField label="Email" name="email" :error="errors.email">
+  <UInput v-model="form.email" type="email" />
+</UFormField>
+```
+
+---
+
+### Header
+**Figma Node:** `3621:25193`
+**Nuxt UI:** `UHeader`
+
+---
+
+### Input
+**Figma Node:** `1707:967`
+**Nuxt UI:** `UInput`
+**Figma Component Sets:** `InputOutline` · `InputSoft` · `InputSubtle` · `InputGhost` · `InputNone`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `neutral` \| `error` |
+| variant | `outline` \| `soft` \| `subtle` \| `ghost` \| `none` |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+| LeadingSlot | `None` \| `Icon` \| `Span` \| `Avatar` |
+| TrailingSlot | `None` \| `Icon` \| `Span` |
+| State | `Default` \| `Hover` \| `Focus` \| `Disabled` |
+
+```vue
+<UInput v-model="value" placeholder="Search..." variant="outline" size="md" />
+<UInput leading-icon="i-lucide-search" placeholder="Search" />
+```
+
+---
+
+### InputMenu
+**Figma Node:** `1714:72390`
+**Nuxt UI:** `UInputMenu`
+
+| Property | Values |
+|---|---|
+| variant | `outline` \| `soft` \| `subtle` \| `ghost` \| `none` |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+
+---
+
+### InputNumber
+**Figma Node:** `2086:5996`
+**Nuxt UI:** `UInputNumber`
+
+| Property | Values |
+|---|---|
+| variant | `outline` \| `soft` \| `subtle` \| `ghost` \| `none` |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+
+---
+
+### InputTags
+**Figma Node:** `4198:71537`
+**Nuxt UI:** `UInputTags`
+
+---
+
+### Kbd
+**Figma Node:** `1714:71452`
+**Nuxt UI:** `UKbd`
+
+| Property | Values |
+|---|---|
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+| variant | `solid` \| `outline` \| `subtle` |
+
+```vue
+<UKbd>⌘</UKbd>
+<UKbd>K</UKbd>
+```
+
+---
+
+### Link
+**Figma Node:** `1714:71323`
+**Nuxt UI:** `ULink`
+
+| Property | Values |
+|---|---|
+| active | `true` \| `false` |
+
+---
+
+### LocaleSelect
+**Figma Node:** `3578:12033`
+**Nuxt UI:** `ULocaleSelect`
+
+---
+
+### Modal
+**Figma Node:** `1714:71247`
+**Nuxt UI:** `UModal`
+
+| Property | Values |
+|---|---|
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` \| `2xl` \| `3xl` \| `4xl` \| `5xl` \| `full` |
+| fullscreen | `true` \| `false` |
+| close | `true` \| `false` |
+
+```vue
+<UModal v-model:open="open" title="Modal Title">
+  <p>Content</p>
+  <template #footer>
+    <UButton @click="open = false">Close</UButton>
+  </template>
+</UModal>
+```
+
+---
+
+### NavigationMenu
+**Figma Node:** `1714:62072`
+**Nuxt UI:** `UNavigationMenu`
+
+| Property | Values |
+|---|---|
+| orientation | `horizontal` \| `vertical` |
+| variant | `pill` \| `link` |
+
+---
+
+### PageAccordion
+**Figma Node:** `3651:310209`
+**Nuxt UI:** `UPageAccordion`
+
+---
+
+### PageAnchors
+**Figma Node:** `3625:26553`
+**Nuxt UI:** `UPageAnchors`
+
+---
+
+### PageCard
+**Figma Node:** `3637:254571`
+**Nuxt UI:** `UPageCard`
+
+| Property | Values |
+|---|---|
+| variant | `outline` \| `soft` \| `subtle` \| `ghost` \| `naked` |
+| orientation | `horizontal` \| `vertical` |
+
+---
+
+### PageCTA
+**Figma Node:** `3762:85958`
+**Nuxt UI:** `UPageCTA`
+
+| Property | Values |
+|---|---|
+| variant | `solid` \| `outline` \| `soft` \| `subtle` \| `naked` |
+
+---
+
+### PageFeature
+**Figma Node:** `3682:80050`
+**Nuxt UI:** `UPageFeature`
+
+---
+
+### PageHeader
+**Figma Node:** `3584:18586`
+**Nuxt UI:** `UPageHeader`
+
+---
+
+### PageHero
+**Figma Node:** `3682:78568`
+**Nuxt UI:** `UPageHero`
+
+| Property | Values |
+|---|---|
+| orientation | `horizontal` \| `vertical` |
+
+---
+
+### PageSection
+**Figma Node:** `3642:276423`
+**Nuxt UI:** `UPageSection`
+
+---
+
+### Pagination
+**Figma Node:** `1714:55440`
+**Nuxt UI:** `UPagination`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `neutral` |
+| variant | `solid` \| `outline` \| `soft` \| `ghost` |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+
+```vue
+<UPagination v-model:page="page" :total="100" :items-per-page="10" />
+```
+
+---
+
+### PinInput
+**Figma Node:** `2072:15906`
+**Nuxt UI:** `UPinInput`
+
+| Property | Values |
+|---|---|
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+| variant | `outline` \| `soft` \| `subtle` \| `ghost` \| `none` |
+| color | `primary` \| `neutral` \| `error` |
+
+---
+
+### Popover
+**Figma Node:** `1714:43286`
+**Nuxt UI:** `UPopover`
+
+| Property | Values |
+|---|---|
+| arrow | `true` \| `false` |
+| align | `start` \| `center` \| `end` |
+| side | `top` \| `right` \| `bottom` \| `left` |
+
+---
+
+### PricingPlan / PricingPlans / PricingTable
+**Figma Nodes:** `3631:51513` / `3633:31250` / `4089:8692`
+**Nuxt UI:** `UPricingPlan` / `UPricingPlans` / `UPricingTable`
+
+---
+
+### Progress
+**Figma Node:** `1714:42674`
+**Nuxt UI:** `UProgress`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `secondary` \| `success` \| `info` \| `warning` \| `error` \| `neutral` |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+| animation | `carousel` \| `carousel-inverse` \| `swing` \| `elastic` |
+
+```vue
+<UProgress :value="75" color="primary" size="md" />
+<UProgress color="success" :indeterminate="true" />
+```
+
+---
+
+### RadioGroup
+**Figma Node:** `1714:41062`
+**Nuxt UI:** `URadioGroup`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `neutral` \| `error` |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+| variant | `card` \| `list` \| `table` |
+| orientation | `vertical` \| `horizontal` |
+
+---
+
+### Select
+**Figma Node:** `1706:238`
+**Nuxt UI:** `USelect`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `neutral` \| `error` |
+| variant | `outline` \| `soft` \| `subtle` \| `ghost` \| `none` |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+
+---
+
+### SelectMenu
+**Figma Node:** `1706:239`
+**Nuxt UI:** `USelectMenu`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `neutral` \| `error` |
+| variant | `outline` \| `soft` \| `subtle` \| `ghost` \| `none` |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+| multiple | `true` \| `false` |
+
+---
+
+### Separator
+**Figma Node:** `1705:23642`
+**Nuxt UI:** `USeparator`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `neutral` (and all colors) |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+| orientation | `horizontal` \| `vertical` |
+| type | `solid` \| `dashed` \| `dotted` |
+| Slot | `None` \| `Icon` \| `Text` |
+
+```vue
+<USeparator label="Or" />
+<USeparator orientation="vertical" />
+```
+
+---
+
+### Skeleton
+**Figma Node:** `1705:19761`
+**Nuxt UI:** `USkeleton`
+
+```vue
+<USkeleton class="h-4 w-48" />
+<USkeleton class="h-10 w-full rounded-lg" />
+```
+
+---
+
+### Slideover
+**Figma Node:** `1705:19760`
+**Nuxt UI:** `USlideover`
+
+| Property | Values |
+|---|---|
+| side | `top` \| `right` \| `bottom` \| `left` |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` \| `2xl` \| `3xl` \| `4xl` \| `full` |
+
+---
+
+### Slider
+**Figma Node:** `1705:15994`
+**Nuxt UI:** `USlider`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `neutral` |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+| orientation | `horizontal` \| `vertical` |
+
+```vue
+<USlider v-model="value" :min="0" :max="100" color="primary" />
+```
+
+---
+
+### Stepper
+**Figma Node:** `3596:7448`
+**Nuxt UI:** `UStepper`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `neutral` |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+| orientation | `horizontal` \| `vertical` |
+
+---
+
+### Switch
+**Figma Node:** `1705:14471`
+**Nuxt UI:** `USwitch`
+**Figma Component Set:** `Switch`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `secondary` \| `success` \| `info` \| `warning` \| `error` \| `neutral` |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+| State | `Default` \| `Active` \| `Disabled` \| `Focus` |
+
+```vue
+<USwitch v-model="enabled" color="primary" size="md" label="Enable notifications" />
+```
+
+---
+
+### Table
+**Figma Node:** `1812:30587`
+**Nuxt UI:** `UTable`
+
+| Property | Values |
+|---|---|
+| Loading | `true` \| `false` |
+| sticky | `true` \| `false` |
+
+```vue
+<UTable :columns="columns" :rows="rows" />
+```
+
+---
+
+### Tabs
+**Figma Node:** `1703:2438`
+**Nuxt UI:** `UTabs`
+**Figma Component Set Key:** `e30293e9b409f012f12ec0b884600b3578e3c324`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `neutral` |
+| variant | `pill` \| `link` |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+| Align (orientation) | `Horizontal` \| `Vertical` |
+
+```vue
+<UTabs :items="tabs" color="primary" variant="pill" size="md" />
+```
+
+---
+
+### Textarea
+**Figma Node:** `1703:79`
+**Nuxt UI:** `UTextarea`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `neutral` \| `error` |
+| variant | `outline` \| `soft` \| `subtle` \| `ghost` \| `none` |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+
+---
+
+### Timeline
+**Figma Node:** `4205:19199`
+**Nuxt UI:** `UTimeline`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `neutral` |
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+| orientation | `horizontal` \| `vertical` |
+
+---
+
+### Toast
+**Figma Node:** `1703:78`
+**Nuxt UI:** `UToast` / `useToast()`
+**Figma Component Set:** `Toast`
+
+| Property | Values |
+|---|---|
+| color | `primary` \| `secondary` \| `success` \| `info` \| `warning` \| `error` \| `neutral` |
+| LeadingSlot | `Icon` \| `Avatar` \| `None` |
+| Description | `True` \| `False` |
+| Actions | `True` \| `False` |
+| Progress | `0` \| `100` |
+
+```vue
+<!-- In component -->
+<UToastProvider />
+
+<!-- Usage via composable -->
+<script setup>
+const toast = useToast()
+toast.add({ title: 'Saved!', color: 'success', icon: 'i-lucide-check' })
+</script>
+```
+
+---
+
+### Tooltip
+**Figma Node:** `1702:34484`
+**Nuxt UI:** `UTooltip`
+
+| Property | Values |
+|---|---|
+| arrow | `true` \| `false` |
+| side | `top` \| `right` \| `bottom` \| `left` |
+| delay | number (ms) |
+
+```vue
+<UTooltip text="This is a tooltip">
+  <UButton>Hover me</UButton>
+</UTooltip>
+```
+
+---
+
+### Tree
+**Figma Node:** `4039:83575`
+**Nuxt UI:** `UTree`
+
+---
+
+### User
+**Figma Node:** `3570:9856`
+**Nuxt UI:** `UUser`
+
+| Property | Values |
+|---|---|
+| size | `xs` \| `sm` \| `md` \| `lg` \| `xl` |
+| avatar | Avatar props object |
+
+---
+
+## 8. Page-Level Layout Components (Nuxt UI Pro)
+
+These composite components are available in the Design Kit as full-page patterns.
+
+| Component | Figma Node | Nuxt UI |
+|---|---|---|
+| Header | `3621:25193` | `UHeader` |
+| Footer | `3620:13888` | `UFooter` |
+| PageHero | `3682:78568` | `UPageHero` |
+| PageSection | `3642:276423` | `UPageSection` |
+| PageFeature | `3682:80050` | `UPageFeature` |
+| PageCard | `3637:254571` | `UPageCard` |
+| PageGrid | `3638:258142` | `UPageGrid` |
+| PageColumns | `3682:75859` | `UPageColumns` |
+| PageCTA | `3762:85958` | `UPageCTA` |
+| PageLogos | `3814:131760` | `UPageLogos` |
+| PageLinks | `3630:36672` | `UPageLinks` |
+| PageAnchors | `3625:26553` | `UPageAnchors` |
+| PricingPlan | `3631:51513` | `UPricingPlan` |
+| PricingPlans | `3633:31250` | `UPricingPlans` |
+| PricingTable | `4089:8692` | `UPricingTable` |
+| BlogPost | `3567:9849` | `UBlogPost` |
+| BlogPosts | `3576:4567` | `UBlogPosts` |
+| ChangelogVersion | `4200:61406` | `UChangelogVersion` |
+| DashboardNavbar | `3975:13038` | `UDashboardNavbar` |
+| DashboardSidebar | `3981:35516` | `UDashboardSidebar` |
+| DashboardPanel | `3979:24521` | `UDashboardPanel` |
+| DashboardSearch | `3980:32976` | `UDashboardSearch` |
+| DashboardToolbar | `3984:298678` | `UDashboardToolbar` |
+
+---
+
+## 9. Quick Reference: Hex → Semantic Token
+
+When you encounter a hardcoded hex color, replace it with the nearest semantic token:
+
+| Hex | Semantic Token | Context |
+|---|---|---|
+| `#00DC82` / `#00C16A` | `--ui-primary` / `primary-400/500` | Primary green |
+| `#2B7FFF` / `#155DFC` | `--ui-secondary` / `secondary-500/600` | Secondary blue |
+| `#FCC800` / `#EFB100` | `--ui-warning` / `warning-400/500` | Warning yellow |
+| `#FB2C36` / `#E7000B` | `--ui-error` / `error-500/600` | Error red |
+| `#00C16A` / `#00A155` | `--ui-success` / `success-500/600` | Success green |
+| `#2B7FFF` / `#0084D1` | `--ui-info` / `info-500/600` | Info blue |
+| `#FFFFFF` | `--ui-bg-elevated` | Card/surface background |
+| `#F8FAFC` / `#F1F5F9` | `--ui-bg` / `--ui-bg-accented` | Page background |
+| `#E2E8F0` / `#CAD5E2` | `--ui-border` / `--ui-border-accented` | Borders |
+| `#0F172B` / `#1D293D` | `--ui-text-highlighted` | Headings |
+| `#314158` / `#45556C` | `--ui-text` | Body text |
+| `#64748E` / `#90A1B9` | `--ui-text-muted` / `--ui-text-dimmed` | Muted/hint text |
+
+---
+
+## 10. Rules for Figma Handoff
+
+When converting a Vue page to Figma or from Figma to Vue:
+
+1. **Replace raw hex fills** with the nearest `--ui-*` CSS variable from Section 9.
+2. **Replace raw rectangles/shapes** with the matching Nuxt UI component from Section 7 (correct color + variant + size).
+3. **Replace raw SVG paths** with `<UIcon name="i-lucide-{name}" />` or `<UIcon name="i-simple-icons-{name}" />`.
+4. **Use Figma component name** from the `componentSetId` key when inserting components directly into Figma frames via MCP.
+5. **Never use `color="primary"` on Badge/Button without also specifying `variant`** — the default is `solid`.
+6. **For text colors:** use `--ui-text-highlighted` for headings, `--ui-text` for body, `--ui-text-muted` for secondary, never raw hex.
+7. **For backgrounds:** use `--ui-bg-elevated` for card surfaces, `--ui-bg` for page, `--ui-bg-accented` for subtle fills.

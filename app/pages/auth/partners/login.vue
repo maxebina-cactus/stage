@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import * as z from 'zod'
+import { z } from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 
 definePageMeta({ layout: 'auth-split' })
@@ -10,87 +10,142 @@ useSeoMeta({
 })
 
 const schema = z.object({
-  email: z.string().email('E-mail inválido'),
-  senha: z.string().min(8, 'Mínimo de 8 caracteres'),
+  email: z.string({ required_error: 'O e-mail é obrigatório' })
+    .min(1, 'O e-mail é obrigatório')
+    .email('Digite um e-mail válido'),
+  senha: z.string({ required_error: 'A senha é obrigatória' })
+    .min(1, 'A senha é obrigatória')
+    .min(8, 'A senha deve ter no mínimo 8 caracteres'),
 })
 
 type Schema = z.output<typeof schema>
 
+const mockUsers = [
+  { email: 'gestor@partners.com', password: 'Ges@tor123', name: 'Gestor', role: 'gestor' },
+  { email: 'afiliado@partners.com', password: 'Afili@do321', name: 'Afiliado', role: 'afiliado' },
+]
+
+const authUser = useState('authUser', () => null)
+
 const state = reactive<Partial<Schema>>({
-  email: undefined,
-  senha: undefined,
+  email: '',
+  senha: '',
 })
 
 const mostrarSenha = ref(false)
-const carregando = ref(false)
+const isLoading = ref(false)
+const loginError = ref('')
+const isProgramDrawerOpen = useState('programDrawer', () => false)
+
+const route = useRoute()
+const router = useRouter()
+const toast = useToast()
+
+const toastMessages: Record<string, Parameters<typeof toast.add>[0]> = {
+  reset_success: {
+    title: 'Senha redefinida!',
+    description: 'Sua nova senha já está ativa. Você pode acessar sua conta agora.',
+    icon: 'i-lucide-circle-check',
+    color: 'success',
+  },
+  activation_success: {
+    title: 'E-mail confirmado!',
+    description: 'Sua conta foi ativada. Agora é só fazer o login.',
+    icon: 'i-lucide-badge-check',
+    color: 'success',
+  },
+}
+
+onMounted(() => {
+  const config = toastMessages[route.query.msg as string]
+  if (config) {
+    toast.add(config)
+    router.replace({ query: {} })
+  }
+})
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  carregando.value = true
-  // TODO: integrar com API de autenticação
-  console.log('Login', event.data)
-  carregando.value = false
+  isLoading.value = true
+  loginError.value = ''
+
+  await new Promise(resolve => setTimeout(resolve, 2000))
+
+  const user = mockUsers.find(
+    u => u.email === event.data.email && u.password === event.data.senha,
+  )
+
+  if (!user) {
+    loginError.value = 'E-mail ou senha incorretos. Verifique seus dados e tente novamente.'
+    isLoading.value = false
+    return
+  }
+
+  authUser.value = user
+  await navigateTo('/partners')
 }
 
 const features = [
-  { icon: 'i-lucide-bar-chart-2', label: 'Relatórios em tempo real' },
-  { icon: 'i-lucide-zap', label: 'Gestão de campanhas integrada' },
-  { icon: 'i-lucide-shield-check', label: 'Ambiente seguro e auditável' },
+  { icon: 'i-lucide-handshake', label: 'Afiliados' },
+  { icon: 'i-lucide-gamepad-2', label: 'iGaming' },
+  { icon: 'i-lucide-trophy', label: 'Spotsbook' },
 ]
 </script>
 
 <template>
   <div class="grid lg:grid-cols-2 min-h-screen">
 
-    <!-- ── Painel esquerdo — visual/marketing ── -->
     <div
       class="hidden lg:flex flex-col relative overflow-hidden"
       style="background: linear-gradient(145deg, color-mix(in oklab, var(--ui-primary) 2%, var(--ui-bg)) 0%, color-mix(in oklab, var(--ui-primary) 50%, var(--ui-bg)) 70%);"
     >
 
-      <!-- Dot grid -->
       <div
         class="absolute inset-0"
         style="background-image: radial-gradient(circle, color-mix(in oklab, var(--ui-bg) 18%, transparent) 1px, transparent 1px); background-size: 28px 28px;"
       />
 
-      <!-- Glow blobs -->
       <div class="absolute -top-48 -right-48 size-[560px] rounded-full bg-(--ui-bg)/10 blur-[120px] pointer-events-none" />
       <div class="absolute -bottom-48 -left-48 size-[480px] rounded-full bg-(--ui-bg)/5 blur-[100px] pointer-events-none" />
 
-      <!-- Conteúdo -->
       <div class="relative z-10 flex flex-col justify-between h-full p-12 w-3/4 mx-auto">
 
-        <!-- Logo -->
         <NuxtLink to="/" aria-label="Ir para o início">
           <AppLogo class="h-7 text-(--ui-text-highlighted)" />
         </NuxtLink>
 
-        <!-- Corpo central -->
         <div class="flex flex-col gap-8">
           <div class="flex flex-col gap-4">
-            <h1 class="text-[2.75rem] font-bold text-(--ui-text-highlighted) leading-[1.15] tracking-tight">
-              Plataforma<br />Partners
+            <h1 class="text-4xl font-bold text-(--ui-text-highlighted) leading-tight tracking-tight">
+              Transforme seu tráfego em receita no iGaming e apostas esportivas.
             </h1>
-            <p class="text-[1.0625rem] text-(--ui-text-highlighted) opacity-70 max-w-xs leading-relaxed">
-              Gerencie campanhas, acompanhe resultados e integre seus sistemas em um ambiente unificado.
+            <p class="text-base text-(--ui-text-highlighted) opacity-70 leading-relaxed">
+              Plataforma de afiliados com relatórios claros, comissões competitivas e suporte dedicado — para quem leva performance a sério.
             </p>
           </div>
 
-          <ul class="flex flex-col gap-3">
+          <ul class="flex flex-col gap-3" role="list" aria-label="Segmentos atendidos">
             <li
               v-for="feature in features"
               :key="feature.label"
               class="flex items-center gap-3"
             >
-              <div class="size-8 rounded-lg bg-(--ui-bg)/15 flex items-center justify-center shrink-0">
-                <UIcon :name="feature.icon" class="size-4 text-(--ui-text-highlighted)" />
+              <div class="size-8 rounded-(--ui-radius) bg-(--ui-bg)/15 flex items-center justify-center shrink-0" aria-hidden="true">
+                <UIcon :name="feature.icon" class="size-6 text-(--ui-text-highlighted)" />
               </div>
-              <span class="text-sm font-medium text-(--ui-text-highlighted)">{{ feature.label }}</span>
+              <span class="text-xl font-semibold text-(--ui-text-highlighted)">{{ feature.label }}</span>
             </li>
           </ul>
+
+          <div>
+            <UButton
+              color="neutral"
+              variant="solid"
+              label="Saiba mais sobre o programa"
+              @click="isProgramDrawerOpen = true"
+            />
+          </div>
         </div>
 
-        <!-- Rodapé -->
         <p class="text-xs text-(--ui-text-highlighted) opacity-40">
           © 2026 Stage. Todos os direitos reservados.
         </p>
@@ -98,24 +153,20 @@ const features = [
       </div>
     </div>
 
-    <!-- ── Painel direito — formulário ── -->
     <div class="relative flex flex-col bg-(--ui-bg)">
 
-      <!-- Color mode toggle -->
-      <div class="absolute top-5 right-5 z-10">
-        <UColorModeButton />
+      <div class="absolute top-5 right-5 z-10 flex items-center gap-1">
+        <LocaleSwitcher />
+        <UColorModeButton size="md" />
       </div>
 
-      <!-- Formulário centralizado -->
       <div class="flex flex-col items-center justify-center flex-1 min-h-screen lg:min-h-0 px-6 py-16">
         <div class="w-full max-w-sm flex flex-col gap-7">
 
-          <!-- Logo (mobile only) -->
           <NuxtLink to="/" class="flex justify-center lg:hidden" aria-label="Ir para o início">
             <AppLogo class="h-6 text-(--ui-text-highlighted)" />
           </NuxtLink>
 
-          <!-- Header -->
           <div class="flex flex-col gap-1">
             <h2 class="text-2xl font-semibold text-(--ui-text-highlighted)">
               Bem-vindo de volta
@@ -125,7 +176,6 @@ const features = [
             </p>
           </div>
 
-          <!-- Form -->
           <UForm :schema="schema" :state="state" class="flex flex-col gap-4" @submit="onSubmit">
 
             <UFormField name="email" label="E-mail" required>
@@ -173,31 +223,26 @@ const features = [
               </UInput>
             </UFormField>
 
+            <UAlert
+              v-if="loginError"
+              color="error"
+              variant="soft"
+              icon="i-lucide-circle-alert"
+              :description="loginError"
+            />
+
             <UButton
               type="submit"
               label="Entrar"
               color="primary"
               block
-              :loading="carregando"
+              :loading="isLoading"
+              :disabled="isLoading"
               class="mt-1"
             />
 
           </UForm>
 
-          <!-- Divider -->
-          <div class="flex items-center gap-3">
-            <div class="flex-1 h-px bg-(--ui-border)" />
-            <span class="text-xs text-(--ui-text-muted) shrink-0">ou continue com</span>
-            <div class="flex-1 h-px bg-(--ui-border)" />
-          </div>
-
-          <!-- OAuth -->
-          <div class="flex gap-3">
-            <UButton label="Google" icon="i-simple-icons-google" color="neutral" variant="outline" block />
-            <UButton label="GitHub" icon="i-simple-icons-github" color="neutral" variant="outline" block />
-          </div>
-
-          <!-- Link signup -->
           <p class="text-center text-sm text-(--ui-text-muted)">
             Não tem uma conta?
             <NuxtLink to="/auth/partners/signup" class="text-(--ui-primary) font-medium hover:underline">
@@ -205,10 +250,14 @@ const features = [
             </NuxtLink>
           </p>
 
-          <!-- Terms -->
-          <p class="text-center text-xs text-(--ui-text-toned)">
+          <p class="text-center text-xs text-(--ui-text-muted)">
             Ao entrar, você concorda com nossos
-            <NuxtLink to="/" class="text-(--ui-primary) hover:underline">Termos de Uso</NuxtLink>.
+            <span 
+              class="text-(--ui-primary) font-medium hover:underline cursor-pointer"
+              @click="useState('termsOpen').value = true"
+            >
+              Termos de Uso
+            </span>.
           </p>
 
         </div>
@@ -216,4 +265,16 @@ const features = [
     </div>
 
   </div>
+
+  <UDrawer
+    v-model:open="isProgramDrawerOpen"
+    direction="right"
+    inset
+    :modal="false"
+    class="md:max-w-[50vw] w-full"
+  >
+    <template #content>
+      <OrganismsProgramDrawerContent />
+    </template>
+  </UDrawer>
 </template>
