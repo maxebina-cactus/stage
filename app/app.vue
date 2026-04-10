@@ -14,7 +14,8 @@ useHead({
     { key: 'theme-color', name: 'theme-color', content: color }
   ],
   link: [{ rel: 'icon', href: '/favicon.ico' }],
-  htmlAttrs: { lang: 'pt-BR' }
+  htmlAttrs: { lang: 'pt-BR' },
+  script: [{ src: 'https://mcp.figma.com/mcp/html-to-design/capture.js', async: true }]
 })
 
 useSeoMeta({
@@ -26,8 +27,13 @@ useSeoMeta({
 <template>
   <UApp :locale="ptBR">
     <NuxtLoadingIndicator />
+    
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
+
+    <TermsModal />
+    
+    <UToaster /> 
   </UApp>
 </template>

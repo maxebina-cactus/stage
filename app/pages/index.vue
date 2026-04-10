@@ -237,12 +237,12 @@ const changelogColumns = [
           </div>
         </section>
 
-        <!-- Produtos -->
+        <!-- Layouts -->
         <section id="produtos" class="flex flex-col gap-4">
           <div class="flex items-center gap-2">
             <div class="w-1 self-stretch rounded-sm bg-(--ui-primary) shrink-0" />
             <h2 class="text-sm font-semibold text-(--ui-text-muted) uppercase tracking-wider whitespace-nowrap shrink-0">
-              Produtos
+              Layouts
             </h2>
             <div class="flex-1 h-px bg-(--ui-border)" />
           </div>

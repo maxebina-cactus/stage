@@ -19,17 +19,23 @@ const { width } = useElementSize(cardRef)
 
 const data = ref<DataRecord[]>([])
 
+let debounceTimer: ReturnType<typeof setTimeout> | null = null
+
 watch([() => props.period, () => props.range], () => {
-  const dates = ({
-    daily: eachDayOfInterval,
-    weekly: eachWeekOfInterval,
-    monthly: eachMonthOfInterval
-  } as Record<Period, typeof eachDayOfInterval>)[props.period](props.range)
+  if (debounceTimer) clearTimeout(debounceTimer)
 
-  const min = 1000
-  const max = 10000
+  debounceTimer = setTimeout(() => {
+    const dates = ({
+      daily: eachDayOfInterval,
+      weekly: eachWeekOfInterval,
+      monthly: eachMonthOfInterval
+    } as Record<Period, typeof eachDayOfInterval>)[props.period](props.range)
 
-  data.value = dates.map(date => ({ date, amount: Math.floor(Math.random() * (max - min + 1)) + min }))
+    const min = 1000
+    const max = 10000
+
+    data.value = dates.map(date => ({ date, amount: Math.floor(Math.random() * (max - min + 1)) + min }))
+  }, 150)
 }, { immediate: true })
 
 const x = (_: DataRecord, i: number) => i

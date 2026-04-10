@@ -33,3 +33,4 @@ app/components/molecules/CommandPasswordGate.vue
 app/components/molecules/CommandSection.vue
 app/components/organisms/CommandPasswordGate.vue
 app/components/organisms/CommandSection.vue
+.claude/

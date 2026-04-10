@@ -92,9 +92,9 @@ const sections: ChangelogSection[] = [
       class="flex gap-8 relative pb-10 last:pb-0"
     >
       <div class="w-48 shrink-0">
-        <span class="sticky top-6 block text-sm text-(--ui-text-muted) leading-6">
+        <h2 class="sticky top-6 block text-md text-(--ui-text) font-semibold leading-6">
           {{ section.date }}
-        </span>
+        </h2>
       </div>
 
       <ul class="flex-1 min-w-0 space-y-3">

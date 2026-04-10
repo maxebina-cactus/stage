@@ -26,6 +26,26 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-01-15',
 
+  vite: {
+    server: {
+      headers: {
+        'Cache-Control': 'no-store'
+      }
+    },
+    resolve: {
+      dedupe: ['vue']
+    },
+    optimizeDeps: {
+      include: [
+        'zod',
+        'date-fns',
+        '@unovis/vue',
+        '@internationalized/date',
+        '@vueuse/core'
+      ]
+    }
+  },
+
   eslint: {
     config: {
       stylistic: {

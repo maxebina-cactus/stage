@@ -96,7 +96,7 @@ const groups = computed(() => [{
       </template>
 
       <template #footer="{ collapsed }">
-        <UserMenu :collapsed="collapsed" />
+        <UserMenuBackoffice :collapsed="collapsed" />
       </template>
     </UDashboardSidebar>
 

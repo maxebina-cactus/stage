@@ -22,51 +22,10 @@ const user = computed(() => ({
 }))
 
 const items = computed<DropdownMenuItem[][]>(() => ([[{
-  label: user.value.name,
-  avatar: user.value.avatar
+  label: 'Backoffice',
+  icon: 'i-lucide-circle-user',
+  to: '/partners/account'
 }], [{
-  label: 'Tema',
-  icon: 'i-material-symbols-colorize-outline-rounded',
-  children: [{
-    label: 'Primário',
-    slot: 'chip',
-    chip: appConfig.ui.colors.primary,
-    content: {
-      align: 'center',
-      collisionPadding: 16
-    },
-    children: colors.map(color => ({
-      label: color,
-      chip: color,
-      slot: 'chip',
-      checked: appConfig.ui.colors.primary === color,
-      type: 'checkbox',
-      onSelect: (e: Event) => {
-        e.preventDefault()
-        appConfig.ui.colors.primary = color
-      }
-    }))
-  }, {
-    label: 'Fundo',
-    slot: 'chip',
-    chip: appConfig.ui.colors.neutral === 'neutral' ? 'old-neutral' : appConfig.ui.colors.neutral,
-    content: {
-      align: 'end',
-      collisionPadding: 16
-    },
-    children: neutrals.map(color => ({
-      label: color,
-      chip: color === 'neutral' ? 'old-neutral' : color,
-      slot: 'chip',
-      type: 'checkbox',
-      checked: appConfig.ui.colors.neutral === color,
-      onSelect: (e: Event) => {
-        e.preventDefault()
-        appConfig.ui.colors.neutral = color
-      }
-    }))
-  }]
-}, {
   label: 'Aparência',
   icon: 'i-material-symbols-partly-cloudy-day-outline-rounded',
   children: [{

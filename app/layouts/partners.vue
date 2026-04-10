@@ -18,6 +18,34 @@ useHead(() => ({
 const toast = useToast()
 const open = ref(false)
 
+const authUser = useState('authUser', () => null)
+
+const menuAfiliado = [
+  { label: 'Dashboard', icon: 'i-lucide-bar-chart-2', to: '/partners' },
+  { label: 'Link de destino', icon: 'i-lucide-rocket', to: '/partners/afiliado/link-de-destino' },
+  { label: 'Relatório', icon: 'i-lucide-pie-chart', to: '/partners/afiliado/relatorio' },
+  { label: 'Mídia / Banners', icon: 'i-lucide-image', to: '/partners/afiliado/midia' },
+  { label: 'Registros', icon: 'i-lucide-package', to: '/partners/afiliado/registros' },
+  { label: 'Carteira', icon: 'i-lucide-wallet', to: '/partners/afiliado/carteira' },
+  { label: 'Postbacks', icon: 'i-lucide-share-2', to: '/partners/afiliado/postbacks' },
+]
+
+const menuGestor = [
+  { label: 'Dashboard', icon: 'i-lucide-bar-chart-2', to: '/partners' },
+  { label: 'Saque', icon: 'i-lucide-landmark', to: '/partners/gestor/saque' },
+  { label: 'Métodos de recebimento', icon: 'i-lucide-wallet-cards', to: '/partners/gestor/metodos-recebimento' },
+  { label: 'Afiliados', icon: 'i-lucide-users-2', to: '/partners/gestor/afiliados' },
+  { label: 'Gerentes', icon: 'i-lucide-user', to: '/partners/gestor/gerentes' },
+  { label: 'Configurações', icon: 'i-lucide-settings-2', to: '/partners/gestor/configuracoes' },
+  { label: 'Logs', icon: 'i-lucide-triangle-alert', to: '/partners/gestor/logs' },
+]
+
+const menuAtivo = computed(() => {
+  if (authUser.value?.role === 'afiliado') return menuAfiliado
+  if (authUser.value?.role === 'gestor') return menuGestor
+  return []
+})
+
 const links = computed(() => [[{
   label: 'Home',
   icon: 'i-lucide-house',
@@ -93,7 +121,7 @@ onMounted(async () => {
 
         <UNavigationMenu
           :collapsed="collapsed"
-          :items="links[0]"
+          :items="menuAtivo"
           orientation="vertical"
           tooltip
           popover
@@ -131,7 +159,7 @@ onMounted(async () => {
         <AppHeader :title="(route.meta.title as string) || 'Partners'">
           <template #right-extra>
             <div class="w-48 min-w-0">
-              <UserMenu :collapsed="false" class="[&_span]:truncate" />
+              <UserMenuPartners :collapsed="false" class="[&_span]:truncate" />
             </div>
           </template>
         </AppHeader>
@@ -143,5 +171,6 @@ onMounted(async () => {
     </UDashboardPanel>
 
     <NotificationsSlideover />
+    <TermsModal />
   </UDashboardGroup>
 </template>
