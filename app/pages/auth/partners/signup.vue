@@ -16,11 +16,17 @@ const schema = z.object({
   email: z.string({ required_error: 'O e-mail é obrigatório' })
     .min(1, 'O e-mail é obrigatório')
     .email('Digite um e-mail válido'),
-  cpfCnpj: z.string({ required_error: 'CPF ou CNPJ inválido' })
-    .min(1, 'CPF ou CNPJ inválido')
+  cpf: z.string({ required_error: 'CPF inválido' })
+    .min(1, 'CPF inválido')
     .refine(
-      val => { const d = val.replace(/\D/g, ''); return d.length >= 11 && d.length <= 14 },
-      'CPF ou CNPJ inválido',
+      val => val.replace(/\D/g, '').length === 11,
+      'CPF inválido',
+    ),
+  cnpj: z.string({ required_error: 'CNPJ inválido' })
+    .min(1, 'CNPJ inválido')
+    .refine(
+      val => val.replace(/\D/g, '').length === 14,
+      'CNPJ inválido',
     ),
   dataNascimento: z.string({ required_error: 'Data de nascimento inválida' })
     .min(1, 'Data de nascimento inválida')
@@ -64,7 +70,8 @@ type Schema = z.output<typeof schema>
 const state = reactive<Partial<Schema>>({
   nome: '',
   email: '',
-  cpfCnpj: '',
+  cpf: '',
+  cnpj: '',
   dataNascimento: '',
   telefone: '',
   nacionalidade: '',
@@ -112,13 +119,19 @@ const isProgramDrawerOpen = useState('programDrawer', () => false)
 
 // ── Máscaras ─────────────────────────────────────────────────────────────────
 
-function formatCpfCnpj(value: string): string {
-  const d = value.replace(/\D/g, '').slice(0, 14)
+function formatCpf(value: string): string {
+  const d = value.replace(/\D/g, '').slice(0, 11)
   if (d.length <= 3) return d
   if (d.length <= 6) return `${d.slice(0, 3)}.${d.slice(3)}`
   if (d.length <= 9) return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6)}`
-  if (d.length <= 11) return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6, 9)}-${d.slice(9)}`
-  // CNPJ (12–14 dígitos)
+  return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6, 9)}-${d.slice(9)}`
+}
+
+function formatCnpj(value: string): string {
+  const d = value.replace(/\D/g, '').slice(0, 14)
+  if (d.length <= 2) return d
+  if (d.length <= 5) return `${d.slice(0, 2)}.${d.slice(2)}`
+  if (d.length <= 8) return `${d.slice(0, 2)}.${d.slice(2, 5)}.${d.slice(5)}`
   if (d.length <= 12) return `${d.slice(0, 2)}.${d.slice(2, 5)}.${d.slice(5, 8)}/${d.slice(8)}`
   return `${d.slice(0, 2)}.${d.slice(2, 5)}.${d.slice(5, 8)}/${d.slice(8, 12)}-${d.slice(12)}`
 }
@@ -139,8 +152,12 @@ function formatTelefone(value: string): string {
   return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`
 }
 
-function handleCpfCnpjUpdate(val: string) {
-  state.cpfCnpj = formatCpfCnpj(val)
+function handleCpfUpdate(val: string) {
+  state.cpf = formatCpf(val)
+}
+
+function handleCnpjUpdate(val: string) {
+  state.cnpj = formatCnpj(val)
 }
 
 function handleDataNascimentoUpdate(val: string) {
@@ -355,21 +372,6 @@ const features = [
                 />
               </UFormField>
 
-              <UFormField name="cpfCnpj" label="CPF / CNPJ" required>
-                <UInput
-                  :model-value="state.cpfCnpj"
-                  type="text"
-                  inputmode="numeric"
-                  placeholder="000.000.000-00 ou 00.000.000/0001-00"
-                  icon="i-lucide-id-card"
-                  color="neutral"
-                  variant="outline"
-                  class="w-full"
-                  autocomplete="off"
-                  @update:model-value="handleCpfCnpjUpdate"
-                />
-              </UFormField>
-
               <UFormField name="nacionalidade" label="Nacionalidade" required>
                 <USelect
                   v-model="state.nacionalidade"
@@ -379,6 +381,39 @@ const features = [
                   color="neutral"
                   variant="outline"
                   class="w-full"
+                />
+              </UFormField>
+            </div>
+
+            <!-- Duas colunas: CPF | CNPJ -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <UFormField name="cpf" label="CPF" required>
+                <UInput
+                  :model-value="state.cpf"
+                  type="text"
+                  inputmode="numeric"
+                  placeholder="000.000.000-00"
+                  icon="i-lucide-id-card"
+                  color="neutral"
+                  variant="outline"
+                  class="w-full"
+                  autocomplete="off"
+                  @update:model-value="handleCpfUpdate"
+                />
+              </UFormField>
+
+              <UFormField name="cnpj" label="CNPJ" required>
+                <UInput
+                  :model-value="state.cnpj"
+                  type="text"
+                  inputmode="numeric"
+                  placeholder="00.000.000/0001-00"
+                  icon="i-lucide-building-2"
+                  color="neutral"
+                  variant="outline"
+                  class="w-full"
+                  autocomplete="off"
+                  @update:model-value="handleCnpjUpdate"
                 />
               </UFormField>
             </div>

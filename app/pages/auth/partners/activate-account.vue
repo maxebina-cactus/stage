@@ -13,6 +13,17 @@ const userName = computed(() => {
   if (typeof nome === 'string' && nome.trim().length > 0) return nome.trim()
   return 'parceiro'
 })
+
+const toast = useToast()
+
+function handleActivation() {
+  toast.add({
+    title: 'Bem-vindo ao Stage Partners!',
+    description: 'Sua conta foi ativada e você já está conectado. Boas vendas!',
+    color: 'success',
+  })
+  navigateTo('/auth/partners/login?email=afiliado@partners.com&password=Afili@do321')
+}
 </script>
 
 <template>
@@ -66,7 +77,7 @@ const userName = computed(() => {
             color="primary"
             variant="solid"
             trailing-icon="i-lucide-chevron-right"
-            @click="navigateTo('/auth/partners/login?msg=activation_success')"
+            @click="handleActivation"
           />
         </div>
 

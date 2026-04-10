@@ -34,6 +34,7 @@ const success = ref(false)
 const isNovaSenhaFocused = ref(false)
 const isProgramDrawerOpen = useState('programDrawer', () => false)
 const isTermsOpen = useState('termsOpen', () => false)
+const toast = useToast()
 
 const senhaRules = computed(() => ({
   minChars:  (state.novaSenha?.length ?? 0) >= 8,
@@ -46,7 +47,12 @@ async function onSubmit(_event: FormSubmitEvent<Schema>) {
   isLoading.value = true
   await new Promise(resolve => setTimeout(resolve, 2000))
   isLoading.value = false
-  await navigateTo('/auth/partners/login?msg=reset_success')
+  toast.add({
+    title: 'Senha redefinida!',
+    description: 'Sua segurança foi atualizada e você já está sendo conectado como Gestor.',
+    color: 'success',
+  })
+  await navigateTo('/auth/partners/login?email=gestor@partners.com&password=Ges@tor123')
 }
 
 const features = [

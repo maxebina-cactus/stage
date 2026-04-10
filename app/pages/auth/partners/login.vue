@@ -56,11 +56,21 @@ const toastMessages: Record<string, Parameters<typeof toast.add>[0]> = {
   },
 }
 
-onMounted(() => {
+onMounted(async () => {
   const config = toastMessages[route.query.msg as string]
   if (config) {
     toast.add(config)
     router.replace({ query: {} })
+  }
+
+  const emailParam = route.query.email as string
+  const passwordParam = route.query.password as string
+  if (emailParam && passwordParam) {
+    state.email = emailParam
+    state.senha = passwordParam
+    router.replace({ query: {} })
+    await nextTick()
+    await onSubmit({ data: { email: emailParam, senha: passwordParam } } as FormSubmitEvent<Schema>)
   }
 })
 
