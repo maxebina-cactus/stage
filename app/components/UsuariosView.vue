@@ -46,7 +46,7 @@ const kpiRow2 = [
     <div class="grid grid-cols-4 gap-4">
       <div
         v-for="kpi in kpiRow1" :key="kpi.label"
-        class="rounded-xl px-4 py-4 flex flex-col gap-2" style="background-color: #101726; border: 1px solid #1E2D45"
+        class="rounded-xl px-4 py-4 flex flex-col gap-2" style="background-color: var(--color-card-bg); border: 1px solid var(--color-card-border)"
       >
         <div class="flex items-start justify-between gap-2">
           <span class="text-xs text-(--ui-text-muted) leading-tight">{{ kpi.label }}</span>
@@ -80,7 +80,7 @@ const kpiRow2 = [
     <div class="grid grid-cols-4 gap-4">
       <div
         v-for="kpi in kpiRow2" :key="kpi.label"
-        class="rounded-xl px-4 py-4 flex flex-col gap-2" style="background-color: #101726; border: 1px solid #1E2D45"
+        class="rounded-xl px-4 py-4 flex flex-col gap-2" style="background-color: var(--color-card-bg); border: 1px solid var(--color-card-border)"
       >
         <div class="flex items-start justify-between gap-2">
           <span class="text-xs text-(--ui-text-muted) leading-tight">{{ kpi.label }}</span>
@@ -152,8 +152,8 @@ const kpiRow2 = [
           </div>
 
           <!-- Usuários Ativos — full width -->
-          <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: #101726; border: 1px solid #1E2D45">
-            <div class="flex items-center justify-between -mx-4 px-4 pb-3" style="border-bottom: 1px solid #1E2D45">
+          <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: var(--color-card-bg); border: 1px solid var(--color-card-border)">
+            <div class="flex items-center justify-between -mx-4 px-4 pb-3" style="border-bottom: 1px solid var(--color-card-border)">
               <div class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full shrink-0" style="background-color: var(--ui-primary)" />
                 <span class="text-sm font-medium text-(--ui-text)">Usuários Ativos</span>
@@ -187,8 +187,8 @@ const kpiRow2 = [
           <div class="grid grid-cols-2 gap-6">
 
             <!-- Atividade por Dia e Hora -->
-            <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: #101726; border: 1px solid #1E2D45">
-              <div class="flex items-start justify-between -mx-4 px-4 pb-3" style="border-bottom: 1px solid #1E2D45">
+            <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: var(--color-card-bg); border: 1px solid var(--color-card-border)">
+              <div class="flex items-start justify-between -mx-4 px-4 pb-3" style="border-bottom: 1px solid var(--color-card-border)">
                 <div class="flex flex-col gap-0.5">
                   <div class="flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full shrink-0" style="background-color: var(--ui-primary)" />
@@ -207,8 +207,8 @@ const kpiRow2 = [
             </div>
 
             <!-- Usuários Ativos por Região -->
-            <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: #101726; border: 1px solid #1E2D45">
-              <div class="flex items-center justify-between -mx-4 px-4 pb-3" style="border-bottom: 1px solid #1E2D45">
+            <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: var(--color-card-bg); border: 1px solid var(--color-card-border)">
+              <div class="flex items-center justify-between -mx-4 px-4 pb-3" style="border-bottom: 1px solid var(--color-card-border)">
                 <div class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full shrink-0" style="background-color: var(--ui-primary)" />
                   <span class="text-sm font-medium text-(--ui-text)">Usuários Ativos por Região</span>
@@ -237,8 +237,8 @@ const kpiRow2 = [
           <div class="grid grid-cols-2 gap-6">
 
             <!-- ARPU vs ARPU ao Longo do Tempo -->
-            <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: #101726; border: 1px solid #1E2D45">
-              <div class="flex items-center justify-between -mx-4 px-4 pb-3" style="border-bottom: 1px solid #1E2D45">
+            <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: var(--color-card-bg); border: 1px solid var(--color-card-border)">
+              <div class="flex items-center justify-between -mx-4 px-4 pb-3" style="border-bottom: 1px solid var(--color-card-border)">
                 <div class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full shrink-0" style="background-color: var(--ui-primary)" />
                   <span class="text-sm font-medium text-(--ui-text)">ARPU vs ARPU ao Longo do Tempo</span>
@@ -254,8 +254,8 @@ const kpiRow2 = [
             </div>
 
             <!-- ARPU vs ARPU por Segmento -->
-            <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: #101726; border: 1px solid #1E2D45">
-              <div class="flex items-center justify-between -mx-4 px-4 pb-3" style="border-bottom: 1px solid #1E2D45">
+            <div class="rounded-xl p-4 flex flex-col gap-3" style="background-color: var(--color-card-bg); border: 1px solid var(--color-card-border)">
+              <div class="flex items-center justify-between -mx-4 px-4 pb-3" style="border-bottom: 1px solid var(--color-card-border)">
                 <div class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full shrink-0" style="background-color: var(--ui-primary)" />
                   <span class="text-sm font-medium text-(--ui-text)">ARPU vs ARPU por Segmento</span>
@@ -277,7 +277,7 @@ const kpiRow2 = [
 
       <!-- ── CICLO DE VIDA E RETENÇÃO ─────────────────────────── -->
       <div v-else-if="activeTab === 'ciclo'" :key="activeTab" class="flex flex-col gap-6">
-        <div class="flex flex-col items-center justify-center py-24 gap-3 rounded-xl" style="background-color: #101726; border: 1px solid #1E2D45">
+        <div class="flex flex-col items-center justify-center py-24 gap-3 rounded-xl" style="background-color: var(--color-card-bg); border: 1px solid var(--color-card-border)">
           <UIcon name="i-lucide-heart" class="w-10 h-10 text-(--ui-text-dimmed)" />
           <span class="text-sm text-(--ui-text-dimmed)">Ciclo de Vida e Retenção — em breve</span>
         </div>
@@ -285,7 +285,7 @@ const kpiRow2 = [
 
       <!-- ── PERFORMANCE FINANCEIRA ──────────────────────────── -->
       <div v-else-if="activeTab === 'financeiro'" :key="activeTab" class="flex flex-col gap-6">
-        <div class="flex flex-col items-center justify-center py-24 gap-3 rounded-xl" style="background-color: #101726; border: 1px solid #1E2D45">
+        <div class="flex flex-col items-center justify-center py-24 gap-3 rounded-xl" style="background-color: var(--color-card-bg); border: 1px solid var(--color-card-border)">
           <UIcon name="i-lucide-dollar-sign" class="w-10 h-10 text-(--ui-text-dimmed)" />
           <span class="text-sm text-(--ui-text-dimmed)">Performance Financeira — em breve</span>
         </div>

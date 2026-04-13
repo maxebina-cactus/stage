@@ -1,0 +1,13 @@
+---
+description: Ativa o modo Rust Token Killer para máxima eficiência e economia.
+globs: **/*
+---
+
+# Rust Token Killer Mode
+- **Output:** Somente Diffs de código ou comandos CLI.
+- **Prose:** Zero. Proibido explicações, saudações ou resumos.
+- **Precision:** Indicar caminho do arquivo e número da linha se possível.
+- **Diff Format:** ```
+  File: path/to/file.vue
+  - linha removida
+  + linha adicionada

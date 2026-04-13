@@ -17,6 +17,14 @@
   --color-green-950: #052E16;
 }
 
+/* App-specific color tokens */
+:root {
+  --color-card-bg: #101726;
+  --color-card-border: #1E2D45;
+  --color-page-bg: #0D1117;
+  --color-scroll-bg: #0B1120;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 5px;

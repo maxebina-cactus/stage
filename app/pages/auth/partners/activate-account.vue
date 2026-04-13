@@ -27,7 +27,7 @@ function handleActivation() {
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#f1f5f9] flex items-center justify-center py-10 px-4">
+  <div class="min-h-screen bg-neutral-100 flex items-center justify-center py-10 px-4">
     <div class="w-full max-w-[480px] bg-white rounded-xl overflow-hidden shadow-xl">
 
       <!-- ── Header ── -->
@@ -50,25 +50,25 @@ function handleActivation() {
 
         <!-- Icon + texts -->
         <div class="flex flex-col items-center gap-4 text-center">
-          <div class="size-14 rounded-full bg-[#e2e8f0] flex items-center justify-center shrink-0">
-            <UIcon name="i-lucide-trophy" class="size-6 text-[#475569]" />
+          <div class="size-14 rounded-full bg-neutral-200 flex items-center justify-center shrink-0">
+            <UIcon name="i-lucide-trophy" class="size-6 text-neutral-600" />
           </div>
 
           <div class="flex flex-col gap-1">
-            <h1 class="text-2xl font-semibold text-[#0f172b] leading-8">
+            <h1 class="text-2xl font-semibold text-(--ui-text) leading-8">
               Bem-vindo ao Stage Partners! 🚀
             </h1>
-            <p class="text-sm text-[#71717b] leading-5">
+            <p class="text-sm text-(--ui-text-muted) leading-5">
               Quase lá, <span class="font-bold">{{ userName }}</span>,
             </p>
-            <p class="text-sm text-[#71717b] leading-5 mt-2">
+            <p class="text-sm text-(--ui-text-muted) leading-5 mt-2">
               Ficamos felizes em ter você conosco. Para começar a gerenciar suas campanhas e transformar seu tráfego em receita, precisamos apenas que você confirme seu e-mail clicando no botão abaixo.
             </p>
           </div>
         </div>
 
         <!-- Dashed separator -->
-        <div class="border-t border-dashed border-[#cad5e2]" />
+        <div class="border-t border-dashed border-neutral-300" />
 
         <!-- CTA -->
         <div class="flex justify-center">
@@ -82,7 +82,7 @@ function handleActivation() {
         </div>
 
         <!-- Disclaimer -->
-        <p class="text-sm text-[#71717b] leading-5 text-center">
+        <p class="text-sm text-(--ui-text-muted) leading-5 text-center">
           Se você não criou uma conta no Stage Partners, pode ignorar este e-mail.
         </p>
 
@@ -93,12 +93,12 @@ function handleActivation() {
         class="flex items-center justify-between px-3 py-2 relative overflow-hidden"
         style="background: color-mix(in oklab, var(--ui-primary) 38%, #000);"
       >
-        <p class="text-xs text-[#f1f5f9] whitespace-nowrap">
+        <p class="text-xs text-white whitespace-nowrap">
           © 2026 Stage. Todos os direitos reservados.
         </p>
         <NuxtLink
           to="/partners/terms"
-          class="text-xs text-[#f1f5f9] hover:underline whitespace-nowrap"
+          class="text-xs text-white hover:underline whitespace-nowrap"
         >
           Termos de uso
         </NuxtLink>
