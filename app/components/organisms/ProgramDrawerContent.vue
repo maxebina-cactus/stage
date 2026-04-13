@@ -4,9 +4,9 @@ const isProgramDrawerOpen = useState('programDrawer')
 </script>
 
 <template>
-  <div class="relative p-8 flex flex-col justify-center min-h-screen gap-8 text-(--ui-text)" tabindex="-1" autofocus>
+  <div class="relative p-8 flex flex-col h-screen max-h-screen text-(--ui-text) overflow-hidden" tabindex="-1" autofocus>
     
-    <div class="absolute top-6 right-6">
+    <div class="absolute top-6 right-6 z-10">
       <UButton
         icon="i-lucide-x"
         color="neutral"
@@ -17,15 +17,16 @@ const isProgramDrawerOpen = useState('programDrawer')
       />
     </div>
 
-    <div class="flex flex-col gap-8">
-      <header class="flex flex-col gap-3">
-        <h2 class="text-3xl font-bold text-(--ui-text-highlighted) leading-tight">
-          Transforme sua influência em um negócio lucrativo.
-        </h2>
-        <p class="opacity-80 text-lg">
-          O Programa de Parceiros da Stage foi desenvolvido para quem busca alta performance no mercado de iGaming.
-        </p>
-      </header>
+    <header class="flex flex-col gap-3 mt-8 mb-8 shrink-0">
+      <h2 class="text-3xl font-bold text-(--ui-text-highlighted) leading-tight">
+        Transforme sua influência em um negócio lucrativo.
+      </h2>
+      <p class="opacity-80 text-lg">
+        O Programa de Parceiros da Stage foi desenvolvido para quem busca alta performance no mercado de iGaming.
+      </p>
+    </header>
+
+    <div class="flex-1 justify-center overflow-y-auto pr-2 flex flex-col gap-8 scrollbar-thin scrollbar-thumb-(--ui-primary)">
 
       <section class="flex flex-col gap-4">
         <div class="flex items-center gap-2">
@@ -59,7 +60,7 @@ const isProgramDrawerOpen = useState('programDrawer')
         </div>
       </section>
 
-      <footer class="pt-6 border-t border-(--ui-border)">
+      <footer class="pt-6 border-t border-(--ui-border) mb-4">
         <div class="flex items-center gap-2 py-2">
           <div class="w-1 self-stretch rounded-sm bg-(--ui-primary) shrink-0" />
           <h2 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider whitespace-nowrap shrink-0">

@@ -15,18 +15,28 @@
     <div class="flex flex-col gap-10 text-sm leading-relaxed text-(--ui-text-muted) pb-12">
       
       <section class="flex flex-col gap-4">
-        <h4 class="font-bold text-(--ui-text-highlighted) text-base uppercase tracking-wider">
-          01. Aceitação e Elegibilidade
-        </h4>
+
+        <div class="flex items-center gap-2">
+          <div class="w-1 self-stretch rounded-sm bg-(--ui-primary) shrink-0" />
+          <h4 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider whitespace-nowrap shrink-0">
+            01. Aceitação e Elegibilidade
+          </h4>
+          <div class="flex-1 h-px bg-(--ui-border)" />
+        </div>
+
         <p>
           Ao acessar o ecossistema <strong>Stage Partners</strong>, você declara ser representante legal ou pessoa autorizada pela sua organização. Este ambiente é restrito a parceiros comerciais com contrato ativo. O uso indevido das credenciais pode resultar na suspensão imediata do acesso sem aviso prévio.
         </p>
       </section>
 
       <section class="flex flex-col gap-4">
-        <h4 class="font-bold text-(--ui-text-highlighted) text-base uppercase tracking-wider">
-          02. Propriedade Intelectual e Sigilo
-        </h4>
+        <div class="flex items-center gap-2">
+          <div class="w-1 self-stretch rounded-sm bg-(--ui-primary) shrink-0" />
+          <h4 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider whitespace-nowrap shrink-0">
+            02. Propriedade Intelectual e Sigilo
+          </h4>
+          <div class="flex-1 h-px bg-(--ui-border)" />
+        </div>
         <p>
           Todos os dados de performance, estratégias de marketing, tabelas de comissionamento e materiais criativos disponibilizados são de propriedade exclusiva da <strong>Stage</strong>. 
         </p>
@@ -38,9 +48,13 @@
       </section>
 
       <section class="flex flex-col gap-4">
-        <h4 class="font-bold text-(--ui-text-highlighted) text-base uppercase tracking-wider">
-          03. Proteção de Dados (LGPD)
-        </h4>
+        <div class="flex items-center gap-2">
+          <div class="w-1 self-stretch rounded-sm bg-(--ui-primary) shrink-0" />
+          <h4 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider whitespace-nowrap shrink-0">
+            03. Proteção de Dados (LGPD)
+          </h4>
+          <div class="flex-1 h-px bg-(--ui-border)" />
+        </div>
         <p>
           Operamos sob os mais altos padrões de segurança. O parceiro compromete-se a:
         </p>
@@ -50,18 +64,26 @@
       </section>
 
       <section class="flex flex-col gap-4">
-        <h4 class="font-bold text-(--ui-text-highlighted) text-base uppercase tracking-wider">
-          04. Auditoria de Resultados
-        </h4>
+        <div class="flex items-center gap-2">
+          <div class="w-1 self-stretch rounded-sm bg-(--ui-primary) shrink-0" />
+          <h4 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider whitespace-nowrap shrink-0">
+            04. Auditoria de Resultados
+          </h4>
+          <div class="flex-1 h-px bg-(--ui-border)" />
+        </div>
         <p>
           A Stage reserva-se o direito de auditar cliques, conversões e leads gerados através da plataforma. Caso seja identificada fraude ou tráfego inválido, as comissões correspondentes serão estornadas e o contrato de parceria poderá ser rescindido.
         </p>
       </section>
 
       <section class="flex flex-col gap-4">
-        <h4 class="font-bold text-(--ui-text-highlighted) text-base uppercase tracking-wider">
-          05. Modificações nos Termos
-        </h4>
+        <div class="flex items-center gap-2">
+          <div class="w-1 self-stretch rounded-sm bg-(--ui-primary) shrink-0" />
+          <h4 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider whitespace-nowrap shrink-0">
+            05. Modificações nos Termos
+          </h4>
+          <div class="flex-1 h-px bg-(--ui-border)" />
+        </div>
         <p>
           Podemos atualizar estes termos para refletir mudanças legais ou operacionais. A data da última atualização estará sempre visível no cabeçalho desta janela. O uso continuado da plataforma após alterações constitui aceitação dos novos termos.
         </p>
