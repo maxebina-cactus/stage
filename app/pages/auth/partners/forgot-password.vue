@@ -13,13 +13,28 @@ const schema = z.object({
   email: z.string({ required_error: 'O e-mail é obrigatório' })
     .min(1, 'O e-mail é obrigatório')
     .email('Digite um e-mail válido'),
+  cpf: z.string({ required_error: 'O CPF é obrigatório' })
+    .min(1, 'O CPF é obrigatório'),
 })
 
 type Schema = z.output<typeof schema>
 
 const state = reactive<Partial<Schema>>({
   email: '',
+  cpf: '',
 })
+
+function formatCpf(value: string): string {
+  const d = value.replace(/\D/g, '').slice(0, 11)
+  if (d.length <= 3) return d
+  if (d.length <= 6) return `${d.slice(0, 3)}.${d.slice(3)}`
+  if (d.length <= 9) return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6)}`
+  return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6, 9)}-${d.slice(9)}`
+}
+
+function handleCpfUpdate(val: string) {
+  state.cpf = formatCpf(val)
+}
 
 const isProgramDrawerOpen = useState('programDrawer', () => false)
 const isLoading = ref(false)
@@ -47,9 +62,11 @@ onUnmounted(() => {
   if (countdownTimer) clearInterval(countdownTimer)
 })
 
-async function onSubmit(_event: FormSubmitEvent<Schema>) {
+async function onSubmit(event: FormSubmitEvent<Schema>) {
   isLoading.value = true
+  const { email, cpf } = event.data
   await new Promise(resolve => setTimeout(resolve, 2000))
+  console.log('Recuperação solicitada:', { email, cpf })
   isLoading.value = false
   enviado.value = true
   startCountdown()
@@ -183,7 +200,7 @@ const features = [
                 Esqueceu a senha?
               </h2>
               <p class="text-sm text-(--ui-text-muted)">
-                Informe seu e-mail e enviaremos um link de recuperação
+                Informe seu e-mail e CPF cadastrados para receber um link de recuperação.
               </p>
             </div>
 
@@ -198,6 +215,20 @@ const features = [
                   variant="outline"
                   class="w-full"
                   autocomplete="email"
+                />
+              </UFormField>
+
+              <UFormField name="cpf" label="CPF" required>
+                <UInput
+                  :model-value="state.cpf"
+                  type="text"
+                  inputmode="numeric"
+                  placeholder="000.000.000-00"
+                  icon="i-lucide-id-card"
+                  color="neutral"
+                  variant="outline"
+                  class="w-full"
+                  @update:model-value="handleCpfUpdate"
                 />
               </UFormField>
 
