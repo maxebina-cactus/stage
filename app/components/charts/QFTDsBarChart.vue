@@ -41,9 +41,9 @@ const xTickFormat = (i: number) => chartData.value[i]?.month ?? ''
 
 const tooltipTemplate = (d: ChartDataItem): string => `
   <div>
-    <div style="font-weight: 600; color: var(--ui-text-highlighted, #ffffff); margin-bottom: 4px;">${d.month}</div>
-    <div style="font-size: 12px; color: var(--ui-text); display: flex; align-items: center; gap: 6px;">
-       <span>QFTDs:</span> <strong style="color: var(--ui-text-highlighted);">${d.qftds}</strong>
+    <div class="font-semibold text-(--ui-text-highlighted) mb-1">${d.month}</div>
+    <div class="text-xs text-(--ui-text) flex items-center gap-1.5">
+      <span>QFTDs:</span> <strong class="text-(--ui-text-highlighted)">${d.qftds}</strong>
     </div>
   </div>
 `

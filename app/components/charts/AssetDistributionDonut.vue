@@ -35,7 +35,7 @@ watch(() => props.loading, (loading) => {
 
   <div v-else>
     <ClientOnly>
-      <div class="donut-chart flex flex-col gap-4">
+      <div class="flex flex-col gap-4">
         <VisSingleContainer :data="mockData" :duration="800" class="h-64">
           <VisDonut
             :value="d => d.value"
@@ -62,7 +62,7 @@ watch(() => props.loading, (loading) => {
    cyan-400 #22d3ee | fuchsia-400 #e879f9 | orange-400 #fb923c
    lime-400 #a3e635 | indigo-400 #818cf8
 */
-.donut-chart {
+.gap-4 {
   --vis-color0: #22d3ee; /* --ui-cyan-400    */
   --vis-color1: #e879f9; /* --ui-fuchsia-400 */
   --vis-color2: #fb923c; /* --ui-orange-400  */

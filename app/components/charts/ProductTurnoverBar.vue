@@ -80,37 +80,18 @@ const yTickFormat = (v: number) => formatBRL(v)
 
 const tooltipTemplate = (d: ChartDataItem): string => `
   <div>
-    <div style="
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--ui-text-highlighted);
-      margin-bottom: 8px;
-    ">${d.month}</div>
+    <div class="text-[13px] font-semibold text-(--ui-text-highlighted) mb-2">${d.month}</div>
 
-    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-      <span style="
-        width: 8px; height: 8px; border-radius: 50%;
-        background: var(--ui-secondary); flex-shrink: 0; display: inline-block;
-      "></span>
-      <span style="font-size: 12px; color: var(--ui-text-dimmed); min-width: 60px;">
-        Cassino:
-      </span>
-      <span style="font-size: 12px; font-weight: 600; color: var(--ui-text-highlighted);">
-        ${formatBRL(d.casino)}
-      </span>
+    <div class="flex items-center gap-2 mb-1">
+      <span class="size-2 rounded-full bg-(--ui-secondary) shrink-0"></span>
+      <span class="text-xs text-(--ui-text-dimmed) min-w-[60px]">Cassino:</span>
+      <span class="text-xs font-semibold text-(--ui-text-highlighted)">${formatBRL(d.casino)}</span>
     </div>
 
-    <div style="display: flex; align-items: center; gap: 8px;">
-      <span style="
-        width: 8px; height: 8px; border-radius: 50%;
-        background: var(--ui-primary); flex-shrink: 0; display: inline-block;
-      "></span>
-      <span style="font-size: 12px; color: var(--ui-text-dimmed); min-width: 60px;">
-        Sports:
-      </span>
-      <span style="font-size: 12px; font-weight: 600; color: var(--ui-text-highlighted);">
-        ${formatBRL(d.sports)}
-      </span>
+    <div class="flex items-center gap-2">
+      <span class="size-2 rounded-full bg-(--ui-primary) shrink-0"></span>
+      <span class="text-xs text-(--ui-text-dimmed) min-w-[60px]">Sports:</span>
+      <span class="text-xs font-semibold text-(--ui-text-highlighted)">${formatBRL(d.sports)}</span>
     </div>
   </div>
 `

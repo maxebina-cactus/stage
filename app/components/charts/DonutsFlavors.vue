@@ -38,17 +38,7 @@ watch(() => props.loading, (loading) => {
   </div>
 
   <ClientOnly v-else>
-    <div
-      class="flex flex-row items-center gap-6 h-64 chart-container"
-      :style="{
-        '--vis-donut-central-label-text-color': 'var(--ui-text-highlighted)',
-        '--vis-donut-central-label-font-size': '32px',
-        '--vis-donut-central-label-font-weight': '700',
-        '--vis-donut-central-sub-label-font-size': '16px',
-        '--vis-donut-central-sub-label-font-weight': '700',
-        '--vis-donut-central-sub-label-text-color': 'var(--ui-text-muted)',
-      }"
-    >
+    <div class="flex flex-row items-center gap-6 h-64">
       <div class="flex-[3] h-full relative">
         <VisSingleContainer :data="donutData" :duration="800" class="w-full h-full">
           <VisDonut
@@ -88,10 +78,16 @@ watch(() => props.loading, (loading) => {
 </template>
 
 <style scoped>
-.chart-container {
+.flex-row {
   --vis-color0: #22d3ee; /* cyan-400    */
   --vis-color1: #e879f9; /* fuchsia-400 */
   --vis-color2: #fb923c; /* orange-400  */
+  --vis-donut-central-label-text-color: var(--ui-text-highlighted);
+  --vis-donut-central-label-font-size: 32px;
+  --vis-donut-central-label-font-weight: 700;
+  --vis-donut-central-sub-label-font-size: 16px;
+  --vis-donut-central-sub-label-font-weight: 700;
+  --vis-donut-central-sub-label-text-color: var(--ui-text-muted);
 }
 
 :deep(path[class*="-background"]) {
