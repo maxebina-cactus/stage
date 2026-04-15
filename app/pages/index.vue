@@ -21,6 +21,12 @@ const quickStartCards = [
     to: '/links',
   },
   {
+    label: 'Gráficos',
+    icon: 'i-lucide-bar-chart-3',
+    description: 'Biblioteca core de visualização de dados baseada em Unovis. Componentes agnósticos para Backoffice, CRM e Partners.',
+    to: '/components/charts',
+  },
+  {
     label: 'Figma Playbook',
     icon: 'i-lucide-book-open',
     description: 'Melhores práticas de design da Cactus',
@@ -175,7 +181,7 @@ const changelogColumns = [
             <div class="flex-1 h-px bg-(--ui-border)" />
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3">
             <UCard
               v-for="card in quickStartCards"
               :key="card.label"
@@ -198,7 +204,6 @@ const changelogColumns = [
                 <div v-if="card.to" class="mt-auto">
                   <UButton
                     :to="card.to"
-                    target="_blank"
                     size="xs"
                     variant="soft"
                     color="primary"
