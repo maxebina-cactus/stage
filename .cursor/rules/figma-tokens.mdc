@@ -1437,3 +1437,29 @@ When converting a Vue page to Figma or from Figma to Vue:
 5. **Never use `color="primary"` on Badge/Button without also specifying `variant`** — the default is `solid`.
 6. **For text colors:** use `--ui-text-highlighted` for headings, `--ui-text` for body, `--ui-text-muted` for secondary, never raw hex.
 7. **For backgrounds:** use `--ui-bg-elevated` for card surfaces, `--ui-bg` for page, `--ui-bg-accented` for subtle fills.
+## 8. Responsividade & Padrões Mobile (Smartphones)
+
+### 8.1 Tabela para Card (Stacked List)
+Em viewports mobile (largura < 768px), o componente `UTable` deve ser decomposto em uma lista vertical de frames (Cards).
+
+- **Estrutura do Card:**
+  - Cada linha (`<tr>`) da tabela vira um Frame de Auto Layout Vertical.
+  - **Padding:** `12px` (3 unidades de 4px).
+  - **Borda:** `--ui-border-accented` na base de cada card para separação.
+  - **Espaçamento Interno:** `gap-3` entre as linhas de dados.
+
+- **Mapeamento de Conteúdo (Label/Valor):**
+  - Cada célula vira um Frame Horizontal `justify-between` e `w-full`.
+  - **Label (Esquerda):** Texto `text-xs`, color `--ui-text-muted`, `font-bold` (extraído do `<th>`).
+  - **Dado (Direita):** Texto `text-sm`, color `--ui-text` (extraído do `<td>`).
+  - **Exceção:** Colunas de "Ações" ou "Status" devem ser centralizadas ou ocupar a base do card.
+
+### 8.2 Filtros e Toolbar Mobile
+- **Layout:** Mude de `flex-row` (Desktop) para `flex-col` (Mobile).
+- **Alinhamento:** Todos os `UInput`, `USelect` e `UButton` devem ter `layoutAlign: 'STRETCH'` para ocupar 100% da largura do smartphone.
+- **Espaçamento:** Manter `gap-4` para facilitar o toque (touch target).
+
+### 8.3 Paginação Mobile
+- **Redução de Elementos:** Esconda os botões numéricos (1, 2, 3...).
+- **Controle:** Mantenha apenas os botões de `Anterior` e `Próximo`.
+- **Layout:** Coloque-os em um frame `justify-between` com largura total.

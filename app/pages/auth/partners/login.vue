@@ -91,7 +91,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   }
 
   authUser.value = user
-  await navigateTo('/partners')
+  await navigateTo(user.role === 'gestor' ? '/partners/dashboard/gestor' : '/partners')
 }
 
 const features = [

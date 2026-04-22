@@ -60,9 +60,10 @@ const selectRange = (range: { days?: number, months?: number, years?: number }) 
   <UPopover :content="{ align: 'start' }" :modal="true">
     <UButton
       color="neutral"
-      variant="ghost"
+      variant="outline"
+      size="md"
       icon="i-lucide-calendar"
-      class="data-[state=open]:bg-elevated group"
+      class="data-[state=open]:bg-elevated"
     >
       <span class="truncate">
         <template v-if="selected.start">
@@ -81,7 +82,7 @@ const selectRange = (range: { days?: number, months?: number, years?: number }) 
       <template #trailing>
         <UIcon
           name="i-lucide-chevron-down"
-          class="shrink-0 text-dimmed size-5 group-data-[state=open]:rotate-180 transition-transform duration-200"
+          class="size-4 shrink-0 text-(--ui-text-muted) ui-open:rotate-180 transition-transform duration-200"
         />
       </template>
     </UButton>

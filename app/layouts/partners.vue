@@ -18,6 +18,8 @@ useHead(() => ({
 const toast = useToast()
 const open = ref(false)
 
+useScrollToTop('dashboard-panel-partners')
+
 const authUser = useState('authUser', () => null)
 
 const menuAfiliado = [
@@ -31,11 +33,11 @@ const menuAfiliado = [
 ]
 
 const menuGestor = [
-  { label: 'Dashboard', icon: 'i-lucide-bar-chart-2', to: '/partners' },
-  { label: 'Saque', icon: 'i-lucide-landmark', to: '/partners/gestor/saque' },
-  { label: 'Métodos de recebimento', icon: 'i-lucide-wallet-cards', to: '/partners/gestor/metodos-recebimento' },
+  { label: 'Dashboard', icon: 'i-lucide-bar-chart-2', to: '/partners/dashboard/gestor' },
+  { label: 'Saques', icon: 'i-lucide-landmark', to: '/partners/saques' },
+  { label: 'Métodos de Recebimento', icon: 'i-lucide-credit-card', to: '/partners/metodos-recebimento' },
   { label: 'Afiliados', icon: 'i-lucide-users-2', to: '/partners/gestor/afiliados' },
-  { label: 'Gerentes', icon: 'i-lucide-user', to: '/partners/gestor/gerentes' },
+  { label: 'Gerentes', icon: 'i-lucide-user-cog', to: '/partners/gestor/gerentes' },
   { label: 'Configurações', icon: 'i-lucide-settings-2', to: '/partners/gestor/configuracoes' },
   { label: 'Logs', icon: 'i-lucide-triangle-alert', to: '/partners/gestor/logs' },
 ]

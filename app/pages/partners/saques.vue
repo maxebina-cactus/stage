@@ -1,21 +1,17 @@
 <script setup lang="ts">
 import { h, resolveComponent } from 'vue'
-import { format } from 'date-fns'
 import type { TableColumn } from '@nuxt/ui'
-import { gerentesMock, type Gerente } from '~/mocks/gestorDashboardMock'
+import type { Range } from '~/types'
+import { saquesMock, type Saque } from '~/mocks/gestorDashboardMock'
 
-definePageMeta({ layout: 'partners', title: 'Gerentes' })
-useSeoMeta({ title: 'Gerentes · Gestor · Partners' })
+definePageMeta({ layout: 'partners', title: 'Saques' })
+useSeoMeta({ title: 'Saques · Gestor · Partners' })
 
 // ── Render components ─────────────────────────────────────────────────────
 const UBadge        = resolveComponent('UBadge')
 const UDropdownMenu = resolveComponent('UDropdownMenu')
 const UButton       = resolveComponent('UButton')
 const UCheckbox     = resolveComponent('UCheckbox')
-
-// ── Date helpers ──────────────────────────────────────────────────────────
-const formatLoginDate = (iso: string) => format(new Date(iso), 'dd/MM/yyyy')
-const formatLoginTime = (iso: string) => format(new Date(iso), 'HH:mm:ss')
 
 // ── Status helper ─────────────────────────────────────────────────────────
 const getStatusColor = (status: string) => {
@@ -30,45 +26,61 @@ const getStatusColor = (status: string) => {
 // ── Filtros ───────────────────────────────────────────────────────────────
 const searchQuery  = ref('')
 const sortOrder    = ref<'desc' | 'asc'>('desc')
+const dateRange    = ref<Range>({
+  start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+  end:   new Date(),
+})
 const statusFiltro = ref<string[]>([])
+const metodoFiltro = ref<string[]>([])
 
 const opcoesOrdenar = [
-  { label: 'ID (maior primeiro)', value: 'desc' },
-  { label: 'ID (menor primeiro)', value: 'asc'  },
+  { label: 'Data (mais recente)', value: 'desc' },
+  { label: 'Data (mais antiga)',  value: 'asc'  },
 ]
 const opcoesStatus = ['Aprovado', 'Pendente', 'Cancelado']
+const opcoesMetodo = ['PIX', 'TED', 'USDT ERC20', 'USDT TRC20']
 
 const limparFiltros = () => {
   searchQuery.value  = ''
   sortOrder.value    = 'desc'
   statusFiltro.value = []
+  metodoFiltro.value = []
+  dateRange.value    = {
+    start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+    end:   new Date(),
+  }
 }
 
 // ── Seleção ───────────────────────────────────────────────────────────────
 const selecao = ref<number[]>([])
 
 // ── Computed: filtro + ordenação ──────────────────────────────────────────
-const gerentesFiltrados = computed(() => {
-  let result = gerentesMock
+const saquesFiltrados = computed(() => {
+  let result = saquesMock
 
   const q = searchQuery.value.toLowerCase().trim()
   if (q) {
-    result = result.filter(g =>
-      `#${g.id}`.includes(q)              ||
-      g.nome.toLowerCase().includes(q)    ||
-      g.email.toLowerCase().includes(q)   ||
-      g.funcao.toLowerCase().includes(q)  ||
-      g.status.toLowerCase().includes(q)
+    result = result.filter(s =>
+      `#${s.id}`.includes(q)                  ||
+      s.usuarioNome.toLowerCase().includes(q)  ||
+      s.usuarioEmail.toLowerCase().includes(q) ||
+      s.metodo.toLowerCase().includes(q)       ||
+      s.status.toLowerCase().includes(q)
     )
   }
 
   if (statusFiltro.value.length) {
-    result = result.filter(g => statusFiltro.value.includes(g.status))
+    result = result.filter(s => statusFiltro.value.includes(s.status))
   }
 
-  return [...result].sort((a, b) =>
-    sortOrder.value === 'desc' ? b.id - a.id : a.id - b.id
-  )
+  if (metodoFiltro.value.length) {
+    result = result.filter(s => metodoFiltro.value.includes(s.metodo))
+  }
+
+  return [...result].sort((a, b) => {
+    const diff = new Date(b.data).getTime() - new Date(a.data).getTime()
+    return sortOrder.value === 'desc' ? diff : -diff
+  })
 })
 
 // ── Paginação ─────────────────────────────────────────────────────────────
@@ -76,30 +88,30 @@ const pagina           = ref(1)
 const itensPorPagina   = ref(10)
 const opcoesVisualizar = [10, 20]
 
-const gerentesPaginados = computed(() => {
+const saquesPaginados = computed(() => {
   const pageSize = Number(itensPorPagina.value)
-  return gerentesFiltrados.value.slice((pagina.value - 1) * pageSize, pagina.value * pageSize)
+  return saquesFiltrados.value.slice((pagina.value - 1) * pageSize, pagina.value * pageSize)
 })
 
-watch([searchQuery, statusFiltro, sortOrder], () => { pagina.value = 1 })
+watch([searchQuery, statusFiltro, metodoFiltro, sortOrder], () => { pagina.value = 1 })
 watch(itensPorPagina, () => { pagina.value = 1 })
 
 // ── Master checkbox ───────────────────────────────────────────────────────
 const todosSelecionados = computed(() =>
-  gerentesPaginados.value.length > 0 &&
-  gerentesPaginados.value.every(g => selecao.value.includes(g.id))
+  saquesPaginados.value.length > 0 &&
+  saquesPaginados.value.every(s => selecao.value.includes(s.id))
 )
 const indeterminado = computed(() =>
-  gerentesPaginados.value.some(g => selecao.value.includes(g.id)) && !todosSelecionados.value
+  saquesPaginados.value.some(s => selecao.value.includes(s.id)) && !todosSelecionados.value
 )
 
 const masterCheckboxItens = [
-  [{ label: 'Todos',  onSelect: () => { selecao.value = gerentesPaginados.value.map(g => g.id) } }],
+  [{ label: 'Todos',  onSelect: () => { selecao.value = saquesPaginados.value.map(s => s.id) } }],
   [{ label: 'Nenhum', onSelect: () => { selecao.value = [] } }],
 ]
 
 const toggleMaster = () => {
-  const ids = gerentesPaginados.value.map(g => g.id)
+  const ids = saquesPaginados.value.map(s => s.id)
   if (todosSelecionados.value) {
     selecao.value = selecao.value.filter(id => !ids.includes(id))
   } else {
@@ -114,7 +126,7 @@ const toggleItem = (id: number) => {
 }
 
 // ── Colunas ───────────────────────────────────────────────────────────────
-const colunas = computed<TableColumn<Gerente>[]>(() => [
+const colunas = computed<TableColumn<Saque>[]>(() => [
   {
     id: 'select',
     header: () => h('div', { class: 'flex items-center gap-0.5' }, [
@@ -143,30 +155,26 @@ const colunas = computed<TableColumn<Gerente>[]>(() => [
     header: '#',
     cell: ({ row }) => h('span', { class: 'text-(--ui-text-muted) font-mono text-xs' }, `#${row.getValue('id')}`),
   },
+  { accessorKey: 'data', header: 'Data' },
+  { accessorKey: 'metodo', header: 'Método' },
   {
-    id: 'nome',
-    header: 'Nome',
-    cell: ({ row }) => h('span', { class: 'font-regular text-(--ui-text-muted)' }, row.original.nome),
-  },
-  {
-    id: 'email',
-    header: 'Email',
-    cell: ({ row }) => h('span', { class: 'text-regular text-(--ui-text-muted)' }, row.original.email),
-  },
-  {
-    id: 'funcao',
-    header: 'Função',
+    id: 'valor',
+    header: 'Valor',
     cell: ({ row }) => h('div', { class: 'flex flex-col gap-0.5' }, [
-      h('span', { class: 'text-sm text-(--ui-text)' }, row.original.funcao),
-      h('span', { class: 'text-xs text-(--ui-text-muted)' }, row.original.funcaoDescricao),
+      h('span', { class: 'font-semibold text-(--ui-text-highlighted)' },
+        `R$ ${row.original.valorBRL.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
+      ),
+      h('span', { class: 'text-xs text-(--ui-text-muted)' },
+        `$ ${row.original.valorUSD.toLocaleString('en-US', { minimumFractionDigits: 2 })}`
+      ),
     ]),
   },
   {
-    id: 'ultimoLogin',
-    header: 'Último Login',
+    id: 'usuario',
+    header: 'Usuário',
     cell: ({ row }) => h('div', { class: 'flex flex-col gap-0.5' }, [
-      h('span', { class: 'font-medium text-(--ui-text-highlighted)' }, formatLoginDate(row.original.ultimoLogin)),
-      h('span', { class: 'text-xs text-(--ui-text-muted)' }, formatLoginTime(row.original.ultimoLogin)),
+      h('span', { class: 'font-medium text-(--ui-text-highlighted)' }, row.original.usuarioNome),
+      h('span', { class: 'text-xs text-(--ui-text-muted)' }, row.original.usuarioEmail),
     ]),
   },
   {
@@ -183,8 +191,8 @@ const colunas = computed<TableColumn<Gerente>[]>(() => [
     cell: ({ row: _row }) => h('div', { class: 'flex justify-end' },
       h(UDropdownMenu, {
         items: [
-          [{ label: 'Ver Detalhes', icon: 'i-lucide-eye'    }],
-          [{ label: 'Editar',       icon: 'i-lucide-pencil' }],
+          [{ label: 'Download da NF',              icon: 'i-lucide-file-text'    }],
+          [{ label: 'Download do Contrato Social',  icon: 'i-lucide-file-archive' }],
         ],
       }, {
         default: () => h(UButton, {
@@ -227,8 +235,8 @@ const semSelecao = computed(() => selecao.value.length === 0)
 
           <!-- Título (esquerda) -->
           <div class="flex items-center gap-2 shrink-0">
-            <UIcon name="i-lucide-user-cog" class="w-5 h-5 text-(--ui-primary)" />
-            <span class="font-semibold text-(--ui-text-highlighted)">Gerentes</span>
+            <UIcon name="i-lucide-landmark" class="w-5 h-5 text-(--ui-primary)" />
+            <span class="font-semibold text-(--ui-text-highlighted)">Saques</span>
           </div>
 
           <!-- Espaçador -->
@@ -267,6 +275,9 @@ const semSelecao = computed(() => selecao.value.length === 0)
               </template>
             </USelect>
 
+            <!-- Período -->
+            <HomeDateRangePicker v-model="dateRange" />
+
             <!-- Status (multi) -->
             <USelectMenu
               v-model="statusFiltro"
@@ -300,6 +311,37 @@ const semSelecao = computed(() => selecao.value.length === 0)
                   variant="subtle"
                   size="xs"
                 />
+              </template>
+              <template #trailing>
+                <UIcon
+                  name="i-lucide-chevron-down"
+                  class="size-4 shrink-0 text-(--ui-text-muted) ui-open:rotate-180 transition-transform duration-200"
+                />
+              </template>
+            </USelectMenu>
+
+            <!-- Método (multi) -->
+            <USelectMenu
+              v-model="metodoFiltro"
+              :items="opcoesMetodo"
+              multiple
+              :search-input="false"
+              placeholder="Método"
+              color="neutral"
+              variant="outline"
+              size="md"
+              class="w-44"
+            >
+              <template #default="{ modelValue: mv }">
+                <template v-if="(mv as string[])?.length">
+                  <span class="text-sm font-medium text-(--ui-text-highlighted)">
+                    {{ (mv as string[])[0] }}
+                  </span>
+                  <span v-if="(mv as string[]).length > 1" class="text-xs text-(--ui-text-muted)">
+                    +{{ (mv as string[]).length - 1 }}
+                  </span>
+                </template>
+                <span v-else class="text-(--ui-text-muted) text-sm">Método</span>
               </template>
               <template #trailing>
                 <UIcon
@@ -352,13 +394,13 @@ const semSelecao = computed(() => selecao.value.length === 0)
         />
       </div>
 
-      <UTable :data="gerentesPaginados" :columns="colunas" />
+      <UTable :data="saquesPaginados" :columns="colunas" />
 
       <template #footer>
         <TablesTableFooter
           v-model:page="pagina"
           v-model:page-size="itensPorPagina"
-          :total="gerentesFiltrados.length"
+          :total="saquesFiltrados.length"
           :page-size-options="opcoesVisualizar"
         />
       </template>

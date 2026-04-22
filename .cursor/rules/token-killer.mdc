@@ -1,6 +1,7 @@
 ---
 description: Ativa o modo Rust Token Killer para máxima eficiência e economia.
 globs: **/*
+alwaysApply: false
 ---
 
 # Rust Token Killer Mode
