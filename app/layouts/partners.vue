@@ -112,7 +112,7 @@ onMounted(async () => {
       resizable
       :default-size="17"
       class="bg-elevated/25"
-      :ui="{ footer: 'lg:border-t lg:border-default' }"
+      :ui="{ footer: 'lg:border-t lg:border-default h-16' }"
     >
       <template #header="{ collapsed }">
         <TeamsMenu :collapsed="collapsed" />

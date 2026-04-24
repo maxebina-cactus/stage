@@ -127,11 +127,11 @@ const changelogColumns = [
     </template>
 
     <template #body>
-      <div class="p-6 flex flex-col gap-8 max-w-5xl mx-auto w-full">
+      <div class="p-4 sm:p-6 flex flex-col gap-8 max-w-5xl mx-auto w-full">
 
         <!-- Hero -->
         <section id="bem-vindo" class="flex flex-col gap-3">
-          <h1 class="text-2xl font-semibold text-(--ui-text-muted) whitespace-nowrap">
+          <h1 class="text-xl sm:text-2xl font-semibold text-(--ui-text-muted)">
             Bem-vindo à Cactus UI
           </h1>
           <p class="text-[15px] font-normal text-(--ui-text-muted) text-pretty max-w-2xl">
@@ -181,7 +181,7 @@ const changelogColumns = [
             <div class="flex-1 h-px bg-(--ui-border)" />
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             <UCard
               v-for="card in quickStartCards"
               :key="card.label"
@@ -300,11 +300,12 @@ const changelogColumns = [
             <div class="flex-1 h-px bg-(--ui-border)" />
           </div>
 
+          <div class="overflow-x-auto rounded-lg">
           <UTable
             :data="changelog"
             :columns="changelogColumns"
             :ui="{
-              root: 'border border-(--ui-border) rounded-lg overflow-hidden',
+              root: 'border border-(--ui-border) rounded-lg overflow-hidden min-w-[480px]',
             }"
           >
             <template #version-cell="{ row }">
@@ -329,6 +330,7 @@ const changelogColumns = [
               <span class="text-xs text-(--ui-text-toned)">{{ row.original.date }}</span>
             </template>
           </UTable>
+          </div>
         </section>
 
       </div>

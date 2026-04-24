@@ -177,6 +177,16 @@ const features = [
             <AppLogo class="h-6 text-(--ui-text-highlighted)" />
           </NuxtLink>
 
+          <div class="flex justify-center lg:hidden">
+            <UButton
+              color="neutral"
+              variant="ghost"
+              label="Saiba mais sobre o programa"
+              icon="i-lucide-info"
+              @click="isProgramDrawerOpen = true"
+            />
+          </div>
+
           <div class="flex flex-col gap-1">
             <h2 class="text-2xl font-semibold text-(--ui-text-highlighted)">
               Bem-vindo de volta

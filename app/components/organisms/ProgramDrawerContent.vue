@@ -4,7 +4,7 @@ const isProgramDrawerOpen = useState('programDrawer')
 </script>
 
 <template>
-  <div class="relative p-8 flex flex-col h-screen max-h-screen text-(--ui-text) overflow-hidden" tabindex="-1" autofocus>
+  <div class="relative p-5 sm:p-8 flex flex-col h-screen max-h-screen text-(--ui-text) overflow-hidden max-w-full" tabindex="-1" autofocus>
     
     <div class="absolute top-6 right-6 z-10">
       <UButton
@@ -18,7 +18,7 @@ const isProgramDrawerOpen = useState('programDrawer')
     </div>
 
     <header class="flex flex-col gap-3 mt-8 mb-8 shrink-0">
-      <h2 class="text-3xl font-bold text-(--ui-text-highlighted) leading-tight">
+      <h2 class="text-2xl sm:text-3xl font-bold text-(--ui-text-highlighted) leading-tight break-words">
         Transforme sua influência em um negócio lucrativo.
       </h2>
       <p class="opacity-80 text-lg">
@@ -26,12 +26,12 @@ const isProgramDrawerOpen = useState('programDrawer')
       </p>
     </header>
 
-    <div class="flex-1 justify-center overflow-y-auto pr-2 flex flex-col gap-8 scrollbar-thin scrollbar-thumb-(--ui-primary)">
+    <div class="flex-1 overflow-y-auto overflow-x-hidden pr-2 flex flex-col gap-8 scrollbar-thin scrollbar-thumb-(--ui-primary)">
 
       <section class="flex flex-col gap-4">
-        <div class="flex items-center gap-2">
+        <div class="flex items-start gap-2">
           <div class="w-1 self-stretch rounded-sm bg-(--ui-primary) shrink-0" />
-          <h2 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider whitespace-nowrap shrink-0">
+          <h2 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider break-words">
             Por que ser um parceiro?
           </h2>
           <div class="flex-1 h-px bg-(--ui-border)" />
@@ -45,9 +45,9 @@ const isProgramDrawerOpen = useState('programDrawer')
       </section>
 
       <section class="flex flex-col gap-4">
-        <div class="flex items-center gap-2">
+        <div class="flex items-start gap-2">
           <div class="w-1 self-stretch rounded-sm bg-(--ui-primary) shrink-0" />
-          <h2 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider whitespace-nowrap shrink-0">
+          <h2 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider break-words">
             Como funciona?
           </h2>
           <div class="flex-1 h-px bg-(--ui-border)" />
@@ -61,9 +61,9 @@ const isProgramDrawerOpen = useState('programDrawer')
       </section>
 
       <footer class="pt-6 border-t border-(--ui-border) mb-4">
-        <div class="flex items-center gap-2 py-2">
+        <div class="flex items-start gap-2 py-2">
           <div class="w-1 self-stretch rounded-sm bg-(--ui-primary) shrink-0" />
-          <h2 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider whitespace-nowrap shrink-0">
+          <h2 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider break-words">
             Pronto para começar?
           </h2>
           <div class="flex-1 h-px bg-(--ui-border)" />

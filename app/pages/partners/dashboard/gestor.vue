@@ -106,10 +106,6 @@ const afiliadosPaginados = computed(() => {
 watch(searchQuery,     () => { pagina.value = 1 })
 watch(itensPorPagina, () => { pagina.value = 1 })
 
-const totalAfiliados = computed(() => afiliadosFiltrados.value.length)
-const startAfiliados = computed(() => (pagina.value - 1) * Number(itensPorPagina.value) + 1)
-const endAfiliados   = computed(() => Math.min(pagina.value * Number(itensPorPagina.value), totalAfiliados.value))
-
 const quickStats = [
   { icon: 'i-lucide-users', label: 'Usuários Hoje', value: '3.782', trend: 1, trendLabel: '+11,01%' },
   { icon: 'i-lucide-dollar-sign', label: 'Saques Hoje', value: '3.782', trend: -1, trendLabel: '-9,05%' },
@@ -212,29 +208,12 @@ const quickStats = [
       <UTable :data="afiliadosPaginados" :columns="colunasAfiliados" />
 
       <template #footer>
-        <div class="flex items-center justify-between">
-          <span class="text-sm text-(--ui-text-muted)">
-            Mostrando {{ startAfiliados }} - {{ endAfiliados }} de {{ totalAfiliados }} resultados
-          </span>
-          <div class="flex items-center gap-4">
-            <span class="text-sm text-(--ui-text-muted)">Linhas por página</span>
-            <USelect
-              :model-value="itensPorPagina"
-              :items="opcoesVisualizar"
-              size="md"
-              class="w-20"
-              @update:model-value="val => itensPorPagina = Number(val)"
-            >
-              <template #trailing>
-                <UIcon
-                  name="i-lucide-chevron-down"
-                  class="size-4 shrink-0 text-(--ui-text-muted) ui-open:rotate-180 transition-transform duration-200"
-                />
-              </template>
-            </USelect>
-            <UPagination v-model:page="pagina" :total="totalAfiliados" :items-per-page="itensPorPagina" size="md" />
-          </div>
-        </div>
+        <TablesTableFooter
+          v-model:page="pagina"
+          v-model:page-size="itensPorPagina"
+          :total="afiliadosFiltrados.length"
+          :page-size-options="opcoesVisualizar"
+        />
       </template>
     </UCard>
 

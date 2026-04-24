@@ -107,8 +107,8 @@ const sections: ChangelogSection[] = [
             <UBadge
               :label="badgeConfig[item.badge].label"
               :color="badgeConfig[item.badge].color"
-              variant="soft"
-              size="sm"
+              variant="subtle"
+              size="md"
             />
           </div>
           <span class="text-sm text-(--ui-text) leading-6">{{ item.text }}</span>

@@ -331,6 +331,17 @@ const features = [
 
           <!-- Form -->
           <template v-else>
+
+          <div class="flex justify-center lg:hidden">
+            <UButton
+              color="neutral"
+              variant="ghost"
+              label="Saiba mais sobre o programa"
+              icon="i-lucide-info"
+              @click="isProgramDrawerOpen = true"
+            />
+          </div>
+
           <!-- Header -->
           <div class="flex flex-col gap-1">
             <h2 class="text-2xl font-semibold text-(--ui-text-highlighted)">

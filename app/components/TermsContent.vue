@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-8">
+  <div class="flex flex-col gap-8 max-w-full overflow-x-hidden">
 
     <!-- Cabeçalho -->
     <div class="flex flex-col gap-2 pb-6 border-b border-(--ui-border)">
@@ -16,9 +16,9 @@
       
       <section class="flex flex-col gap-4">
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-start gap-2">
           <div class="w-1 self-stretch rounded-sm bg-(--ui-primary) shrink-0" />
-          <h4 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider whitespace-nowrap shrink-0">
+          <h4 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider break-words">
             01. Aceitação e Elegibilidade
           </h4>
           <div class="flex-1 h-px bg-(--ui-border)" />
@@ -30,9 +30,9 @@
       </section>
 
       <section class="flex flex-col gap-4">
-        <div class="flex items-center gap-2">
+        <div class="flex items-start gap-2">
           <div class="w-1 self-stretch rounded-sm bg-(--ui-primary) shrink-0" />
-          <h4 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider whitespace-nowrap shrink-0">
+          <h4 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider break-words">
             02. Propriedade Intelectual e Sigilo
           </h4>
           <div class="flex-1 h-px bg-(--ui-border)" />
@@ -48,9 +48,9 @@
       </section>
 
       <section class="flex flex-col gap-4">
-        <div class="flex items-center gap-2">
+        <div class="flex items-start gap-2">
           <div class="w-1 self-stretch rounded-sm bg-(--ui-primary) shrink-0" />
-          <h4 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider whitespace-nowrap shrink-0">
+          <h4 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider break-words">
             03. Proteção de Dados (LGPD)
           </h4>
           <div class="flex-1 h-px bg-(--ui-border)" />
@@ -64,9 +64,9 @@
       </section>
 
       <section class="flex flex-col gap-4">
-        <div class="flex items-center gap-2">
+        <div class="flex items-start gap-2">
           <div class="w-1 self-stretch rounded-sm bg-(--ui-primary) shrink-0" />
-          <h4 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider whitespace-nowrap shrink-0">
+          <h4 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider break-words">
             04. Auditoria de Resultados
           </h4>
           <div class="flex-1 h-px bg-(--ui-border)" />
@@ -77,9 +77,9 @@
       </section>
 
       <section class="flex flex-col gap-4">
-        <div class="flex items-center gap-2">
+        <div class="flex items-start gap-2">
           <div class="w-1 self-stretch rounded-sm bg-(--ui-primary) shrink-0" />
-          <h4 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider whitespace-nowrap shrink-0">
+          <h4 class="text-xl font-semibold text-(--ui-text-muted) uppercase tracking-wider break-words">
             05. Modificações nos Termos
           </h4>
           <div class="flex-1 h-px bg-(--ui-border)" />

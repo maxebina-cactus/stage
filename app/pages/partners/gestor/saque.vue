@@ -52,10 +52,6 @@ const saquesPaginados = computed(() => {
 
 watch(searchQuery,     () => { pagina.value = 1 })
 watch(itensPorPagina, () => { pagina.value = 1 })
-
-const totalSaques = computed(() => saquesFiltrados.value.length)
-const startSaques = computed(() => (pagina.value - 1) * Number(itensPorPagina.value) + 1)
-const endSaques   = computed(() => Math.min(pagina.value * Number(itensPorPagina.value), totalSaques.value))
 </script>
 
 <template>
@@ -93,29 +89,12 @@ const endSaques   = computed(() => Math.min(pagina.value * Number(itensPorPagina
       <UTable :data="saquesPaginados" :columns="colunasSaques" />
 
       <template #footer>
-        <div class="flex items-center justify-between">
-          <span class="text-sm text-(--ui-text-muted)">
-            Mostrando {{ startSaques }} - {{ endSaques }} de {{ totalSaques }} resultados
-          </span>
-          <div class="flex items-center gap-4">
-            <span class="text-sm text-(--ui-text-muted)">Linhas por página</span>
-            <USelect
-              :model-value="itensPorPagina"
-              :items="opcoesVisualizar"
-              size="md"
-              class="w-20"
-              @update:model-value="val => itensPorPagina = Number(val)"
-            >
-              <template #trailing>
-                <UIcon
-                  name="i-lucide-chevron-down"
-                  class="size-4 shrink-0 text-(--ui-text-muted) ui-open:rotate-180 transition-transform duration-200"
-                />
-              </template>
-            </USelect>
-            <UPagination v-model:page="pagina" :total="totalSaques" :items-per-page="itensPorPagina" size="md" />
-          </div>
-        </div>
+        <TablesTableFooter
+          v-model:page="pagina"
+          v-model:page-size="itensPorPagina"
+          :total="saquesFiltrados.length"
+          :page-size-options="opcoesVisualizar"
+        />
       </template>
     </UCard>
 

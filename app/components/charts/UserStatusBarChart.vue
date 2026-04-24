@@ -68,30 +68,34 @@ const tooltipTemplate = (d: ChartDataItem): string => `
     </div>
 
     <ClientOnly v-else>
-      <VisXYContainer :data="chartData" :duration="800" class="w-full h-full pt-2">
-        <VisStackedBar
-          :x="(d: ChartDataItem) => d.index"
-          :y="yAccessors"
-          :color="barColors"
-          :roundedCorners="4"
-          :barPadding="0.3"
-        />
-        <VisAxis
-          type="x"
-          :tickFormat="xTickFormat"
-          :tickValues="xTickValues"
-          :gridLine="false"
-          :tickLine="false"
-        />
-        <VisAxis
-          type="y"
-          :gridLine="true"
-          :tickLine="false"
-          :numTicks="5"
-        />
-        <VisCrosshair :template="tooltipTemplate" :color="() => resolvedColor.value" />
-        <VisTooltip />
-      </VisXYContainer>
+      <div class="overflow-x-auto overflow-y-hidden h-full scrollbar-thin scrollbar-thumb-(--ui-border) scrollbar-track-transparent">
+        <div class="min-w-[700px] lg:min-w-0 lg:w-full h-full">
+          <VisXYContainer :data="chartData" :duration="800" :margin="{ bottom: 40 }" class="w-full h-full pt-2">
+            <VisStackedBar
+              :x="(d: ChartDataItem) => d.index"
+              :y="yAccessors"
+              :color="barColors"
+              :roundedCorners="4"
+              :barPadding="0.4"
+            />
+            <VisAxis
+              type="x"
+              :tickFormat="xTickFormat"
+              :tickValues="xTickValues"
+              :gridLine="false"
+              :tickLine="false"
+            />
+            <VisAxis
+              type="y"
+              :gridLine="true"
+              :tickLine="false"
+              :numTicks="5"
+            />
+            <VisCrosshair :template="tooltipTemplate" :color="() => resolvedColor.value" />
+            <VisTooltip />
+          </VisXYContainer>
+        </div>
+      </div>
     </ClientOnly>
   </div>
 </template>

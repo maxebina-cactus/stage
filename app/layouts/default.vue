@@ -9,9 +9,8 @@ const colorMode = useColorMode()
 
 defineShortcuts({
   'g-h': () => router.push('/'),
-  'g-i': () => router.push('/inbox'),
-  'g-c': () => router.push('/customers'),
-  'g-s': () => router.push('/settings'),
+  // 'g-i': () => router.push('/inbox'),
+  // 'g-c': () => router.push('/customers'),
   'n': () => { isNotificationsSlideoverOpen.value = !isNotificationsSlideoverOpen.value }
 })
 
@@ -22,39 +21,43 @@ const links = [[{
   icon: 'i-lucide-house',
   to: '/',
   onSelect: () => { open.value = false }
-}, {
-  label: 'Inbox',
-  icon: 'i-lucide-inbox',
-  to: '/inbox',
-  badge: '4',
-  onSelect: () => { open.value = false }
-}, {
-  label: 'Customers',
-  icon: 'i-lucide-users',
-  to: '/customers',
-  onSelect: () => { open.value = false }
-}, {
-  label: 'Settings',
-  to: '/settings',
-  icon: 'i-lucide-settings',
-  defaultOpen: true,
+},
+// {
+//   label: 'Inbox',
+//   icon: 'i-lucide-inbox',
+//   to: '/inbox',
+//   badge: '4',
+//   onSelect: () => { open.value = false }
+// }, {
+//   label: 'Customers',
+//   icon: 'i-lucide-users',
+//   to: '/customers',
+//   onSelect: () => { open.value = false }
+// },
+{
+  label: 'Navigation Tree',
+  icon: 'i-lucide-list',
   type: 'trigger',
+  defaultOpen: false,
   children: [{
-    label: 'General',
-    to: '/settings',
-    exact: true,
+    label: 'Page 1',
+    icon: 'i-lucide-file-text',
+    to: '/navigation/page-1',
     onSelect: () => { open.value = false }
   }, {
-    label: 'Members',
-    to: '/settings/members',
+    label: 'Page 2',
+    icon: 'i-lucide-file-text',
+    to: '/navigation/page-2',
     onSelect: () => { open.value = false }
   }, {
-    label: 'Notifications',
-    to: '/settings/notifications',
+    label: 'Page 3',
+    icon: 'i-lucide-file-text',
+    to: '/navigation/page-3',
     onSelect: () => { open.value = false }
   }, {
-    label: 'Security',
-    to: '/settings/security',
+    label: 'Page 4',
+    icon: 'i-lucide-file-text',
+    to: '/navigation/page-4',
     onSelect: () => { open.value = false }
   }]
 }], [{

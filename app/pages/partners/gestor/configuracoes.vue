@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import { colord, extend } from 'colord'
+import mixPlugin  from 'colord/plugins/mix'
+import a11yPlugin from 'colord/plugins/a11y'
+
+extend([mixPlugin, a11yPlugin])
 
 definePageMeta({ layout: 'partners', title: 'Configurações' })
 useSeoMeta({ title: 'Configurações · Gestor · Partners' })
@@ -11,6 +16,8 @@ const abas = [
   { label: 'Aparência',     slot: 'aparencia'      },
   { label: 'Banners',       slot: 'banners'        },
 ]
+const selectedTab   = ref('0')
+const abasMobile    = abas.map((a, i) => ({ label: a.label, value: String(i) }))
 
 // ── Toast ─────────────────────────────────────────────────────────────────
 const toast = useToast()
@@ -93,9 +100,88 @@ function onAparenciaDrop(e: DragEvent, target: 'logo' | 'favicon') {
 }
 
 // ── Aparência · Cores ─────────────────────────────────────────────────────
-const corPrimaria   = ref('#6366f1')
-const corSecundaria = ref('#8b5cf6')
-const corBackground = ref('#09090b')
+const primaryHex       = ref('#00C16A')
+const paletteGenerated = ref(false)
+const clickCount       = ref(0)
+const palette          = ref({ secondary: '', background: '', text: '', primaryOnBackground: '' })
+
+const schemes = [
+  { name: 'complementar',   deg:  180 },
+  { name: 'split-comp-pos', deg:  150 },
+  { name: 'split-comp-neg', deg: -150 },
+  { name: 'triadico',       deg:  120 },
+  { name: 'analogo',        deg:   30 },
+]
+
+function ensureContrast(fgHex: string, bgHex: string, minRatio: number): string {
+  let c = colord(fgHex)
+  const bgLight = colord(bgHex).luminance() > 0.5
+  let safety = 0
+  while (colord(bgHex).contrast(c.toHex()) < minRatio && safety < 60) {
+    c = bgLight ? c.darken(0.02) : c.lighten(0.02)
+    safety++
+  }
+  return c.toHex()
+}
+
+function badgeLabel(r: number): string {
+  if (r >= 7)   return `AAA ${r.toFixed(2)}:1`
+  if (r >= 4.5) return `AA ${r.toFixed(2)}:1`
+  if (r >= 3)   return `AA Large ${r.toFixed(2)}:1`
+  return `Falha ${r.toFixed(2)}:1`
+}
+
+function badgeClass(r: number): string {
+  if (r >= 4.5) return 'bg-green-500/20 text-green-400'
+  if (r >= 3)   return 'bg-yellow-500/20 text-yellow-400'
+  return 'bg-red-500/20 text-red-400'
+}
+
+function gerarPaleta() {
+  const primary = colord(primaryHex.value)
+  if (!primary.isValid()) {
+    toast.remove('palette-error')
+    toast.add({
+      id: 'palette-error',
+      title: 'Cor primária inválida',
+      description: 'Informe um hex válido (ex: #21BB75).',
+      color: 'error',
+      duration: 3000,
+    })
+    return
+  }
+
+  const isVeryLight = primary.luminance() > 0.55
+
+  const background = isVeryLight
+    ? primary.mix('#0a0a0a', 0.88).toHex()
+    : primary.mix('#ffffff', 0.92).toHex()
+
+  let text = isVeryLight
+    ? primary.mix('#ffffff', 0.88).toHex()
+    : primary.mix('#000000', 0.85).toHex()
+  text = ensureContrast(text, background, 4.5)
+
+  const primaryOnBackground = ensureContrast(primaryHex.value, background, 4.5)
+
+  const scheme    = schemes[clickCount.value % schemes.length]
+  let   secondary = colord(primaryHex.value).rotate(scheme.deg).toHex()
+  secondary = ensureContrast(secondary, background, 4.5)
+
+  palette.value      = { secondary, background, text, primaryOnBackground }
+  paletteGenerated.value = true
+  clickCount.value++
+
+  toast.remove('palette-generated')
+  toast.add({
+    id: 'palette-generated',
+    title: 'Paleta gerada!',
+    description: 'Cores complementares calculadas com base na cor primária.',
+    color: 'success',
+    icon: 'i-lucide-sparkles',
+    duration: 2500,
+  })
+}
 
 // ── Aparência · URLs ──────────────────────────────────────────────────────
 const urlSettings = reactive({
@@ -178,6 +264,85 @@ const subAbas = [
   { key: 'mensagens',   label: 'Mensagens'   },
 ]
 const activeSubTab = ref('saques')
+
+// ── Parâmetros · carrossel mobile ─────────────────────────────────────────
+const subTabsScrollRef      = ref<HTMLElement | null>(null)
+const subTabsCanScrollLeft  = ref(false)
+const subTabsCanScrollRight = ref(false)
+
+function updateSubTabsScroll() {
+  const el = subTabsScrollRef.value
+  if (!el) return
+  subTabsCanScrollLeft.value  = el.scrollLeft > 2
+  subTabsCanScrollRight.value = el.scrollLeft < el.scrollWidth - el.clientWidth - 2
+}
+function scrollSubTabs(dir: 'left' | 'right') {
+  subTabsScrollRef.value?.scrollBy({ left: dir === 'left' ? -150 : 150, behavior: 'smooth' })
+}
+watch(activeSubTab, async () => {
+  await nextTick()
+  const el = subTabsScrollRef.value
+  if (!el) return
+  el.querySelector<HTMLElement>('[data-active="true"]')
+    ?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+  setTimeout(updateSubTabsScroll, 300)
+})
+// ── Gamificação · carrossel mobile ───────────────────────────────────────
+const gamiScrollRef      = ref<HTMLElement | null>(null)
+const gamiCanScrollLeft  = ref(false)
+const gamiCanScrollRight = ref(false)
+
+function updateGamiScroll() {
+  const el = gamiScrollRef.value
+  if (!el) return
+  gamiCanScrollLeft.value  = el.scrollLeft > 2
+  gamiCanScrollRight.value = el.scrollLeft < el.scrollWidth - el.clientWidth - 2
+}
+function scrollGamiTabs(dir: 'left' | 'right') {
+  gamiScrollRef.value?.scrollBy({ left: dir === 'left' ? -150 : 150, behavior: 'smooth' })
+}
+watch(activeGamiTab, async () => {
+  await nextTick()
+  const el = gamiScrollRef.value
+  if (!el) return
+  el.querySelector<HTMLElement>('[data-active="true"]')
+    ?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+  setTimeout(updateGamiScroll, 300)
+})
+
+// ── Aparência · carrossel mobile ──────────────────────────────────────────
+const aparenciaScrollRef      = ref<HTMLElement | null>(null)
+const aparenciaCanScrollLeft  = ref(false)
+const aparenciaCanScrollRight = ref(false)
+
+function updateAparenciaScroll() {
+  const el = aparenciaScrollRef.value
+  if (!el) return
+  aparenciaCanScrollLeft.value  = el.scrollLeft > 2
+  aparenciaCanScrollRight.value = el.scrollLeft < el.scrollWidth - el.clientWidth - 2
+}
+function scrollAparenciaTabs(dir: 'left' | 'right') {
+  aparenciaScrollRef.value?.scrollBy({ left: dir === 'left' ? -150 : 150, behavior: 'smooth' })
+}
+watch(activeAparenciaTab, async () => {
+  await nextTick()
+  const el = aparenciaScrollRef.value
+  if (!el) return
+  el.querySelector<HTMLElement>('[data-active="true"]')
+    ?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+  setTimeout(updateAparenciaScroll, 300)
+})
+
+useResizeObserver(subTabsScrollRef,   updateSubTabsScroll)
+useResizeObserver(gamiScrollRef,      updateGamiScroll)
+useResizeObserver(aparenciaScrollRef, updateAparenciaScroll)
+
+onMounted(() => {
+  updateSubTabsScroll()
+  updateGamiScroll()
+  updateAparenciaScroll()
+  markClean()
+})
 
 // ── Parâmetros · Mensagens ────────────────────────────────────────────────
 const langTabs = [
@@ -305,6 +470,44 @@ function onDrop(e: DragEvent, target: 'desktop' | 'mobile') {
   onFileSelect(fakeEvent, target)
 }
 
+// ── Banners ────────────────────────────────────────────────────────────────
+const bannerLink         = ref('')
+const bannerLinkCopiado  = ref(false)
+const bannerDesktopFile  = ref<File | null>(null)
+const bannerDesktopImage = ref<string | null>(null)
+const bannerDesktopInput = ref<HTMLInputElement | null>(null)
+
+function onBannerFileSelect(e: Event) {
+  const file = (e.target as HTMLInputElement).files?.[0]
+  if (!file) return
+  const reader = new FileReader()
+  reader.onload = ev => {
+    bannerDesktopFile.value  = file
+    bannerDesktopImage.value = ev.target?.result as string
+  }
+  reader.readAsDataURL(file)
+}
+
+function onBannerDrop(e: DragEvent) {
+  e.preventDefault()
+  const file = e.dataTransfer?.files?.[0]
+  if (!file) return
+  onBannerFileSelect({ target: { files: [file] } } as unknown as Event)
+}
+
+async function copyBannerLink() {
+  if (!bannerLink.value) return
+  await navigator.clipboard.writeText(bannerLink.value)
+  bannerLinkCopiado.value = true
+  toast.add({
+    title: 'Link Copiado',
+    description: 'O link foi copiado para a área de transferência.',
+    color: 'success',
+    icon: 'i-lucide-check',
+  })
+  setTimeout(() => { bannerLinkCopiado.value = false }, 2000)
+}
+
 // Mock upload helpers (substituir por chamada real à API)
 function onDesktopUpload() {
   desktopImage.value = 'https://placehold.co/1920x1080/1a1a2e/ffffff?text=Desktop+Preview'
@@ -326,14 +529,47 @@ async function copyLink() {
   setTimeout(() => { linkCopiado.value = false }, 2000)
 }
 
-function salvar() {
-  // placeholder — conectar à API
-}
+// ── Dirty state ───────────────────────────────────────────────────────────
+const { isDirty: _isDirty, isModalOpen, bypassGuard, markDirty, markClean, save } = useSettingsDirty()
+
+onBeforeRouteLeave(() => {
+  if (_isDirty.value && !bypassGuard.value) {
+    isModalOpen.value = true
+    return false
+  }
+  bypassGuard.value = false
+})
+
+watch(
+  [
+    gamiAtivo, niveisComissao,
+    primaryHex, palette, paletteGenerated,
+    logoImage, faviconImage,
+    relatorioAtivo, selectedReportFields,
+    cryptoActive, cryptoUsdtTrc, cryptoBitcoin, cryptoXrp, cryptoBnb, cryptoEth, cryptoErc20,
+    maxWithdrawal, conversionRate,
+    pixCpf, pixCnpj, pixEmail, pixTelefone, pixAleatoria,
+    transferenciaIntl, qtdMaxMetodos, revShareSubAfiliados,
+    valorMinimo, valorMaximoPF, valorMaximoPJ,
+    ftdsMinimos, carenciaNovo, carenciaReprovacao, carenciaPrimeiro,
+    prazoMaximo, margemRisco, exigirAnexo,
+    popupAtivo, linkDestino, delayExibir, exibirNovamente,
+    desktopImage, mobileImage,
+    ftdFotoAtivo, ftdDesktopImage, ftdMobileImage,
+    bannerLink, bannerDesktopImage,
+    links,
+  ],
+  markDirty,
+  { deep: true },
+)
+
+watch([messagesConfig, ftdGoals, urlSettings, textoReferencia, servicosLinks], markDirty, { deep: true })
 </script>
 
 <template>
-  <div class="p-6">
-    <div class="max-w-6xl mx-auto w-full flex flex-col gap-8">
+  <div class="-m-4 sm:-m-6 flex flex-col h-[calc(100%+2rem)] sm:h-[calc(100%+3rem)]">
+    <div class="flex-1 overflow-y-auto min-h-0 p-6">
+    <div class="max-w-6xl mx-auto w-full flex flex-col gap-8 pb-6">
 
       <!-- Navegação ────────────────────────────────────────────────────────── -->
       <div>
@@ -347,8 +583,31 @@ function salvar() {
         />
       </div>
 
-      <!-- Tabs ─────────────────────────────────────────────────────────────── -->
-      <UTabs :items="abas" variant="link" size="md">
+      <!-- Seletor mobile ────────────────────────────────────────────────────── -->
+      <div class="md:hidden flex flex-col gap-1.5">
+        <span class="text-sm text-(--ui-text-muted)">Selecione a seção:</span>
+        <USelect
+          v-model="selectedTab"
+          :items="abasMobile"
+          leading-icon="i-lucide-sliders-horizontal"
+          size="md"
+          color="neutral"
+          variant="outline"
+        />
+      </div>
+
+      <!-- Tabs desktop ───────────────────────────────────────────────────────── -->
+      <UTabs
+        v-model="selectedTab"
+        :items="abas"
+        variant="link"
+        size="md"
+        :ui="{
+          list: 'hidden md:flex',
+          trigger: 'shrink-0',
+          label: 'whitespace-nowrap',
+        }"
+      >
 
         <!-- ── Popup ──────────────────────────────────────────────────────── -->
         <template #popup>
@@ -572,44 +831,77 @@ function salvar() {
               </div>
             </UCard>
 
-            <!-- Salvar ───────────────────────────────────────────────────── -->
-            <UButton
-              label="Salvar configurações"
-              icon="i-lucide-save"
-              color="primary"
-              size="md"
-              class="self-end"
-              @click="salvar"
-            />
-
           </div>
         </template>
 
         <!-- ── Parâmetros ─────────────────────────────────────────────────── -->
         <template #parametros>
-          <div class="flex gap-6 pt-4 min-h-[480px]">
+          <div class="pt-4">
 
-            <!-- Sub-navegação lateral -->
-            <div class="w-48 flex-shrink-0">
-              <nav class="flex flex-col">
+            <!-- Sub-navegação mobile: carrossel com setas ───────────────────── -->
+            <div class="md:hidden relative flex items-center gap-1 border-b border-(--ui-border) mb-4">
+              <UButton
+                v-show="subTabsCanScrollLeft"
+                icon="i-lucide-chevron-left"
+                variant="ghost"
+                color="neutral"
+                size="xs"
+                class="shrink-0"
+                aria-label="Rolar para esquerda"
+                @click="scrollSubTabs('left')"
+              />
+              <div
+                ref="subTabsScrollRef"
+                class="flex-1 flex overflow-x-auto overflow-y-hidden scroll-smooth pb-px [scrollbar-width:none] [&::-webkit-scrollbar]:h-0"
+                @scroll="updateSubTabsScroll"
+              >
                 <button
                   v-for="sub in subAbas"
                   :key="sub.key"
-                  class="flex items-center text-sm text-left px-3 py-2 transition-colors border-l-1 ui-border-muted"
+                  :data-active="activeSubTab === sub.key ? 'true' : 'false'"
+                  class="shrink-0 whitespace-nowrap px-3 py-2 text-sm transition-colors border-b-2 -mb-px"
                   :class="activeSubTab === sub.key
-                    ? 'border-l-1 border-(--ui-primary) pl-2.5 text-(--ui-primary) font-medium'
-                    : 'text-(--ui-text-muted) hover:text-(--ui-text)'"
+                    ? 'border-(--ui-primary) text-(--ui-primary) font-medium'
+                    : 'border-transparent text-(--ui-text-muted) hover:text-(--ui-text)'"
                   @click="activeSubTab = sub.key"
                 >
                   {{ sub.label }}
                 </button>
-              </nav>
+              </div>
+              <UButton
+                v-show="subTabsCanScrollRight"
+                icon="i-lucide-chevron-right"
+                variant="ghost"
+                color="neutral"
+                size="xs"
+                class="shrink-0"
+                aria-label="Rolar para direita"
+                @click="scrollSubTabs('right')"
+              />
             </div>
 
-            <USeparator orientation="vertical" class="self-stretch" />
+            <!-- Sub-navegação desktop: sidebar vertical ──────────────────── -->
+            <div class="flex flex-col md:flex-row md:gap-6 md:min-h-[480px]">
+              <div class="hidden md:block w-48 flex-shrink-0">
+                <nav class="flex flex-col">
+                  <button
+                    v-for="sub in subAbas"
+                    :key="sub.key"
+                    class="flex items-center text-sm text-left px-3 py-2 transition-colors border-l-1 ui-border-muted"
+                    :class="activeSubTab === sub.key
+                      ? 'border-l-1 border-(--ui-primary) pl-2.5 text-(--ui-primary) font-medium'
+                      : 'text-(--ui-text-muted) hover:text-(--ui-text)'"
+                    @click="activeSubTab = sub.key"
+                  >
+                    {{ sub.label }}
+                  </button>
+                </nav>
+              </div>
 
-            <!-- Conteúdo principal -->
-            <div class="flex-1 flex flex-col gap-6">
+              <USeparator orientation="vertical" class="hidden md:block self-stretch" />
+
+              <!-- Conteúdo principal -->
+              <div class="flex-1 flex flex-col gap-6">
 
               <!-- ── Saques ──────────────────────────────────────────── -->
               <template v-if="activeSubTab === 'saques'">
@@ -980,46 +1272,79 @@ function salvar() {
                 </div>
               </template>
 
-              <!-- Footer Salvar -->
-              <div class="flex justify-end pt-2">
-                <UButton
-                  label="Salvar configurações"
-                  icon="i-lucide-save"
-                  color="primary"
-                  size="md"
-                  @click="salvar"
-                />
-              </div>
-
+            </div>
             </div>
           </div>
         </template>
 
         <!-- ── Gamificação ────────────────────────────────────────────────── -->
         <template #gamificacao>
-          <div class="flex gap-6 pt-4 min-h-[480px]">
+          <div class="pt-4">
 
-            <!-- Sub-navegação lateral -->
-            <div class="w-48 flex-shrink-0">
-              <nav class="flex flex-col">
+            <!-- Sub-navegação mobile: carrossel com setas ───────────────────── -->
+            <div class="md:hidden relative flex items-center gap-1 border-b border-(--ui-border) mb-4">
+              <UButton
+                v-show="gamiCanScrollLeft"
+                icon="i-lucide-chevron-left"
+                variant="ghost"
+                color="neutral"
+                size="xs"
+                class="shrink-0"
+                aria-label="Rolar para esquerda"
+                @click="scrollGamiTabs('left')"
+              />
+              <div
+                ref="gamiScrollRef"
+                class="flex-1 flex overflow-x-auto overflow-y-hidden scroll-smooth pb-px [scrollbar-width:none] [&::-webkit-scrollbar]:h-0"
+                @scroll="updateGamiScroll"
+              >
                 <button
                   v-for="sub in gamiSubAbas"
                   :key="sub.key"
-                  class="flex items-center text-sm text-left px-3 py-2 transition-colors border-l-1 ui-border-muted"
+                  :data-active="activeGamiTab === sub.key ? 'true' : 'false'"
+                  class="shrink-0 whitespace-nowrap px-3 py-2 text-sm transition-colors border-b-2 -mb-px"
                   :class="activeGamiTab === sub.key
-                    ? 'border-l-1 border-(--ui-primary) pl-2.5 text-(--ui-primary) font-medium'
-                    : 'text-(--ui-text-muted) hover:text-(--ui-text)'"
+                    ? 'border-(--ui-primary) text-(--ui-primary) font-medium'
+                    : 'border-transparent text-(--ui-text-muted) hover:text-(--ui-text)'"
                   @click="activeGamiTab = sub.key"
                 >
                   {{ sub.label }}
                 </button>
-              </nav>
+              </div>
+              <UButton
+                v-show="gamiCanScrollRight"
+                icon="i-lucide-chevron-right"
+                variant="ghost"
+                color="neutral"
+                size="xs"
+                class="shrink-0"
+                aria-label="Rolar para direita"
+                @click="scrollGamiTabs('right')"
+              />
             </div>
 
-            <USeparator orientation="vertical" class="self-stretch" />
+            <!-- Sub-navegação desktop: sidebar vertical ──────────────────── -->
+            <div class="flex flex-col md:flex-row md:gap-6 md:min-h-[480px]">
+              <div class="hidden md:block w-48 flex-shrink-0">
+                <nav class="flex flex-col">
+                  <button
+                    v-for="sub in gamiSubAbas"
+                    :key="sub.key"
+                    class="flex items-center text-sm text-left px-3 py-2 transition-colors border-l-1 ui-border-muted"
+                    :class="activeGamiTab === sub.key
+                      ? 'border-l-1 border-(--ui-primary) pl-2.5 text-(--ui-primary) font-medium'
+                      : 'text-(--ui-text-muted) hover:text-(--ui-text)'"
+                    @click="activeGamiTab = sub.key"
+                  >
+                    {{ sub.label }}
+                  </button>
+                </nav>
+              </div>
 
-            <!-- Conteúdo principal -->
-            <div class="flex-1 flex flex-col gap-6">
+              <USeparator orientation="vertical" class="hidden md:block self-stretch" />
+
+              <!-- Conteúdo principal -->
+              <div class="flex-1 flex flex-col gap-6">
 
               <!-- ── Comissão ────────────────────────────────────────── -->
               <template v-if="activeGamiTab === 'comissao'">
@@ -1201,7 +1526,11 @@ function salvar() {
                             variant="outline"
                             class="w-full"
                             @update:model-value="(v) => { ftdGoals[nivel.id] = Number(v) }"
-                          />
+                          >
+                            <template #leading>
+                              <span class="text-xs text-(--ui-text-muted) select-none">$</span>
+                            </template>
+                          </UInput>
                         </td>
                         <td class="px-3 py-2">
                           <UInput v-model="nivel.nomePt" placeholder="Português" size="md" color="neutral" variant="outline" class="w-full" />
@@ -1315,46 +1644,79 @@ function salvar() {
 
               </template>
 
-              <!-- Footer Salvar -->
-              <div class="flex justify-end pt-2">
-                <UButton
-                  label="Salvar configurações"
-                  icon="i-lucide-save"
-                  color="primary"
-                  size="md"
-                  @click="salvar"
-                />
-              </div>
-
+            </div>
             </div>
           </div>
         </template>
 
         <!-- ── Aparência ──────────────────────────────────────────────────── -->
         <template #aparencia>
-          <div class="flex gap-6 pt-4 min-h-[480px]">
+          <div class="pt-4">
 
-            <!-- Sub-navegação lateral -->
-            <div class="w-48 flex-shrink-0">
-              <nav class="flex flex-col">
+            <!-- Sub-navegação mobile: carrossel com setas ───────────────────── -->
+            <div class="md:hidden relative flex items-center gap-1 border-b border-(--ui-border) mb-4">
+              <UButton
+                v-show="aparenciaCanScrollLeft"
+                icon="i-lucide-chevron-left"
+                variant="ghost"
+                color="neutral"
+                size="xs"
+                class="shrink-0"
+                aria-label="Rolar para esquerda"
+                @click="scrollAparenciaTabs('left')"
+              />
+              <div
+                ref="aparenciaScrollRef"
+                class="flex-1 flex overflow-x-auto overflow-y-hidden scroll-smooth pb-px [scrollbar-width:none] [&::-webkit-scrollbar]:h-0"
+                @scroll="updateAparenciaScroll"
+              >
                 <button
                   v-for="sub in aparenciaSubAbas"
                   :key="sub.key"
-                  class="flex items-center text-sm text-left px-3 py-2 transition-colors border-l-1 ui-border-muted"
+                  :data-active="activeAparenciaTab === sub.key ? 'true' : 'false'"
+                  class="shrink-0 whitespace-nowrap px-3 py-2 text-sm transition-colors border-b-2 -mb-px"
                   :class="activeAparenciaTab === sub.key
-                    ? 'border-l-1 border-(--ui-primary) pl-2.5 text-(--ui-primary) font-medium'
-                    : 'text-(--ui-text-muted) hover:text-(--ui-text)'"
+                    ? 'border-(--ui-primary) text-(--ui-primary) font-medium'
+                    : 'border-transparent text-(--ui-text-muted) hover:text-(--ui-text)'"
                   @click="activeAparenciaTab = sub.key"
                 >
                   {{ sub.label }}
                 </button>
-              </nav>
+              </div>
+              <UButton
+                v-show="aparenciaCanScrollRight"
+                icon="i-lucide-chevron-right"
+                variant="ghost"
+                color="neutral"
+                size="xs"
+                class="shrink-0"
+                aria-label="Rolar para direita"
+                @click="scrollAparenciaTabs('right')"
+              />
             </div>
 
-            <USeparator orientation="vertical" class="self-stretch" />
+            <!-- Sub-navegação desktop: sidebar vertical ──────────────────── -->
+            <div class="flex flex-col md:flex-row md:gap-6 md:min-h-[480px]">
+              <div class="hidden md:block w-48 flex-shrink-0">
+                <nav class="flex flex-col">
+                  <button
+                    v-for="sub in aparenciaSubAbas"
+                    :key="sub.key"
+                    class="flex items-center text-sm text-left px-3 py-2 transition-colors border-l-1 ui-border-muted"
+                    :class="activeAparenciaTab === sub.key
+                      ? 'border-l-1 border-(--ui-primary) pl-2.5 text-(--ui-primary) font-medium'
+                      : 'text-(--ui-text-muted) hover:text-(--ui-text)'"
+                    @click="activeAparenciaTab = sub.key"
+                  >
+                    {{ sub.label }}
+                  </button>
+                </nav>
+              </div>
 
-            <!-- Conteúdo -->
-            <div class="flex-1 flex flex-col gap-6">
+              <USeparator orientation="vertical" class="hidden md:block self-stretch" />
+
+              <!-- Conteúdo -->
+              <div class="flex-1 flex flex-col gap-6">
 
               <!-- ── Logo ───────────────────────────────────────────────── -->
               <template v-if="activeAparenciaTab === 'logo'">
@@ -1439,7 +1801,316 @@ function salvar() {
               </template>
               -->
               <template v-else-if="activeAparenciaTab === 'cores'">
-                <div class="pt-6 text-sm text-(--ui-text-muted)">Em breve.</div>
+                <div class="flex flex-col gap-4">
+
+                  <!-- ── Identidade Visual ────────────────────────────────── -->
+                  <UCard>
+                    <div class="flex flex-col gap-5">
+
+                      <div class="flex flex-col gap-0.5">
+                        <span class="text-sm font-medium text-(--ui-text-highlighted)">Identidade Visual</span>
+                        <p class="text-sm text-(--ui-text-muted)">
+                          Defina a cor primária da sua plataforma. Esta cor será aplicada em botões, links e elementos de destaque.
+                        </p>
+                      </div>
+
+                      <div class="flex flex-col sm:flex-row sm:items-end gap-6">
+
+                        <UFormField label="Preencha a sua cor" class="flex-1">
+                          <UInput
+                            v-model="primaryHex"
+                            placeholder="#21BB75"
+                            size="md"
+                            color="neutral"
+                            variant="outline"
+                            class="w-full font-mono uppercase"
+                          >
+                            <template #leading>
+                              <span
+                                class="size-4 rounded-full shrink-0 ring-1 ring-(--ui-border)"
+                                :style="{ backgroundColor: primaryHex }"
+                              />
+                            </template>
+                          </UInput>
+                        </UFormField>
+
+                        <div class="hidden sm:flex items-center h-9 shrink-0">
+                          <span class="text-sm text-(--ui-text-muted)">ou</span>
+                        </div>
+
+                        <UFormField label="Escolha a cor" class="flex-1">
+                          <UPopover :content="{ side: 'bottom', align: 'end' }">
+                            <div
+                              class="h-9 w-full rounded-lg cursor-pointer hover:opacity-80 transition-opacity ring-1 ring-(--ui-border)"
+                              :style="{ backgroundColor: primaryHex }"
+                            />
+                            <template #content>
+                              <UColorPicker v-model="primaryHex" format="hex" class="p-2" />
+                            </template>
+                          </UPopover>
+                        </UFormField>
+
+                      </div>
+
+                      <div class="flex justify-end">
+                        <UButton
+                          color="primary"
+                          variant="solid"
+                          size="md"
+                          class="w-full md:w-auto justify-center"
+                          @click="gerarPaleta"
+                        >
+                          <UIcon name="i-heroicons-sparkles" class="size-5 shrink-0" />
+                          Gerar Paleta Inteligente
+                        </UButton>
+                      </div>
+
+                    </div>
+                  </UCard>
+
+                  <!-- ── Paleta Inteligente (único card, condicional) ──────── -->
+                  <UCard v-if="paletteGenerated">
+                    <div class="flex flex-col gap-5">
+
+                      <div class="flex flex-col gap-0.5">
+                        <span class="text-sm font-medium text-(--ui-text-highlighted)">Paleta Inteligente</span>
+                        <p class="text-sm text-(--ui-text-muted)">
+                          Cores complementares geradas com base na cor primária.
+                        </p>
+                      </div>
+
+                      <div class="flex flex-col gap-4">
+
+                        <!-- Secundária -->
+                        <div class="flex flex-col sm:flex-row sm:items-end gap-3 sm:gap-6">
+                          <UFormField class="flex-1 min-w-0">
+                            <template #label>
+                              <span class="flex items-center gap-2">
+                                Secundária
+                                <span
+                                  class="text-xs px-2 py-0.5 rounded font-mono"
+                                  :class="badgeClass(colord(palette.secondary).contrast(palette.background))"
+                                >{{ badgeLabel(colord(palette.secondary).contrast(palette.background)) }}</span>
+                              </span>
+                            </template>
+                            <UInput v-model="palette.secondary" size="md" color="neutral" variant="outline" class="w-full font-mono uppercase">
+                              <template #leading>
+                                <span class="size-4 rounded-full shrink-0 ring-1 ring-(--ui-border)" :style="{ backgroundColor: palette.secondary }" />
+                              </template>
+                            </UInput>
+                          </UFormField>
+                          <div class="hidden sm:flex items-center h-9 shrink-0">
+                            <span class="text-sm text-(--ui-text-muted)">—</span>
+                          </div>
+                          <UFormField label="Escolha a cor" class="flex-1 min-w-0">
+                            <UPopover :content="{ side: 'bottom', align: 'end' }">
+                              <div
+                                class="h-9 w-full rounded-lg cursor-pointer hover:opacity-80 transition-opacity ring-1 ring-(--ui-border)"
+                                :style="{ backgroundColor: palette.secondary }"
+                              />
+                              <template #content>
+                                <UColorPicker v-model="palette.secondary" format="hex" class="p-2" />
+                              </template>
+                            </UPopover>
+                          </UFormField>
+                        </div>
+
+                        <!-- Background -->
+                        <div class="flex flex-col sm:flex-row sm:items-end gap-3 sm:gap-6">
+                          <UFormField class="flex-1 min-w-0">
+                            <template #label>
+                              <span class="flex items-center gap-2">
+                                Background
+                                <span
+                                  class="text-xs px-2 py-0.5 rounded font-mono"
+                                  :class="badgeClass(colord(palette.background).contrast(palette.text))"
+                                >{{ badgeLabel(colord(palette.background).contrast(palette.text)) }}</span>
+                              </span>
+                            </template>
+                            <UInput v-model="palette.background" size="md" color="neutral" variant="outline" class="w-full font-mono uppercase">
+                              <template #leading>
+                                <span class="size-4 rounded-full shrink-0 ring-1 ring-(--ui-border)" :style="{ backgroundColor: palette.background }" />
+                              </template>
+                            </UInput>
+                          </UFormField>
+                          <div class="hidden sm:flex items-center h-9 shrink-0">
+                            <span class="text-sm text-(--ui-text-muted)">—</span>
+                          </div>
+                          <UFormField label="Escolha a cor" class="flex-1 min-w-0">
+                            <UPopover :content="{ side: 'bottom', align: 'end' }">
+                              <div
+                                class="h-9 w-full rounded-lg cursor-pointer hover:opacity-80 transition-opacity ring-1 ring-(--ui-border)"
+                                :style="{ backgroundColor: palette.background }"
+                              />
+                              <template #content>
+                                <UColorPicker v-model="palette.background" format="hex" class="p-2" />
+                              </template>
+                            </UPopover>
+                          </UFormField>
+                        </div>
+
+                        <!-- Texto -->
+                        <div class="flex flex-col sm:flex-row sm:items-end gap-3 sm:gap-6">
+                          <UFormField class="flex-1 min-w-0">
+                            <template #label>
+                              <span class="flex items-center gap-2">
+                                Texto
+                                <span
+                                  class="text-xs px-2 py-0.5 rounded font-mono"
+                                  :class="badgeClass(colord(palette.text).contrast(palette.background))"
+                                >{{ badgeLabel(colord(palette.text).contrast(palette.background)) }}</span>
+                              </span>
+                            </template>
+                            <UInput v-model="palette.text" size="md" color="neutral" variant="outline" class="w-full font-mono uppercase">
+                              <template #leading>
+                                <span class="size-4 rounded-full shrink-0 ring-1 ring-(--ui-border)" :style="{ backgroundColor: palette.text }" />
+                              </template>
+                            </UInput>
+                          </UFormField>
+                          <div class="hidden sm:flex items-center h-9 shrink-0">
+                            <span class="text-sm text-(--ui-text-muted)">—</span>
+                          </div>
+                          <UFormField label="Escolha a cor" class="flex-1 min-w-0">
+                            <UPopover :content="{ side: 'bottom', align: 'end' }">
+                              <div
+                                class="h-9 w-full rounded-lg cursor-pointer hover:opacity-80 transition-opacity ring-1 ring-(--ui-border)"
+                                :style="{ backgroundColor: palette.text }"
+                              />
+                              <template #content>
+                                <UColorPicker v-model="palette.text" format="hex" class="p-2" />
+                              </template>
+                            </UPopover>
+                          </UFormField>
+                        </div>
+
+                        <!-- Primária ajustada -->
+                        <div class="flex flex-col sm:flex-row sm:items-end gap-3 sm:gap-6">
+                          <UFormField class="flex-1 min-w-0">
+                            <template #label>
+                              <span class="flex items-center gap-2">
+                                Primária ajustada
+                                <UTooltip text="Versão da primária ajustada para garantir contraste mínimo AA sobre o background gerado.">
+                                  <UIcon name="i-lucide-info" class="size-3.5 text-(--ui-text-muted)" />
+                                </UTooltip>
+                                <span
+                                  class="text-xs px-2 py-0.5 rounded font-mono"
+                                  :class="badgeClass(colord(palette.primaryOnBackground).contrast(palette.background))"
+                                >{{ badgeLabel(colord(palette.primaryOnBackground).contrast(palette.background)) }}</span>
+                              </span>
+                            </template>
+                            <UInput v-model="palette.primaryOnBackground" size="md" color="neutral" variant="outline" class="w-full font-mono uppercase">
+                              <template #leading>
+                                <span class="size-4 rounded-full shrink-0 ring-1 ring-(--ui-border)" :style="{ backgroundColor: palette.primaryOnBackground }" />
+                              </template>
+                            </UInput>
+                          </UFormField>
+                          <div class="hidden sm:flex items-center h-9 shrink-0">
+                            <span class="text-sm text-(--ui-text-muted)">—</span>
+                          </div>
+                          <UFormField label="Escolha a cor" class="flex-1 min-w-0">
+                            <UPopover :content="{ side: 'bottom', align: 'end' }">
+                              <div
+                                class="h-9 w-full rounded-lg cursor-pointer hover:opacity-80 transition-opacity ring-1 ring-(--ui-border)"
+                                :style="{ backgroundColor: palette.primaryOnBackground }"
+                              />
+                              <template #content>
+                                <UColorPicker v-model="palette.primaryOnBackground" format="hex" class="p-2" />
+                              </template>
+                            </UPopover>
+                          </UFormField>
+                        </div>
+
+                      </div>
+                    </div>
+                  </UCard>
+
+                  <!-- ── Preview ───────────────────────────────────────────── -->
+                  <UCard v-if="paletteGenerated">
+                    <template #header>
+                      <div class="flex items-center gap-2">
+                        <UIcon name="i-lucide-eye" class="size-4 text-(--ui-primary)" />
+                        <span class="text-sm font-semibold text-(--ui-text-highlighted)">Preview</span>
+                        <span class="text-xs text-(--ui-text-muted) ml-1">mini-app simulado</span>
+                      </div>
+                    </template>
+
+                    <div
+                      class="rounded-lg overflow-hidden border border-(--ui-border) h-64 flex select-none"
+                      :style="{ backgroundColor: palette.background, color: palette.text }"
+                    >
+
+                      <!-- Sidebar -->
+                      <div
+                        class="w-14 flex-shrink-0 flex flex-col items-center gap-2 py-3 px-2"
+                        :style="{ backgroundColor: palette.background, borderRight: `1px solid ${palette.text}18` }"
+                      >
+                        <div class="size-7 rounded-lg mb-1" :style="{ backgroundColor: palette.primaryOnBackground }" />
+                        <div
+                          v-for="n in 5" :key="n"
+                          class="w-full h-7 rounded-md"
+                          :style="{ backgroundColor: n === 1 ? `${palette.primaryOnBackground}28` : `${palette.text}0d` }"
+                        />
+                      </div>
+
+                      <!-- Main area -->
+                      <div class="flex-1 flex flex-col overflow-hidden">
+
+                        <!-- Header -->
+                        <div
+                          class="h-11 flex-shrink-0 flex items-center justify-between px-4"
+                          :style="{ borderBottom: `1px solid ${palette.text}18` }"
+                        >
+                          <div class="h-3 w-28 rounded-full" :style="{ backgroundColor: `${palette.text}40` }" />
+                          <div class="flex items-center gap-2">
+                            <div
+                              class="h-7 px-3 rounded-md text-xs font-semibold flex items-center"
+                              :style="{ backgroundColor: palette.primaryOnBackground, color: palette.background }"
+                            >Salvar</div>
+                            <div class="size-7 rounded-full" :style="{ backgroundColor: `${palette.secondary}55` }" />
+                          </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="flex-1 overflow-hidden p-4 flex flex-col gap-3">
+
+                          <!-- Stat cards -->
+                          <div class="flex gap-2">
+                            <div
+                              v-for="m in 3" :key="m"
+                              class="flex-1 rounded-lg p-2.5 flex flex-col gap-1.5"
+                              :style="{ backgroundColor: `${palette.text}0a`, border: `1px solid ${palette.text}14` }"
+                            >
+                              <div class="h-2 w-3/5 rounded-full" :style="{ backgroundColor: `${palette.text}30` }" />
+                              <div
+                                class="h-4 w-4/5 rounded"
+                                :style="{ backgroundColor: m === 1 ? `${palette.primaryOnBackground}28` : `${palette.secondary}28` }"
+                              />
+                            </div>
+                          </div>
+
+                          <!-- Row list -->
+                          <div class="flex flex-col gap-1.5">
+                            <div
+                              v-for="r in 2" :key="r"
+                              class="flex items-center gap-2 h-8 rounded-md px-2.5"
+                              :style="{ backgroundColor: `${palette.text}08` }"
+                            >
+                              <div class="size-4 rounded-full flex-shrink-0" :style="{ backgroundColor: `${palette.secondary}50` }" />
+                              <div class="flex-1 h-2 rounded-full" :style="{ backgroundColor: `${palette.text}28` }" />
+                              <div
+                                class="h-5 w-14 rounded text-xs font-medium flex items-center justify-center"
+                                :style="{ backgroundColor: `${palette.primaryOnBackground}20`, color: palette.primaryOnBackground }"
+                              >ativo</div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                    </div>
+                  </UCard>
+
+                </div>
               </template>
 
               <!-- ── URLs ───────────────────────────────────────────────── -->
@@ -1548,23 +2219,99 @@ function salvar() {
 
               </template>
 
-              <!-- Footer Salvar -->
-              <div class="flex justify-end pt-2">
-                <UButton label="Salvar configurações" icon="i-lucide-save" color="primary" size="md" @click="salvar" />
-              </div>
-
+            </div>
             </div>
           </div>
         </template>
 
-        <!-- ── Banners (placeholder) ──────────────────────────────────────── -->
+        <!-- ── Banners ──────────────────────────────────────────────────── -->
         <template #banners>
-          <div class="pt-6 text-sm text-(--ui-text-muted)">Em breve.</div>
+          <div class="flex flex-col gap-8 pt-4">
+
+            <!-- Link do banner ───────────────────────────────────────────── -->
+            <UCard>
+              <template #header>
+                <span class="text-sm font-semibold text-(--ui-text-highlighted)">Link do banner</span>
+              </template>
+
+              <div class="flex flex-col gap-1.5">
+                <div class="flex w-full gap-2">
+                  <UInput
+                    v-model="bannerLink"
+                    icon="i-lucide-link"
+                    placeholder="https://exemplo.com/destino"
+                    size="md"
+                    color="neutral"
+                    variant="outline"
+                    class="flex-1"
+                  />
+                  <UButton
+                    :icon="bannerLinkCopiado ? 'i-lucide-check' : 'i-lucide-copy'"
+                    color="neutral"
+                    variant="outline"
+                    size="md"
+                    :disabled="!bannerLink"
+                    :class="bannerLinkCopiado ? 'text-(--ui-success)' : ''"
+                    @click="copyBannerLink"
+                  />
+                </div>
+                <p class="text-xs text-(--ui-text-muted)">
+                  URL para onde o usuário será redirecionado ao clicar no banner.
+                </p>
+              </div>
+            </UCard>
+
+            <!-- Imagem do banner ─────────────────────────────────────────── -->
+            <UCard>
+              <template #header>
+                <span class="text-sm font-semibold text-(--ui-text-highlighted)">Imagem do banner</span>
+              </template>
+
+              <div class="w-1/2">
+                <div v-if="bannerDesktopImage" class="relative h-44 rounded-lg overflow-hidden">
+                  <img :src="bannerDesktopImage" class="w-full h-full object-cover rounded-lg" alt="Preview banner" />
+                  <UButton
+                    icon="i-lucide-trash-2"
+                    color="error"
+                    variant="solid"
+                    size="xs"
+                    class="absolute top-2 right-2 rounded-full"
+                    @click="bannerDesktopImage = null; bannerDesktopFile = null"
+                  />
+                </div>
+
+                <div
+                  v-else
+                  class="relative flex flex-col items-center justify-center gap-3 h-44 rounded-lg border-2 border-dashed border-(--ui-border) bg-(--ui-bg-muted) cursor-pointer hover:border-(--ui-primary) transition-colors"
+                  @click="bannerDesktopInput?.click()"
+                  @dragover.prevent
+                  @drop="onBannerDrop($event)"
+                >
+                  <UIcon name="i-lucide-image" class="w-8 h-8 text-(--ui-text-muted)" />
+                  <div class="text-center px-4">
+                    <p class="text-xs font-medium text-(--ui-text-highlighted)">Arraste ou clique para enviar</p>
+                    <p class="text-xs text-(--ui-text-muted)">PNG, JPG até 5 MB — 1920 × 1080 px</p>
+                  </div>
+                  <input
+                    ref="bannerDesktopInput"
+                    type="file"
+                    accept="image/*"
+                    class="hidden"
+                    @change="onBannerFileSelect($event)"
+                  />
+                </div>
+              </div>
+            </UCard>
+
+          </div>
         </template>
 
       </UTabs>
 
     </div>
+    </div>
+
+    <PartnersGestorSettingsFormActions />
   </div>
 
 
