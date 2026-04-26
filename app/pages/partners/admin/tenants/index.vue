@@ -147,13 +147,13 @@ const columns = [
         h(UDropdownMenu, {
           items: [
             [
-              { label: 'Editar',                   icon: 'i-heroicons-pencil-square'            },
-              { label: 'Acessar Painel (Login as)', icon: 'i-heroicons-arrow-right-on-rectangle' },
+              { label: 'Editar',                   icon: 'i-lucide-square-pen' },
+              { label: 'Acessar Painel (Login as)', icon: 'i-lucide-log-in'    },
             ],
           ],
         }, {
           default: () => h(UButton, {
-            icon:    'i-heroicons-ellipsis-vertical-20-solid',
+            icon:    'i-lucide-ellipsis-vertical',
             size:    'xs',
             variant: 'ghost',
             color:   'neutral',

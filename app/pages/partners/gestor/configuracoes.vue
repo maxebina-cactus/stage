@@ -1839,7 +1839,7 @@ watch([messagesConfig, ftdGoals, urlSettings, textoReferencia, servicosLinks], m
                           class="w-full md:w-auto justify-center"
                           @click="gerarPaleta"
                         >
-                          <UIcon name="i-heroicons-sparkles" class="size-5 shrink-0" />
+                          <UIcon name="i-lucide-sparkles" class="size-5 shrink-0" />
                           Gerar Paleta Inteligente
                         </UButton>
                       </div>
