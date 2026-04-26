@@ -271,16 +271,19 @@ const gamiScrollRef      = ref<HTMLElement | null>(null)
 const aparenciaScrollRef = ref<HTMLElement | null>(null)
 
 const {
-  showLeft: subTabsCanScrollLeft, showRight: subTabsCanScrollRight,
-  update: updateSubTabsScroll,    scroll:  scrollSubTabs,
+  hasOverflow: subTabsHasOverflow,
+  canScrollLeft: subTabsCanScrollLeft, canScrollRight: subTabsCanScrollRight,
+  update: updateSubTabsScroll,         scroll:         scrollSubTabs,
 } = useScrollableTabsArrows(subTabsScrollRef)
 const {
-  showLeft: gamiCanScrollLeft,    showRight: gamiCanScrollRight,
-  update: updateGamiScroll,       scroll:  scrollGamiTabs,
+  hasOverflow: gamiHasOverflow,
+  canScrollLeft: gamiCanScrollLeft,    canScrollRight: gamiCanScrollRight,
+  update: updateGamiScroll,            scroll:         scrollGamiTabs,
 } = useScrollableTabsArrows(gamiScrollRef)
 const {
-  showLeft: aparenciaCanScrollLeft, showRight: aparenciaCanScrollRight,
-  update: updateAparenciaScroll,    scroll:  scrollAparenciaTabs,
+  hasOverflow: aparenciaHasOverflow,
+  canScrollLeft: aparenciaCanScrollLeft, canScrollRight: aparenciaCanScrollRight,
+  update: updateAparenciaScroll,         scroll:         scrollAparenciaTabs,
 } = useScrollableTabsArrows(aparenciaScrollRef)
 
 // Recalculate arrows when the active main tab changes (panel becomes visible)
@@ -820,7 +823,8 @@ watch([messagesConfig, ftdGoals, urlSettings, textoReferencia, servicosLinks], m
             <!-- Sub-navegação mobile: carrossel com setas ───────────────────── -->
             <div class="md:hidden relative flex items-center gap-1 border-b border-(--ui-border) mb-4">
               <UButton
-                v-show="subTabsCanScrollLeft"
+                v-if="subTabsHasOverflow"
+                :disabled="!subTabsCanScrollLeft"
                 icon="i-lucide-chevron-left"
                 variant="ghost"
                 color="neutral"
@@ -848,7 +852,8 @@ watch([messagesConfig, ftdGoals, urlSettings, textoReferencia, servicosLinks], m
                 </button>
               </div>
               <UButton
-                v-show="subTabsCanScrollRight"
+                v-if="subTabsHasOverflow"
+                :disabled="!subTabsCanScrollRight"
                 icon="i-lucide-chevron-right"
                 variant="ghost"
                 color="neutral"
@@ -1263,7 +1268,8 @@ watch([messagesConfig, ftdGoals, urlSettings, textoReferencia, servicosLinks], m
             <!-- Sub-navegação mobile: carrossel com setas ───────────────────── -->
             <div class="md:hidden relative flex items-center gap-1 border-b border-(--ui-border) mb-4">
               <UButton
-                v-show="gamiCanScrollLeft"
+                v-if="gamiHasOverflow"
+                :disabled="!gamiCanScrollLeft"
                 icon="i-lucide-chevron-left"
                 variant="ghost"
                 color="neutral"
@@ -1291,7 +1297,8 @@ watch([messagesConfig, ftdGoals, urlSettings, textoReferencia, servicosLinks], m
                 </button>
               </div>
               <UButton
-                v-show="gamiCanScrollRight"
+                v-if="gamiHasOverflow"
+                :disabled="!gamiCanScrollRight"
                 icon="i-lucide-chevron-right"
                 variant="ghost"
                 color="neutral"
@@ -1635,7 +1642,8 @@ watch([messagesConfig, ftdGoals, urlSettings, textoReferencia, servicosLinks], m
             <!-- Sub-navegação mobile: carrossel com setas ───────────────────── -->
             <div class="md:hidden relative flex items-center gap-1 border-b border-(--ui-border) mb-4">
               <UButton
-                v-show="aparenciaCanScrollLeft"
+                v-if="aparenciaHasOverflow"
+                :disabled="!aparenciaCanScrollLeft"
                 icon="i-lucide-chevron-left"
                 variant="ghost"
                 color="neutral"
@@ -1663,7 +1671,8 @@ watch([messagesConfig, ftdGoals, urlSettings, textoReferencia, servicosLinks], m
                 </button>
               </div>
               <UButton
-                v-show="aparenciaCanScrollRight"
+                v-if="aparenciaHasOverflow"
+                :disabled="!aparenciaCanScrollRight"
                 icon="i-lucide-chevron-right"
                 variant="ghost"
                 color="neutral"

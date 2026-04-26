@@ -1,18 +1,26 @@
 export function useScrollableTabsArrows(scrollRef: Ref<HTMLElement | null>) {
-  const showLeft = ref(false)
-  const showRight = ref(false)
+  const hasOverflow = ref(false)
+  const canScrollLeft = ref(false)
+  const canScrollRight = ref(false)
 
   function update() {
     const el = scrollRef.value
     if (!el) {
-      showLeft.value = false
-      showRight.value = false
+      hasOverflow.value = false
+      canScrollLeft.value = false
+      canScrollRight.value = false
       return
     }
-    const overflow = el.scrollWidth - el.clientWidth
-    const hasOverflow = overflow > 2
-    showLeft.value = hasOverflow && el.scrollLeft > 2
-    showRight.value = hasOverflow && el.scrollLeft < overflow - 2
+    // rAF ensures measurements happen after layout is painted, avoiding
+    // stale scrollWidth/clientWidth readings on initial mount
+    requestAnimationFrame(() => {
+      if (!scrollRef.value) return
+      const overflow = scrollRef.value.scrollWidth - scrollRef.value.clientWidth
+      hasOverflow.value = overflow > 2
+      canScrollLeft.value = scrollRef.value.scrollLeft > 0
+      canScrollRight.value =
+        scrollRef.value.scrollLeft + scrollRef.value.clientWidth < scrollRef.value.scrollWidth - 1
+    })
   }
 
   function scroll(dir: 'left' | 'right') {
@@ -21,5 +29,5 @@ export function useScrollableTabsArrows(scrollRef: Ref<HTMLElement | null>) {
 
   useResizeObserver(scrollRef, update)
 
-  return { showLeft, showRight, update, scroll }
+  return { hasOverflow, canScrollLeft, canScrollRight, update, scroll }
 }
