@@ -265,20 +265,32 @@ const subAbas = [
 ]
 const activeSubTab = ref('saques')
 
-// ── Parâmetros · carrossel mobile ─────────────────────────────────────────
-const subTabsScrollRef      = ref<HTMLElement | null>(null)
-const subTabsCanScrollLeft  = ref(false)
-const subTabsCanScrollRight = ref(false)
+// ── carrossel mobile – setas de scroll ────────────────────────────────────
+const subTabsScrollRef   = ref<HTMLElement | null>(null)
+const gamiScrollRef      = ref<HTMLElement | null>(null)
+const aparenciaScrollRef = ref<HTMLElement | null>(null)
 
-function updateSubTabsScroll() {
-  const el = subTabsScrollRef.value
-  if (!el) return
-  subTabsCanScrollLeft.value  = el.scrollLeft > 2
-  subTabsCanScrollRight.value = el.scrollLeft < el.scrollWidth - el.clientWidth - 2
-}
-function scrollSubTabs(dir: 'left' | 'right') {
-  subTabsScrollRef.value?.scrollBy({ left: dir === 'left' ? -150 : 150, behavior: 'smooth' })
-}
+const {
+  showLeft: subTabsCanScrollLeft, showRight: subTabsCanScrollRight,
+  update: updateSubTabsScroll,    scroll:  scrollSubTabs,
+} = useScrollableTabsArrows(subTabsScrollRef)
+const {
+  showLeft: gamiCanScrollLeft,    showRight: gamiCanScrollRight,
+  update: updateGamiScroll,       scroll:  scrollGamiTabs,
+} = useScrollableTabsArrows(gamiScrollRef)
+const {
+  showLeft: aparenciaCanScrollLeft, showRight: aparenciaCanScrollRight,
+  update: updateAparenciaScroll,    scroll:  scrollAparenciaTabs,
+} = useScrollableTabsArrows(aparenciaScrollRef)
+
+// Recalculate arrows when the active main tab changes (panel becomes visible)
+watch(selectedTab, async () => {
+  await nextTick()
+  updateSubTabsScroll()
+  updateGamiScroll()
+  updateAparenciaScroll()
+})
+
 watch(activeSubTab, async () => {
   await nextTick()
   const el = subTabsScrollRef.value
@@ -287,20 +299,6 @@ watch(activeSubTab, async () => {
     ?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
   setTimeout(updateSubTabsScroll, 300)
 })
-// ── Gamificação · carrossel mobile ───────────────────────────────────────
-const gamiScrollRef      = ref<HTMLElement | null>(null)
-const gamiCanScrollLeft  = ref(false)
-const gamiCanScrollRight = ref(false)
-
-function updateGamiScroll() {
-  const el = gamiScrollRef.value
-  if (!el) return
-  gamiCanScrollLeft.value  = el.scrollLeft > 2
-  gamiCanScrollRight.value = el.scrollLeft < el.scrollWidth - el.clientWidth - 2
-}
-function scrollGamiTabs(dir: 'left' | 'right') {
-  gamiScrollRef.value?.scrollBy({ left: dir === 'left' ? -150 : 150, behavior: 'smooth' })
-}
 watch(activeGamiTab, async () => {
   await nextTick()
   const el = gamiScrollRef.value
@@ -309,21 +307,6 @@ watch(activeGamiTab, async () => {
     ?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
   setTimeout(updateGamiScroll, 300)
 })
-
-// ── Aparência · carrossel mobile ──────────────────────────────────────────
-const aparenciaScrollRef      = ref<HTMLElement | null>(null)
-const aparenciaCanScrollLeft  = ref(false)
-const aparenciaCanScrollRight = ref(false)
-
-function updateAparenciaScroll() {
-  const el = aparenciaScrollRef.value
-  if (!el) return
-  aparenciaCanScrollLeft.value  = el.scrollLeft > 2
-  aparenciaCanScrollRight.value = el.scrollLeft < el.scrollWidth - el.clientWidth - 2
-}
-function scrollAparenciaTabs(dir: 'left' | 'right') {
-  aparenciaScrollRef.value?.scrollBy({ left: dir === 'left' ? -150 : 150, behavior: 'smooth' })
-}
 watch(activeAparenciaTab, async () => {
   await nextTick()
   const el = aparenciaScrollRef.value
@@ -332,10 +315,6 @@ watch(activeAparenciaTab, async () => {
     ?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
   setTimeout(updateAparenciaScroll, 300)
 })
-
-useResizeObserver(subTabsScrollRef,   updateSubTabsScroll)
-useResizeObserver(gamiScrollRef,      updateGamiScroll)
-useResizeObserver(aparenciaScrollRef, updateAparenciaScroll)
 
 onMounted(() => {
   updateSubTabsScroll()
@@ -2267,7 +2246,7 @@ watch([messagesConfig, ftdGoals, urlSettings, textoReferencia, servicosLinks], m
                 <span class="text-sm font-semibold text-(--ui-text-highlighted)">Imagem do banner</span>
               </template>
 
-              <div class="w-1/2">
+              <div class="w-full md:w-1/2">
                 <div v-if="bannerDesktopImage" class="relative h-44 rounded-lg overflow-hidden">
                   <img :src="bannerDesktopImage" class="w-full h-full object-cover rounded-lg" alt="Preview banner" />
                   <UButton

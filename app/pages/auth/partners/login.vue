@@ -21,8 +21,9 @@ const schema = z.object({
 type Schema = z.output<typeof schema>
 
 const mockUsers = [
-  { email: 'gestor@partners.com', password: 'Ges@tor123', name: 'Gestor', role: 'gestor' },
-  { email: 'afiliado@partners.com', password: 'Afili@do321', name: 'Afiliado', role: 'afiliado' },
+  { email: 'gestor@partners.com',    password: 'Ges@tor123',      name: 'Gestor',        role: 'gestor'        },
+  { email: 'afiliado@partners.com',  password: 'Afili@do321',     name: 'Afiliado',      role: 'afiliado'      },
+  { email: 'admin@partners.com',     password: 'Admin@Master789', name: 'Admin Master',  role: 'admin-master'  },
 ]
 
 const authUser = useState('authUser', () => null)
@@ -91,7 +92,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   }
 
   authUser.value = user
-  await navigateTo(user.role === 'gestor' ? '/partners/dashboard/gestor' : '/partners')
+  const gestorRoles = ['gestor', 'admin-master']
+  await navigateTo(gestorRoles.includes(user.role) ? '/partners/dashboard/gestor' : '/partners')
 }
 
 const features = [

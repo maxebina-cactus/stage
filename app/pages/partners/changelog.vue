@@ -85,14 +85,14 @@ const sections: ChangelogSection[] = [
 </script>
 
 <template>
-  <UContainer class="py-8">
+  <UContainer class="pt-2 pb-8 md:py-8">
     <div
       v-for="section in sections"
       :key="section.date"
-      class="flex gap-8 relative pb-10 last:pb-0"
+      class="flex flex-col md:flex-row gap-2 md:gap-8 relative pb-6 md:pb-10 last:pb-0"
     >
-      <div class="w-48 shrink-0">
-        <h2 class="sticky top-6 block text-md text-(--ui-text) font-semibold leading-6">
+      <div class="w-full md:w-48 shrink-0 sticky md:static top-0 z-10 bg-(--ui-bg-elevated) md:bg-transparent py-2 md:py-0">
+        <h2 class="block text-md text-(--ui-text) font-semibold leading-6 md:sticky md:top-6">
           {{ section.date }}
         </h2>
       </div>
@@ -101,9 +101,9 @@ const sections: ChangelogSection[] = [
         <li
           v-for="(item, i) in section.items"
           :key="i"
-          class="flex items-start gap-3"
+          class="flex flex-wrap md:flex-nowrap items-start gap-2 md:gap-3"
         >
-          <div class="w-28 shrink-0">
+          <div class="w-auto md:w-28 shrink-0">
             <UBadge
               :label="badgeConfig[item.badge].label"
               :color="badgeConfig[item.badge].color"
@@ -111,7 +111,7 @@ const sections: ChangelogSection[] = [
               size="md"
             />
           </div>
-          <span class="text-sm text-(--ui-text) leading-6">{{ item.text }}</span>
+          <span class="text-sm text-(--ui-text) leading-6 basis-full md:basis-auto min-w-0 break-normal">{{ item.text }}</span>
         </li>
       </ul>
     </div>

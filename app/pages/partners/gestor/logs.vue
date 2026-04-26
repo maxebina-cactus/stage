@@ -116,8 +116,8 @@ watch(itensPorPagina, () => { pagina.value = 1 })
       <UButton
         label="Exportar Logs"
         icon="i-lucide-download"
-        variant="outline"
-        color="neutral"
+        variant="solid"
+        color="primary"
         size="sm"
       />
     </div>

@@ -42,11 +42,17 @@ const menuGestor = [
   { label: 'Logs', icon: 'i-lucide-triangle-alert', to: '/partners/gestor/logs' },
 ]
 
+const menuAdmin: NavigationMenuItem[] = [
+  { label: 'Gerenciar Tenants', icon: 'i-lucide-building-2', to: '/partners/admin/tenants' },
+]
+
 const menuAtivo = computed(() => {
   if (authUser.value?.role === 'afiliado') return menuAfiliado
-  if (authUser.value?.role === 'gestor') return menuGestor
+  if (authUser.value?.role === 'gestor' || authUser.value?.role === 'admin-master') return menuGestor
   return []
 })
+
+const isAdminMaster = computed(() => authUser.value?.role === 'admin-master')
 
 const links = computed(() => [[{
   label: 'Home',
@@ -128,6 +134,22 @@ onMounted(async () => {
           tooltip
           popover
         />
+
+        <template v-if="isAdminMaster">
+          <p
+            v-if="!collapsed"
+            class="px-2.5 pt-3 pb-0.5 text-xs font-semibold uppercase tracking-wider text-(--ui-text-muted)"
+          >
+            Administração
+          </p>
+          <UNavigationMenu
+            :collapsed="collapsed"
+            :items="menuAdmin"
+            orientation="vertical"
+            tooltip
+            popover
+          />
+        </template>
 
         <UNavigationMenu
           :collapsed="collapsed"
