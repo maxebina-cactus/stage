@@ -234,7 +234,7 @@ const semSelecao = computed(() => selecao.value.length === 0)
       <template #header>
 
         <!-- Título + Filtros ─────────────────────────────────────────── -->
-        <div class="flex flex-wrap items-center gap-3">
+        <div class="flex flex-col md:flex-row md:flex-wrap md:items-center gap-3">
 
           <!-- Título (esquerda) -->
           <div class="flex items-center gap-2 shrink-0">
@@ -243,10 +243,10 @@ const semSelecao = computed(() => selecao.value.length === 0)
           </div>
 
           <!-- Espaçador -->
-          <div class="flex-1" />
+          <div class="hidden md:block md:flex-1" />
 
           <!-- Filtros (direita) -->
-          <div class="flex flex-wrap items-center gap-2">
+          <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
 
             <!-- Busca -->
             <UInput
@@ -256,7 +256,7 @@ const semSelecao = computed(() => selecao.value.length === 0)
               color="neutral"
               variant="outline"
               size="md"
-              class="w-52"
+              class="w-full md:w-52"
             />
 
             <!-- Ordenar -->
@@ -268,7 +268,7 @@ const semSelecao = computed(() => selecao.value.length === 0)
               color="neutral"
               variant="outline"
               size="md"
-              class="w-48"
+              class="w-full md:w-48"
             >
               <template #trailing>
                 <UIcon
@@ -279,7 +279,7 @@ const semSelecao = computed(() => selecao.value.length === 0)
             </USelect>
 
             <!-- Período -->
-            <HomeDateRangePicker v-model="dateRange" />
+            <HomeDateRangePicker v-model="dateRange" class="w-full md:w-auto" />
 
             <!-- Status (multi) -->
             <USelectMenu
@@ -291,7 +291,7 @@ const semSelecao = computed(() => selecao.value.length === 0)
               color="neutral"
               variant="outline"
               size="md"
-              class="w-44"
+              class="w-full md:w-44"
             >
               <template #default="{ modelValue: mv }">
                 <template v-if="(mv as string[])?.length">
@@ -333,7 +333,7 @@ const semSelecao = computed(() => selecao.value.length === 0)
               color="neutral"
               variant="outline"
               size="md"
-              class="w-44"
+              class="w-full md:w-44"
             >
               <template #default="{ modelValue: mv }">
                 <template v-if="(mv as string[])?.length">
@@ -367,7 +367,7 @@ const semSelecao = computed(() => selecao.value.length === 0)
       </template>
 
       <!-- Ações em lote ──────────────────────────────────────────────── -->
-      <div class="flex items-center gap-2 mb-3">
+      <div class="flex flex-col sm:flex-row flex-wrap sm:items-center gap-2 mb-3">
         <span class="text-xs text-(--ui-text-muted) mr-1">
           {{ selecao.length }} selecionado(s)
         </span>
@@ -377,6 +377,7 @@ const semSelecao = computed(() => selecao.value.length === 0)
           size="md"
           color="success"
           variant="soft"
+          class="w-full sm:w-auto"
           :disabled="semSelecao"
         />
         <UButton
@@ -385,6 +386,7 @@ const semSelecao = computed(() => selecao.value.length === 0)
           size="md"
           color="error"
           variant="soft"
+          class="w-full sm:w-auto"
           :disabled="semSelecao"
         />
         <UButton
@@ -393,6 +395,7 @@ const semSelecao = computed(() => selecao.value.length === 0)
           size="md"
           color="neutral"
           variant="outline"
+          class="w-full sm:w-auto"
           :disabled="selecao.length === 0"
         />
       </div>

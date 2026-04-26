@@ -170,19 +170,21 @@ const columns = [
   <div class="p-6 flex flex-col gap-6 w-full">
 
     <!-- Row 1: Navegação + Adicionar ────────────────────────────────────── -->
-    <div class="flex items-center justify-between">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
       <UButton
         icon="i-lucide-arrow-left"
         label="Voltar"
         color="neutral"
         variant="ghost"
         to="/partners/dashboard/gestor"
+        class="w-full sm:w-auto"
       />
       <UButton
         icon="i-lucide-plus"
         label="Adicionar Tenant"
         color="primary"
         size="sm"
+        class="w-full sm:w-auto"
       />
     </div>
 
