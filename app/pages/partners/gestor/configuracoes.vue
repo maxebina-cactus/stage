@@ -1840,7 +1840,7 @@ watch([messagesConfig, ftdGoals, urlSettings, textoReferencia, servicosLinks], m
 
                       </div>
 
-                      <div class="flex justify-end">
+                      <div class="flex justify-center">
                         <UButton
                           color="primary"
                           variant="solid"
