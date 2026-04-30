@@ -93,7 +93,13 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
   authUser.value = user
   const gestorRoles = ['gestor', 'admin-master']
-  await navigateTo(gestorRoles.includes(user.role) ? '/partners/dashboard/gestor' : '/partners')
+  if (gestorRoles.includes(user.role)) {
+    await navigateTo('/partners/dashboard/gestor')
+  } else if (user.role === 'afiliado') {
+    await navigateTo('/partners/dashboard/afiliados')
+  } else {
+    await navigateTo('/partners')
+  }
 }
 
 const features = [

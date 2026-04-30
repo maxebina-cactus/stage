@@ -23,7 +23,7 @@ useScrollToTop('dashboard-panel-partners')
 const authUser = useState('authUser', () => null)
 
 const menuAfiliado = [
-  { label: 'Dashboard', icon: 'i-lucide-bar-chart-2', to: '/partners' },
+  { label: 'Dashboard', icon: 'i-lucide-bar-chart-2', to: '/partners/dashboard/afiliados' },
   { label: 'Link de destino', icon: 'i-lucide-rocket', to: '/partners/afiliado/link-de-destino' },
   { label: 'Relatório', icon: 'i-lucide-pie-chart', to: '/partners/afiliado/relatorio' },
   { label: 'Mídia / Banners', icon: 'i-lucide-image', to: '/partners/afiliado/midia' },
