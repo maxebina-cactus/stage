@@ -69,6 +69,18 @@ const colunas: TableColumn<LinkDestino>[] = [
 
 <template>
   <div class="p-6 flex flex-col gap-6 w-full">
+
+    <!-- Navegação ────────────────────────────────────────────────────────── -->
+    <div>
+      <UButton
+        icon="i-lucide-arrow-left"
+        label="Voltar"
+        color="neutral"
+        variant="ghost"
+        to="/partners/dashboard/Afiliados"
+      />
+    </div>    
+
     <UCard>
 
       <template #header>
